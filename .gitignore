@@ -16,6 +16,8 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.env.local
+.env.*.local
 
 # macOS-specific files
 .DS_Store
@@ -23,9 +25,21 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# Playwright
+# Cursor / local editor state
+.cursor/
+
+# Playwright (tests + MCP snapshots under project root)
 test-results/
 playwright-report/
+.playwright-mcp/
+
+# Codex / local agent plugin cache (regenerate from repo docs if needed)
+.agents/
 
 # n8n (docker-compose.n8n.yml)
 n8n_data/
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
