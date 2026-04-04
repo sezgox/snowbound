@@ -1,0 +1,227 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - region "Hero" [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]:
+          - img "Snowbound"
+        - navigation "Primary" [ref=e7]:
+          - link "Home" [ref=e8] [cursor=pointer]:
+            - /url: "#top"
+          - link "The Game" [ref=e9] [cursor=pointer]:
+            - /url: "#gameplay"
+          - link "About Us" [ref=e10] [cursor=pointer]:
+            - /url: "#about"
+          - link "Contact" [ref=e11] [cursor=pointer]:
+            - /url: "#waitlist"
+      - generic [ref=e13]:
+        - generic:
+          - img "Snowbound logo"
+      - generic [ref=e15]:
+        - paragraph [ref=e16]: Survive the winter.
+        - paragraph [ref=e17]: Betray your rivals.
+      - paragraph [ref=e19]: A Strategic Board Game of Exploration, Deception and Survival.
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]: Name
+          - textbox "Name" [ref=e24]:
+            - /placeholder: Your name
+          - generic [ref=e25]: Email
+          - textbox "Email" [ref=e26]:
+            - /placeholder: Email for updates
+        - generic [ref=e27]: Message
+        - textbox "Message" [ref=e28]:
+          - /placeholder: Optional message
+        - button "JOIN THE WAITLIST" [ref=e29]
+        - paragraph [ref=e285]: Thanks! You are on the list — we will be in touch.
+      - paragraph [ref=e30]: Get notified at launch and be the first to enter Snowbound
+      - generic [ref=e34]:
+        - paragraph [ref=e35]: COMING
+        - paragraph [ref=e36]: SOON TO
+        - paragraph [ref=e37]: KICKSTARTER
+        - paragraph [ref=e38]: PLATFORM
+    - region "Game facts" [ref=e39]:
+      - paragraph [ref=e43]: 2 - 6
+      - paragraph [ref=e48]: 30 - 45
+      - paragraph [ref=e55]: 9+
+    - region "AN ICED PARADISE AWAITS" [ref=e56]:
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - heading "AN ICED PARADISE AWAITS" [level=2] [ref=e60]
+          - generic [ref=e61]:
+            - paragraph [ref=e62]: In the frozen North, beneath shimmering auroras, tribes fight to survive the cold winter.
+            - paragraph [ref=e63]: Hidden under ancient ice lie the magical petals of the Thall Tree, a power worth risking everything for.
+            - paragraph [ref=e64]: For ages, the Inuit have fought to gain its power — will you be the next to claim it?
+        - generic [ref=e66]:
+          - img "Illustration of the Thall Tree"
+    - region "WHAT MAKES IT UNIQUE" [ref=e67]:
+      - generic [ref=e68]:
+        - heading "WHAT MAKES IT UNIQUE" [level=2] [ref=e69]
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - generic [ref=e72]:
+              - paragraph [ref=e73]: CHANGING
+              - paragraph [ref=e74]: BOARD
+            - paragraph [ref=e75]: Break the ice and reveal a new map every game
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - paragraph [ref=e78]: HIGH PLAYER
+              - paragraph [ref=e79]: INTERACTION
+            - paragraph [ref=e80]: Steal, block and outplay your rivals at every turn.
+          - generic [ref=e81]:
+            - paragraph [ref=e83]: RISK VS REWARD
+            - paragraph [ref=e84]: Push your luck… or play it safe and lose the race.
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - paragraph [ref=e87]: 2 PATHS TO
+              - paragraph [ref=e88]: VICTORIES
+            - paragraph [ref=e89]: You don't need to follow everyone else's path.
+    - region "The Inuit tribes" [ref=e91]:
+      - generic [ref=e92]:
+        - heading "The Inuit tribes" [level=2] [ref=e93]
+        - button "Previous tribe" [ref=e94] [cursor=pointer]
+        - button "Next tribe" [ref=e96] [cursor=pointer]
+        - generic [ref=e99]:
+          - article [ref=e100]:
+            - generic [ref=e101]:
+              - paragraph [ref=e103]: THE INUIT TRIBES
+              - generic [ref=e104]:
+                - generic [ref=e106]:
+                  - img "IQURNAT character"
+                - generic [ref=e108]:
+                  - heading "IQURNAT" [level=3] [ref=e109]
+                  - generic [ref=e110]:
+                    - paragraph [ref=e111]: Shamans who invoke the power of the Thal tree.
+                    - paragraph [ref=e112]: They are known for being in harmony with the spirits of the beyond.
+          - article [ref=e113]:
+            - generic [ref=e114]:
+              - paragraph [ref=e116]: THE INUIT TRIBES
+              - generic [ref=e117]:
+                - generic [ref=e119]:
+                  - img "Qaniktuq character"
+                - generic [ref=e121]:
+                  - heading "Qaniktuq" [level=3] [ref=e122]
+                  - generic [ref=e123]:
+                    - paragraph [ref=e124]: Tribe known for having their hair covered in ice.
+                    - paragraph [ref=e125]: Their specialty is controlling polar bears.
+          - article [ref=e126]:
+            - generic [ref=e127]:
+              - paragraph [ref=e129]: THE INUIT TRIBES
+              - generic [ref=e130]:
+                - generic [ref=e132]:
+                  - img "Kaviktaq character"
+                - generic [ref=e134]:
+                  - heading "Kaviktaq" [level=3] [ref=e135]
+                  - generic [ref=e136]:
+                    - paragraph [ref=e137]: Tribe known for being nomadic and undertaking long journeys in search of food.
+                    - paragraph [ref=e138]: They stand out for their skill in handling kayaks and their understanding of the environment.
+          - article [ref=e139]:
+            - generic [ref=e140]:
+              - paragraph [ref=e142]: THE INUIT TRIBES
+              - generic [ref=e143]:
+                - generic [ref=e145]:
+                  - img "IQURNAT character"
+                - generic [ref=e147]:
+                  - heading "IQURNAT" [level=3] [ref=e148]
+                  - generic [ref=e149]:
+                    - paragraph [ref=e150]: Shamans who invoke the power of the Thal tree.
+                    - paragraph [ref=e151]: They are known for being in harmony with spirits from the beyond.
+          - article [ref=e152]:
+            - generic [ref=e153]:
+              - paragraph [ref=e155]: THE INUIT TRIBES
+              - generic [ref=e156]:
+                - generic [ref=e158]:
+                  - img "Sednaluk character"
+                - generic [ref=e160]:
+                  - heading "Sednaluk" [level=3] [ref=e161]
+                  - generic [ref=e162]:
+                    - paragraph [ref=e163]: They are given the name “Singers of the Sea” as they worship the goddess Sedna.
+                    - paragraph [ref=e164]: Their culture is based on the sea and traditions.
+          - article [ref=e165]:
+            - generic [ref=e166]:
+              - paragraph [ref=e168]: THE INUIT TRIBES
+              - generic [ref=e169]:
+                - generic [ref=e171]:
+                  - img "Nunaqar character"
+                - generic [ref=e173]:
+                  - heading "Nunaqar" [level=3] [ref=e174]
+                  - generic [ref=e175]:
+                    - paragraph [ref=e176]: Tribe known for being experts in the manufacture of snow goggles, a resource that allows them to travel during snowstorms.
+                    - paragraph [ref=e177]: Their specialty is traditional craftsmanship..
+        - tablist "Tribe slides" [ref=e178]:
+          - tab "Show tribe 1" [selected] [ref=e179]
+          - tab "Show tribe 2" [ref=e180]
+          - tab "Show tribe 3" [ref=e181]
+          - tab "Show tribe 4" [ref=e182]
+          - tab "Show tribe 5" [ref=e183]
+          - tab "Show tribe 6" [ref=e184]
+    - region "GAMEPLAY" [ref=e185]:
+      - generic [ref=e186]:
+        - heading "GAMEPLAY" [level=2] [ref=e187]
+        - generic [ref=e188]:
+          - generic [ref=e189]:
+            - heading "UNCOVERING ICE" [level=3] [ref=e191]
+            - generic [ref=e193]:
+              - paragraph [ref=e194]: Reveal what's under the ice
+              - paragraph [ref=e195]: and find useful items and
+              - paragraph [ref=e196]: locations
+          - generic [ref=e199]:
+            - heading "GRAB & ESCAPE" [level=3] [ref=e201]
+            - generic [ref=e203]:
+              - paragraph [ref=e204]: When you find an item while
+              - paragraph [ref=e205]: searching the snow, save it
+              - paragraph [ref=e206]: in your bag and run back to
+              - paragraph [ref=e207]: your main base.
+          - generic [ref=e210]:
+            - heading "FINDING PETALS" [level=3] [ref=e212]
+            - paragraph [ref=e215]: You will need Petals to win the game. Every time you find one it will activate an event
+          - generic [ref=e216]:
+            - heading "GLOBAL EVENTS" [level=3] [ref=e218]
+            - paragraph [ref=e221]: Events are random and affect every player. They can alter the game immediately
+    - region "ABOUT US" [ref=e224]:
+      - generic [ref=e225]:
+        - heading "ABOUT US" [level=2] [ref=e226]
+        - generic [ref=e227]:
+          - paragraph [ref=e233]: Juanma Mateo & Gonzalo Valle
+          - generic [ref=e234]:
+            - paragraph [ref=e235]: "We are a passionate team of game designers who, driven by our creativity, have embarked on the adventure of creating a tabletop game. Drawing from our experience in the video game industry, Snowbound brings together many of the elements we love most in tabletop gaming: competition, strategy, and unexpected twists."
+            - paragraph [ref=e236]: Your support helps turn this dream into reality and bring Snowbound to tables all around the world.
+      - generic [ref=e237]:
+        - generic [ref=e238]:
+          - generic [ref=e239]:
+            - generic [ref=e240]: Name
+            - textbox "Name" [ref=e241]:
+              - /placeholder: Your name
+            - generic [ref=e242]: Email
+            - textbox "Email" [ref=e243]:
+              - /placeholder: Email for updates
+          - generic [ref=e244]: Message
+          - textbox "Message" [ref=e245]:
+            - /placeholder: Optional message
+          - button "JOIN THE WAITLIST" [ref=e246]
+        - paragraph [ref=e247]: Don't miss the launch
+    - contentinfo [ref=e248]:
+      - generic [ref=e251]:
+        - img "Snowbound"
+      - generic [ref=e252]:
+        - link "Email" [ref=e253] [cursor=pointer]:
+          - /url: mailto:snowbound.web@gmail.com
+        - link "Facebook" [ref=e255] [cursor=pointer]:
+          - /url: "#"
+        - link "Instagram" [ref=e256] [cursor=pointer]:
+          - /url: "#"
+      - paragraph [ref=e258]: Get Snowbound!
+  - generic [ref=e261]:
+    - button "Menu" [ref=e262]:
+      - img [ref=e264]
+      - generic: Menu
+    - button "Inspect" [ref=e268]:
+      - img [ref=e270]
+      - generic: Inspect
+    - button "Audit" [ref=e272]:
+      - generic [ref=e273]:
+        - img [ref=e274]
+        - img [ref=e286]
+      - generic: Audit
+    - button "Settings" [ref=e280]:
+      - img [ref=e282]
+      - generic: Settings

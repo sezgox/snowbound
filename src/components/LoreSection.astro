@@ -1,0 +1,63 @@
+---
+import { assets } from "../data/figmaAssets";
+---
+
+<section
+	id="lore"
+	class="relative flex w-full flex-col items-center gap-2.5 overflow-x-hidden py-6 scroll-mt-24"
+	aria-labelledby="lore-heading"
+	style="background-image: url('/images/figma/pattern-ice.png'); background-size: cover; background-position: center;"
+>
+	<!-- Figma LORE STORY: pattern 1200×479, content row h-479, text w-567 py-116, media w-335 h-448 -->
+<!-- 	<div class="pointer-events-none absolute inset-x-0 top-0 h-[479px]" aria-hidden="true">
+		<img
+			src={assets.patternIce}
+			alt=""
+			class="absolute inset-0 size-full max-w-none object-cover"
+		/>
+	</div> -->
+
+	<div
+		class="section-inner relative z-10 flex w-full flex-col items-start gap-12 px-4 md:h-[479px] md:flex-row md:gap-[50px]"
+	>
+		<div
+			class="flex w-full max-w-[567px] flex-col gap-5 md:gap-5 md:py-[116px]"
+		>
+			<div class="flex min-w-0 items-center px-2.5 md:px-[10px]">
+				<h2
+					id="lore-heading"
+					class="font-roboto text-[clamp(1.75rem,4vw,2.5rem)] font-normal leading-tight tracking-[0.2px] text-[#112d57] md:text-[40px] md:leading-[48px] lg:whitespace-nowrap"
+				>
+					AN ICED PARADISE AWAITS
+				</h2>
+			</div>
+			<div
+				class="font-roboto w-full max-w-[557px] p-2.5 text-[20px] font-normal leading-7 tracking-[0.2px] text-black md:p-[10px] md:leading-[28px]"
+			>
+				<p class="mb-0 md:leading-[28px]">
+					In the frozen North, beneath shimmering auroras, tribes fight to survive the
+					cold winter.
+				</p>
+				<p class="mb-0 mt-0 md:leading-[28px]">
+					Hidden under ancient ice lie the magical petals of the Thall Tree, a power
+					worth risking everything for.
+				</p>
+				<p class="mt-0 md:leading-[28px]">
+					For ages, the Inuit have fought to gain its power — will you be the next to
+					claim it?
+				</p>
+			</div>
+		</div>
+		<div
+			class="relative z-10 flex h-auto w-full shrink-0 items-center justify-center p-2.5 md:h-[448px] md:w-[335px] md:p-[10px]"
+		>
+			<div class="relative aspect-square w-full max-w-[min(408.889px,85vw)] shrink-0 md:size-[408.889px] md:max-w-none">
+				<img
+					src={assets.tree}
+					alt="Illustration of the Thall Tree"
+					class="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
+				/>
+			</div>
+		</div>
+	</div>
+</section>

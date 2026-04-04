@@ -1,0 +1,29 @@
+# Optional self-hosted n8n (automation). See docs/n8n.md.
+# Start: docker compose -f docker-compose.n8n.yml up -d
+#
+# For waitlist webhooks, set WAITLIST_N8N_SECRET (same string as in project .env) e.g.:
+#   set WAITLIST_N8N_SECRET=your-secret   (PowerShell)
+#   export WAITLIST_N8N_SECRET=your-secret   (bash)
+# then: docker compose -f docker-compose.n8n.yml up -d
+
+services:
+  n8n:
+    image: n8nio/n8n
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://localhost:5678/
+      # Required when using http:// (not https)
+      - N8N_SECURE_COOKIE=false
+      # Code nodes in “Snowbound Waitlist” workflows read this; match WAITLIST_N8N_SECRET in Snowbound .env
+      - WAITLIST_N8N_SECRET=${WAITLIST_N8N_SECRET:-}
+      # Allow process.env in Code node (if your n8n build defaults block it)
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+    restart: always

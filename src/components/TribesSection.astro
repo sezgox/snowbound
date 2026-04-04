@@ -1,0 +1,328 @@
+---
+import { assets } from "../data/figmaAssets";
+import { tribeSlides, tribesSharedParchment } from "../data/tribes";
+
+const n = tribeSlides.length;
+---
+
+<section
+	id="tribes"
+	class="w-full scroll-mt-24 border-8 border-solid border-[#faf9f2] md:border-[25px] overflow-hidden"
+	aria-labelledby="tribes-heading"
+>
+	<div
+		class="relative w-full"
+		data-tribes-root
+		data-tribes-count={n}
+	>
+		<h2 id="tribes-heading" class="sr-only">The Inuit tribes</h2>
+
+		<button
+			type="button"
+			class="absolute left-2 top-[42%] z-20 hidden h-[62px] w-[34px] -translate-y-1/2 cursor-pointer md:left-[max(0.75rem,calc(50%-min(600px,35vw)-3rem))] md:block"
+			data-tribes-prev
+			aria-label="Previous tribe"
+		>
+			<span
+				class="flex size-full items-center justify-center overflow-hidden [container-type:size]"
+			>
+				<span class="flex h-[100cqw] w-[100cqh] rotate-90 items-center justify-center">
+					<span class="relative block size-full overflow-hidden">
+						<img
+							src={assets.tribesChevron}
+							alt=""
+							class="pointer-events-none absolute left-0 top-[-41%] h-[182%] w-full max-w-none object-cover"
+						/>
+					</span>
+				</span>
+			</span>
+		</button>
+
+		<button
+			type="button"
+			class="absolute right-2 top-[42%] z-20 hidden h-[62px] w-[34px] -translate-y-1/2 cursor-pointer md:right-[max(0.75rem,calc(50%-min(600px,35vw)-3rem))] md:block"
+			data-tribes-next
+			aria-label="Next tribe"
+		>
+			<span
+				class="flex size-full items-center justify-center overflow-hidden [container-type:size]"
+			>
+				<span class="flex h-[100cqw] w-[100cqh] -rotate-90 items-center justify-center">
+					<span class="relative block size-full overflow-hidden">
+						<img
+							src={assets.tribesChevron}
+							alt=""
+							class="pointer-events-none absolute left-0 top-[-41%] h-[182%] w-full max-w-none object-cover"
+						/>
+					</span>
+				</span>
+			</span>
+		</button>
+
+		<!-- All slides stacked in the same grid cell via CSS grid-area -->
+		<div
+			class="tribes-slides-container"
+			data-tribes-slides
+			role="region"
+			aria-label="Tribe slides"
+			tabindex="0"
+		>
+			{
+				tribeSlides.map((slide, i) => (
+					<article
+						class={`tribes-slide${i === 0 ? " is-active" : ""} relative overflow-hidden py-6 md:py-0`}
+						style={
+							slide.background.kind === "gradient"
+								? `background-image: ${slide.background.css};`
+								: `background-color: ${slide.background.hex};`
+						}
+						aria-roledescription="slide"
+						aria-label={`Tribe ${i + 1} of ${n}`}
+						aria-hidden={i === 0 ? "false" : "true"}
+						data-tribes-slide-index={i}
+					>
+						<div class="section-inner relative z-10 flex flex-col items-center px-4 md:px-8">
+							<div class="mb-6 flex w-full max-w-[800px] justify-center py-5">
+								{slide.background.kind === "gradient" ? (
+									<p class="font-display text-center text-4xl tracking-[0.2px] text-[#112d57] md:text-[64px] md:leading-[64px]">
+										<span class="md:whitespace-nowrap">{`THE INUIT `}</span>
+										<span class="md:whitespace-nowrap">TRIBES</span>
+									</p>
+								) : (
+									<p class="font-display text-center text-4xl tracking-[0.2px] text-[#112d57] md:text-[64px] md:leading-[64px] md:whitespace-nowrap">
+										THE INUIT TRIBES
+									</p>
+								)}
+							</div>
+
+							<div class="relative flex w-full max-w-[756px] flex-col items-center gap-6 md:min-h-[320px] md:flex-row md:items-center md:justify-center md:gap-0">
+								<div class="flex w-full shrink-0 justify-center overflow-hidden md:w-[322px] md:max-w-[322px]">
+									<div class="relative mx-auto h-[min(360px,55vh)] w-full max-w-[280px] md:h-[402px] md:max-w-[253px]">
+										<img
+											src={slide.character}
+											alt=""
+											class="pointer-events-none absolute inset-0 size-full max-w-none object-contain object-bottom"
+										/>
+									</div>
+								</div>
+
+								<div class="relative flex min-h-[260px] w-full min-w-0 flex-1 items-center justify-center overflow-hidden md:min-h-[326px] md:max-w-[529px]">
+									<div
+										class="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
+										aria-hidden="true"
+									>
+										<div class="-rotate-90 scale-[0.72] sm:scale-[0.85] md:scale-100">
+											<div class="relative h-[528.923px] w-[325.588px] max-w-none">
+												<div class="absolute inset-0 overflow-hidden">
+													<img
+														src={slide.parchment}
+														alt=""
+														class="absolute left-[-10%] top-0 h-full w-[120%] max-w-none"
+													/>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="relative z-10 flex w-full max-w-[415px] flex-col items-center gap-4 px-6 text-center text-black md:px-14">
+										<h3 class="font-tillana text-[clamp(2rem,5vw,3rem)] font-medium leading-tight tracking-[0.1px] text-black md:text-[48px] md:leading-[32px]">
+											{slide.name}
+										</h3>
+										<div class="font-nunito w-full space-y-3 text-lg leading-6 tracking-[0.2px] text-black md:text-xl md:leading-6">
+											{slide.lines.map((line) => (
+												<p class="mb-0">{line}</p>
+											))}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="mt-3 flex w-full max-w-[256px] justify-center md:mt-4">
+								<img
+									src={slide.border}
+									alt=""
+									class="pointer-events-none h-auto w-full max-w-[256px] object-contain"
+								/>
+							</div>
+						</div>
+					</article>
+				))
+			}
+		</div>
+
+		<div
+			class="flex justify-center gap-2 py-4"
+			data-tribes-dots
+			role="tablist"
+			aria-label="Tribe slides"
+			style="background: var(--color-snowbound-secondary);"
+		>
+			{
+				tribeSlides.map((_, i) => (
+					<button
+						type="button"
+						role="tab"
+						aria-selected={i === 0 ? "true" : "false"}
+						aria-label={`Show tribe ${i + 1}`}
+						data-tribes-dot
+						data-slide-index={i}
+						class="tribes-dot size-2.5 rounded-full bg-white/90 shadow transition md:size-3"
+					/>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	/* Stack all slides in the same grid cell */
+	.tribes-slides-container {
+		display: grid;
+		grid-template-areas: "slide";
+		isolation: isolate;
+	}
+
+	.tribes-slide {
+		grid-area: slide;
+		opacity: 0;
+		pointer-events: none;
+		transition: all 0.5s ease;
+		animation: slide-out 0.5s ease;
+	}
+
+	.tribes-slide-animate-out {
+		animation: slide-out 0.5s ease;
+	}
+
+	@keyframes slide-in {
+		from {
+			translate: 100vw 0;
+		}
+		to {
+			translate: 0 0;
+		}
+	}
+
+	@keyframes slide-out {
+		from {
+			translate: 0 0;
+		}
+		to {
+			translate: -100vw 0;
+		}
+	}
+
+	.tribes-slide.is-active {
+		opacity: 1;
+		pointer-events: auto;
+		transform: scale(1);
+		animation: slide-in 0.5s ease;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.tribes-slide {
+			transition: none;
+		}
+	}
+
+	.tribes-dot[aria-selected="true"] {
+		width: 0.875rem;
+		height: 0.875rem;
+		box-shadow:
+			0 0 0 2px white,
+			0 0 0 4px rgba(255, 255, 255, 0.35);
+		transform: scale(1.15);
+	}
+	@media (min-width: 768px) {
+		.tribes-dot[aria-selected="true"] {
+			width: 1rem;
+			height: 1rem;
+		}
+	}
+</style>
+
+<script>
+	const root = document.querySelector("[data-tribes-root]");
+	if (root) {
+		const slidesContainer = root.querySelector("[data-tribes-slides]");
+		const slides = root.querySelectorAll<HTMLElement>("[data-tribes-slide-index]");
+		const prev = root.querySelector<HTMLButtonElement>("[data-tribes-prev]");
+		const next = root.querySelector<HTMLButtonElement>("[data-tribes-next]");
+		const dots = root.querySelectorAll<HTMLButtonElement>("[data-tribes-dot]");
+
+		const count = slides.length;
+		const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+		let index = 0;
+
+		function updateDots() {
+			dots.forEach((dot, i) => {
+				const on = i === index;
+				dot.setAttribute("aria-selected", on ? "true" : "false");
+				dot.tabIndex = on ? 0 : -1;
+			});
+		}
+
+		function goTo(newIndex: number) {
+			const next = ((newIndex % count) + count) % count;
+			if (next === index) return;
+
+			slides[index].classList.remove("is-active");
+			slides[index].setAttribute("aria-hidden", "true");
+
+			if (reduceMotion) {
+				slides[next].style.transition = "none";
+			}
+
+			slides[next].classList.add("is-active");
+			slides[next].setAttribute("aria-hidden", "false");
+
+			index = next;
+			updateDots();
+		}
+
+		function go(delta: number) {
+			goTo(index + delta);
+		}
+
+		prev?.addEventListener("click", () => go(-1));
+		next?.addEventListener("click", () => go(1));
+
+		dots.forEach((dot) => {
+			dot.addEventListener("click", () => {
+				const i = Number(dot.getAttribute("data-slide-index"));
+				if (!Number.isNaN(i)) goTo(i);
+			});
+		});
+
+		slidesContainer?.addEventListener("keydown", (e) => {
+			const key = (e as KeyboardEvent).key;
+			if (key === "ArrowLeft") {
+				e.preventDefault();
+				go(-1);
+			} else if (key === "ArrowRight") {
+				e.preventDefault();
+				go(1);
+			}
+		});
+
+		let touchStartX = 0;
+		slidesContainer?.addEventListener(
+			"touchstart",
+			(e) => {
+				touchStartX = (e as TouchEvent).changedTouches[0]?.clientX ?? 0;
+			},
+			{ passive: true },
+		);
+		slidesContainer?.addEventListener(
+			"touchend",
+			(e) => {
+				const x = (e as TouchEvent).changedTouches[0]?.clientX ?? 0;
+				const d = x - touchStartX;
+				if (Math.abs(d) > 50) go(d < 0 ? 1 : -1);
+			},
+			{ passive: true },
+		);
+
+		updateDots();
+	}
+</script>

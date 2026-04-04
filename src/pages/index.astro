@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import WaitlistPopover from "../components/WaitlistPopover.astro";
+import GameStats from "../components/GameStats.astro";
+import LoreSection from "../components/LoreSection.astro";
+import FeaturesSection from "../components/FeaturesSection.astro";
+import TribesSection from "../components/TribesSection.astro";
+import GameplaySection from "../components/GameplaySection.astro";
+import AboutSection from "../components/AboutSection.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+---
+
+<Layout>
+	<div id="top" class="flex min-h-screen w-full flex-col bg-white">
+		<Hero />
+		<GameStats />
+		<LoreSection />
+		<FeaturesSection />
+		<TribesSection />
+		<GameplaySection />
+		<AboutSection />
+		<SiteFooter />
+		<!-- Global waitlist popover — triggered by any [data-open-waitlist] button -->
+		<WaitlistPopover />
+	</div>
+</Layout>

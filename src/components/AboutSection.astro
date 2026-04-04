@@ -1,0 +1,73 @@
+---
+import { assets } from "../data/figmaAssets";
+---
+
+<section
+	id="about"
+	class="flex w-full flex-col items-center gap-2.5 bg-gradient-to-b from-[#2395e7] to-white py-10 scroll-mt-24"
+	aria-labelledby="about-heading"
+>
+	<div
+		class="section-inner flex w-full flex-col gap-6 rounded-2xl px-4 pb-8 pt-12 sm:px-8 md:px-12"
+	>
+		<h2
+			id="about-heading"
+			class="font-display w-full text-center text-4xl leading-tight tracking-wide text-white md:text-[64px] md:leading-[64px]"
+		>
+			ABOUT US
+		</h2>
+
+		<div class="relative grid w-full gap-10 md:grid-cols-2 md:gap-8">
+			<div class="flex flex-col items-center gap-4">
+			<div
+				class="relative h-[226px] w-full overflow-hidden rounded-[10px] border-2 border-[#99a1af]"
+			>
+				<img
+					src={assets.aboutTeam}
+					alt="Juanma Mateo and Gonzalo Valle"
+					class="absolute left-0 w-full max-w-none object-cover"
+					style="height: 302.06%; top: -85.16%;"
+				/>
+			</div>
+				<p
+					class="font-inter text-center text-base leading-6 tracking-tight text-[#1d293d]"
+				>
+					Juanma Mateo & Gonzalo Valle
+				</p>
+			</div>
+
+			<div class="flex flex-col gap-4 pt-2 text-white md:pt-2.5">
+				<p
+					class="font-inter text-base leading-6 tracking-tight text-white md:max-w-[492px]"
+				>
+					We are a passionate team of game designers who, driven by our creativity, have
+					embarked on the adventure of creating a tabletop game. Drawing from our
+					experience in the video game industry, Snowbound brings together many of the
+					elements we love most in tabletop gaming: competition, strategy, and unexpected
+					twists.
+				</p>
+				<p
+					class="font-inter text-base leading-6 tracking-tight text-[#1d293d] md:max-w-full"
+				>
+					Your support helps turn this dream into reality and bring Snowbound to tables all
+					around the world.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="flex flex-col items-center gap-4 py-5">
+		<button
+			type="button"
+			data-open-waitlist
+			class="font-tillana inline-flex h-[78px] items-center justify-center rounded-[50px] bg-[#0285e4] px-[70px] text-[48px] leading-8 tracking-[0.1px] text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2]"
+		>
+			JOIN THE WAITLIST
+		</button>
+		<p
+			class="font-roboto max-w-[557px] px-2.5 text-center text-xl leading-7 tracking-[0.2px] text-[#112d57]"
+		>
+			Don't miss the launch
+		</p>
+	</div>
+</section>

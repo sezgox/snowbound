@@ -1,0 +1,61 @@
+---
+import { assets } from "../data/figmaAssets";
+---
+
+<footer
+	class="relative flex w-full shrink-0 flex-col items-center justify-center overflow-hidden bg-[#112d57] py-8"
+>
+	<div
+		class="section-inner flex flex-col items-center gap-6 px-4 md:h-[133px] md:flex-row md:justify-between md:gap-4"
+	>
+		<div class="flex flex-col items-center md:items-start">
+			<div class="flex w-[196px] items-start overflow-hidden px-2.5">
+				<div class="relative h-[58px] w-[186px] shrink-0">
+					<img
+						src={assets.footerLogo}
+						alt="Snowbound"
+						class="pointer-events-none absolute inset-0 size-full max-w-none object-contain"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<div class="flex items-center gap-7">
+			<a
+				href="mailto:snowbound.web@gmail.com"
+				class="relative block size-[50px] overflow-hidden rounded-full hover:opacity-90"
+				aria-label="Email"
+			>
+				<span class="absolute inset-[16.67%_8.33%]">
+					<img src={assets.iconMail} alt="" class="block size-full max-w-none" />
+				</span>
+			</a>
+			<a
+				href="#"
+				class="relative block size-[50px] hover:opacity-90"
+				aria-label="Facebook"
+			>
+				<img
+					src={assets.iconFacebook}
+					alt=""
+					class="absolute block size-full max-w-none"
+				/>
+			</a>
+			<a
+				href="#"
+				class="relative block size-12 overflow-hidden hover:opacity-90"
+				aria-label="Instagram"
+			>
+				<span class="absolute inset-[8.33%]">
+					<img src={assets.iconInstagram} alt="" class="block size-full max-w-none" />
+				</span>
+			</a>
+		</div>
+
+		<p
+			class="font-roboto text-center text-[13px] leading-[23px] tracking-wide text-white md:text-right"
+		>
+			Get Snowbound!
+		</p>
+	</div>
+</footer>

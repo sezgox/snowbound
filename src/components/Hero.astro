@@ -1,0 +1,137 @@
+---
+import { assets } from "../data/figmaAssets";
+---
+
+<section
+	class="relative flex w-full flex-col items-center gap-4 overflow-hidden py-10 opacity-[0.87] md:gap-4 md:py-10"
+	aria-label="Hero"
+>
+	<div class="pointer-events-none absolute inset-0" aria-hidden="true">
+		<div class="absolute inset-0 overflow-hidden opacity-15">
+			<img
+				src={assets.homeHero}
+				alt=""
+				class="absolute left-[-14%] top-[-64%] h-[200%] max-w-none w-[131%] object-cover"
+			/>
+		</div>
+		<div
+			class="absolute inset-0 bg-gradient-to-b from-[rgba(35,149,231,0.7)] to-[rgba(255,255,255,0.7)]"
+		>
+		</div>
+	</div>
+
+	<header
+		class="section-inner relative z-10 flex h-[50px] w-full shrink-0 items-center overflow-hidden rounded-[69px] bg-white px-2 shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+	>
+		<div
+			class="absolute left-[35px] top-1/2 flex h-12 w-[156px] -translate-y-1/2 items-start overflow-hidden bg-white py-2.5"
+		>
+			<div class="relative h-full w-[186px] shrink-0">
+				<img
+					src={assets.navLogo}
+					alt="Snowbound"
+					class="pointer-events-none absolute inset-0 size-full max-w-none object-contain"
+				/>
+			</div>
+		</div>
+		<nav
+			class="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-8 px-2"
+			aria-label="Primary"
+		>
+			<a
+				href="#top"
+				class="font-nunito p-2.5 text-base tracking-wide text-black hover:opacity-80"
+				>Home</a
+			>
+			<a
+				href="#gameplay"
+				class="font-nunito p-2.5 text-base tracking-wide text-black hover:opacity-80"
+				>The Game</a
+			>
+			<a
+				href="#about"
+				class="font-nunito p-2.5 text-base tracking-wide text-black hover:opacity-80"
+				>About Us</a
+			>
+			<a
+				href="#about"
+				class="font-nunito p-2.5 text-base tracking-wide text-black hover:opacity-80"
+				>Contact</a
+			>
+		</nav>
+	</header>
+
+	<div
+		class="section-inner relative z-10 flex flex-col items-center gap-4 px-4 md:gap-4"
+	>
+		<div class="relative z-10 flex h-[175px] w-full flex-col items-center overflow-hidden pb-5">
+			<div class="relative h-[151px] w-[min(452px,90vw)] shrink-0">
+				<div class="pointer-events-none absolute inset-0 overflow-hidden">
+					<img
+						src={assets.heroLogo}
+						alt="Snowbound logo"
+						class="absolute left-0 top-[-11%] h-[150%] w-full max-w-none object-cover"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="relative z-10 flex h-auto min-h-[134px] items-center justify-center overflow-hidden px-2 py-1 md:px-2.5 md:py-1.5"
+		>
+			<div
+				class="font-display text-center text-[clamp(2rem,5vw,4rem)] tracking-[0.2px] text-[#2095f7] md:text-[64px] md:leading-[64px]"
+			>
+				<p class="mb-0 leading-[1.1] whitespace-pre md:leading-[64px]">{`Survive the winter. `}</p>
+				<p class="leading-[1.1] whitespace-pre md:leading-[64px]">Betray your rivals.</p>
+			</div>
+		</div>
+
+		<div
+			class="relative z-10 flex min-h-9 w-full items-center justify-center overflow-hidden px-2.5 py-2.5"
+		>
+			<p
+				class="font-roboto text-center text-xl font-bold leading-7 tracking-[0.2px] text-[#112d57] md:text-[32px] md:leading-8"
+			>
+				A Strategic Board Game of Exploration, Deception and Survival.
+			</p>
+		</div>
+
+		<!-- JOIN THE WAITLIST button — opens global popover -->
+		<div class="relative z-10 flex items-center">
+			<button
+				type="button"
+				data-open-waitlist
+				class="font-tillana flex h-[78px] items-center justify-center rounded-[50px] bg-[#0285e4] px-[70px] text-[48px] leading-8 tracking-[0.1px] text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] md:h-[102px] md:w-[778px]"
+			>
+				JOIN THE WAITLIST
+			</button>
+		</div>
+
+		<p
+			class="font-roboto relative z-10 max-w-[557px] px-4 text-center text-xl leading-7 tracking-[0.2px] text-[#112d57]"
+		>
+			Get notified at launch and be the first to enter Snowbound
+		</p>
+
+		<div class="relative z-10 inline-grid place-items-start leading-none">
+			<div class="relative col-start-1 row-start-1 size-[8.5rem]">
+				<div class="absolute inset-[0_4%_-6%_4%]">
+					<img
+						src={assets.kickstarterHex}
+						alt=""
+						class="block size-full max-w-none"
+					/>
+				</div>
+			</div>
+			<div
+				class="font-roboto relative col-start-1 row-start-1 ml-6 mt-7 h-auto w-[5.5rem] text-center text-xs font-black tracking-wide text-[#1978bd]"
+			>
+				<p class="leading-tight">COMING</p>
+				<p class="leading-tight">SOON TO</p>
+				<p class="leading-tight">KICKSTARTER</p>
+				<p class="leading-tight">PLATFORM</p>
+			</div>
+		</div>
+	</div>
+</section>

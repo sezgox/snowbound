@@ -1,0 +1,176 @@
+---
+interface Props {
+	variant?: "hero" | "inline";
+	id?: string;
+}
+
+const { variant = "hero", id = "waitlist-form" } = Astro.props;
+const isHero = variant === "hero";
+---
+
+<form
+	id={id}
+	class:list={[
+		"flex flex-col gap-3",
+		isHero ? "items-center" : "w-full max-w-md",
+	]}
+	data-waitlist-form
+>
+	<div
+		class:list={[
+			"flex w-full flex-col gap-2 sm:flex-row sm:items-stretch",
+			isHero ? "max-w-xl justify-center px-4" : "",
+		]}
+	>
+		<label class="sr-only" for={`${id}-email`}>Email</label>
+		<input
+			id={`${id}-email`}
+			name="user_email"
+			type="email"
+			required
+			placeholder="Email for updates"
+			autocomplete="email"
+			class="font-nunito min-h-[48px] flex-1 rounded-full border border-[#77abbd] bg-white px-5 text-base text-[#112d57] placeholder:text-[#5c5c5c]/70"
+		/>
+	</div>
+	<button
+		type="submit"
+		data-waitlist-submit
+		class:list={[
+			"font-tillana inline-flex items-center justify-center rounded-[50px] bg-[#0285e4] px-10 py-4 text-2xl leading-8 tracking-wide text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition enabled:hover:bg-[#0270c2] disabled:cursor-not-allowed disabled:opacity-60 md:px-[70px] md:py-5 md:text-5xl md:leading-8",
+		]}
+	>
+		GET UPDATES
+	</button>
+	<p
+		class="font-nunito hidden max-w-xl px-2 text-center text-sm text-[#5c5c5c]"
+		data-waitlist-status
+		aria-live="polite"
+	>
+	</p>
+</form>
+
+<script>
+	import emailjs from "@emailjs/browser";
+
+	const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
+	const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID ?? "";
+	const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
+
+	function showStatus(
+		el: HTMLElement | null,
+		text: string,
+		isError: boolean,
+	) {
+		if (!el) return;
+		el.classList.remove("hidden", "text-red-600", "text-[#5c5c5c]");
+		el.classList.add(isError ? "text-red-600" : "text-[#5c5c5c]");
+		el.textContent = text;
+	}
+
+	const forms = document.querySelectorAll<HTMLFormElement>("[data-waitlist-form]");
+
+	if (publicKey) {
+		emailjs.init({ publicKey });
+	}
+
+	forms.forEach((form) => {
+		form.addEventListener("submit", async (e) => {
+			e.preventDefault();
+			const status = form.querySelector<HTMLElement>("[data-waitlist-status]");
+			const submitBtn = form.querySelector<HTMLButtonElement>("[data-waitlist-submit]");
+
+			const emailInput = form.querySelector<HTMLInputElement>('[name="user_email"]');
+			const email = emailInput?.value.trim() ?? "";
+
+			if (!email) {
+				showStatus(status, "Please enter your email.", true);
+				return;
+			}
+
+			if (!publicKey || !serviceId || !templateId) {
+				showStatus(
+					status,
+					"Email is not configured yet. Copy .env.example to .env and set PUBLIC_EMAILJS_PUBLIC_KEY.",
+					true,
+				);
+				return;
+			}
+
+			if (submitBtn) {
+				submitBtn.disabled = true;
+			}
+			showStatus(status, "Subscribing…", false);
+
+			const time = new Date().toISOString();
+			let emailJsOk = false;
+
+			try {
+				const sheetRes = await fetch("/api/waitlist", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ step: "append", email }),
+				});
+				if (!sheetRes.ok) {
+					showStatus(
+						status,
+						"Could not save your signup. Try again in a moment.",
+						true,
+					);
+					return;
+				}
+			} catch {
+				showStatus(
+					status,
+					"Could not reach the server. Is the dev server running?",
+					true,
+				);
+				return;
+			}
+
+			try {
+				await emailjs.send(serviceId, templateId, {
+					title: "Snowbound newsletter",
+					email,
+					time,
+				});
+				emailJsOk = true;
+			} catch {
+				emailJsOk = false;
+			}
+
+			try {
+				await fetch("/api/waitlist", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						step: "emailStatus",
+						email,
+						emailSent: emailJsOk ? "sí" : "error EmailJS",
+					}),
+				});
+			} catch {
+				// Sheet already has the row; status column may stay "pendiente"
+			}
+
+			if (emailJsOk) {
+				showStatus(
+					status,
+					"Thanks! You are on the list — we will be in touch.",
+					false,
+				);
+				form.reset();
+			} else {
+				showStatus(
+					status,
+					"You are on our list, but we could not send the notification from this form. We still have your email.",
+					false,
+				);
+			}
+
+			if (submitBtn) {
+				submitBtn.disabled = false;
+			}
+		});
+	});
+</script>

@@ -1,0 +1,222 @@
+---
+// Global animated popover for JOIN THE WAITLIST — triggered by any [data-open-waitlist] button.
+// The form logic mirrors WaitlistForm.astro but lives inside the popover overlay.
+---
+
+<div
+	id="waitlist-popover"
+	role="dialog"
+	aria-modal="true"
+	aria-labelledby="waitlist-popover-title"
+	class="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300"
+	data-waitlist-popover
+>
+	<!-- Backdrop -->
+	<div
+		class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+		data-waitlist-backdrop
+	></div>
+
+	<!-- Card -->
+	<div
+		class="relative z-10 flex w-full max-w-lg scale-90 flex-col items-center gap-6 rounded-[24px] bg-white px-8 py-10 shadow-2xl transition-transform duration-300"
+		data-waitlist-card
+	>
+		<!-- Close button -->
+		<button
+			type="button"
+			class="absolute right-4 top-4 flex size-8 items-center justify-center rounded-full text-[#5c5c5c] transition hover:bg-gray-100 hover:text-black"
+			data-waitlist-close
+			aria-label="Close"
+		>
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5">
+				<path d="M18 6 6 18M6 6l12 12"/>
+			</svg>
+		</button>
+
+		<h2
+			id="waitlist-popover-title"
+			class="font-tillana text-center text-3xl leading-tight tracking-[0.1px] text-[#112d57] md:text-[40px]"
+		>
+			JOIN THE WAITLIST
+		</h2>
+
+		<p class="font-roboto text-center text-base leading-6 tracking-wide text-[#5c5c5c]">
+			Get notified at launch and be the first to enter Snowbound.
+		</p>
+
+		<form
+			class="flex w-full flex-col gap-3"
+			data-waitlist-form
+		>
+			<label class="sr-only" for="popover-email">Email</label>
+			<input
+				id="popover-email"
+				name="user_email"
+				type="email"
+				required
+				placeholder="Email for updates"
+				autocomplete="email"
+				class="font-nunito min-h-[52px] w-full rounded-full border border-[#77abbd] bg-white px-5 text-base text-[#112d57] placeholder:text-[#5c5c5c]/70 focus:outline-none focus:ring-2 focus:ring-[#0285e4]"
+			/>
+			<button
+				type="submit"
+				data-waitlist-submit
+				class="font-tillana inline-flex w-full items-center justify-center rounded-[50px] bg-[#0285e4] px-10 py-4 text-2xl leading-8 tracking-wide text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition enabled:hover:bg-[#0270c2] disabled:cursor-not-allowed disabled:opacity-60 md:text-3xl"
+			>
+				GET UPDATES
+			</button>
+			<p
+				class="font-nunito hidden text-center text-sm text-[#5c5c5c]"
+				data-waitlist-status
+				aria-live="polite"
+			></p>
+		</form>
+	</div>
+</div>
+
+<script>
+	import emailjs from "@emailjs/browser";
+
+	const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
+	const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID ?? "";
+	const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
+
+	const popover = document.querySelector<HTMLElement>("[data-waitlist-popover]");
+	const card = popover?.querySelector<HTMLElement>("[data-waitlist-card]");
+	const backdrop = popover?.querySelector<HTMLElement>("[data-waitlist-backdrop]");
+	const closeBtn = popover?.querySelector<HTMLElement>("[data-waitlist-close]");
+	const form = popover?.querySelector<HTMLFormElement>("[data-waitlist-form]");
+	const statusEl = popover?.querySelector<HTMLElement>("[data-waitlist-status]");
+	const submitBtn = popover?.querySelector<HTMLButtonElement>("[data-waitlist-submit]");
+
+	if (publicKey) {
+		emailjs.init({ publicKey });
+	}
+
+	function openPopover() {
+		if (!popover || !card) return;
+		popover.classList.remove("pointer-events-none", "opacity-0");
+		popover.classList.add("pointer-events-auto", "opacity-100");
+		card.classList.remove("scale-90");
+		card.classList.add("scale-100");
+		document.body.style.overflow = "hidden";
+		// Focus the email input after animation
+		setTimeout(() => {
+			const input = form?.querySelector<HTMLInputElement>("input[type='email']");
+			input?.focus();
+		}, 50);
+	}
+
+	function closePopover() {
+		if (!popover || !card) return;
+		popover.classList.add("opacity-0");
+		popover.classList.remove("opacity-100");
+		card.classList.add("scale-90");
+		card.classList.remove("scale-100");
+		setTimeout(() => {
+			popover.classList.add("pointer-events-none");
+			popover.classList.remove("pointer-events-auto");
+			document.body.style.overflow = "";
+		}, 300);
+	}
+
+	// Trigger buttons (any [data-open-waitlist] on the page)
+	document.querySelectorAll("[data-open-waitlist]").forEach((btn) => {
+		btn.addEventListener("click", openPopover);
+	});
+
+	closeBtn?.addEventListener("click", closePopover);
+	backdrop?.addEventListener("click", closePopover);
+
+	document.addEventListener("keydown", (e) => {
+		if (e.key === "Escape") closePopover();
+	});
+
+	// Form submission
+	function showStatus(text: string, isError: boolean) {
+		if (!statusEl) return;
+		statusEl.classList.remove("hidden", "text-red-600", "text-[#5c5c5c]");
+		statusEl.classList.add(isError ? "text-red-600" : "text-[#5c5c5c]");
+		statusEl.textContent = text;
+	}
+
+	form?.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		const emailInput = form.querySelector<HTMLInputElement>('[name="user_email"]');
+		const email = emailInput?.value.trim() ?? "";
+
+		if (!email) {
+			showStatus("Please enter your email.", true);
+			return;
+		}
+
+		if (!publicKey || !serviceId || !templateId) {
+			showStatus(
+				"Email not configured yet — we still noted your interest!",
+				true,
+			);
+			return;
+		}
+
+		if (submitBtn) submitBtn.disabled = true;
+		showStatus("Subscribing…", false);
+
+		const time = new Date().toISOString();
+		let emailJsOk = false;
+
+		try {
+			const sheetRes = await fetch("/api/waitlist", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ step: "append", email }),
+			});
+			if (!sheetRes.ok) {
+				showStatus("Could not save your signup. Try again in a moment.", true);
+				if (submitBtn) submitBtn.disabled = false;
+				return;
+			}
+		} catch {
+			showStatus("Could not reach the server. Is the dev server running?", true);
+			if (submitBtn) submitBtn.disabled = false;
+			return;
+		}
+
+		try {
+			await emailjs.send(serviceId, templateId, {
+				title: "Snowbound newsletter",
+				email,
+				time,
+			});
+			emailJsOk = true;
+		} catch {
+			emailJsOk = false;
+		}
+
+		try {
+			await fetch("/api/waitlist", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					step: "emailStatus",
+					email,
+					emailSent: emailJsOk ? "sí" : "error EmailJS",
+				}),
+			});
+		} catch {
+			// ignore
+		}
+
+		if (emailJsOk) {
+			showStatus("Thanks! You are on the list — we will be in touch.", false);
+			form.reset();
+		} else {
+			showStatus(
+				"You are on our list! We still have your email.",
+				false,
+			);
+		}
+
+		if (submitBtn) submitBtn.disabled = false;
+	});
+</script>

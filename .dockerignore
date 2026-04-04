@@ -1,0 +1,10 @@
+node_modules
+dist
+.git
+.astro
+n8n_data
+playwright-report
+test-results
+*.md
+.env
+!.env.example

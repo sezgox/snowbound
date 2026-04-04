@@ -1,0 +1,38 @@
+{
+  "name": "figma",
+  "version": "0.1.0",
+  "description": "Assist with Figma files, components, variables, and Dev Mode handoff using the Figma REST API and design context.",
+  "author": {
+    "name": "Snowbound",
+    "email": "[TODO: team@example.com]",
+    "url": "[TODO: https://github.com/your-org/snowbound]"
+  },
+  "homepage": "https://www.figma.com/developers/api",
+  "repository": "[TODO: https://github.com/your-org/snowbound]",
+  "license": "MIT",
+  "keywords": ["figma", "design", "ui", "components", "dev-mode", "rest-api"],
+  "skills": "./skills/",
+  "hooks": "./hooks.json",
+  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Figma",
+    "shortDescription": "Figma files, components, and API workflows",
+    "longDescription": "Helps inspect Figma structure, tokens, and assets, and align implementation with Dev Mode and the Figma REST API.",
+    "developerName": "Snowbound",
+    "category": "Design",
+    "capabilities": ["Interactive", "Read"],
+    "websiteURL": "https://www.figma.com/",
+    "privacyPolicyURL": "https://www.figma.com/legal/privacy/",
+    "termsOfServiceURL": "https://www.figma.com/legal/terms/",
+    "defaultPrompt": [
+      "Summarize this Figma file structure and key components.",
+      "Extract spacing and typography tokens from the selection.",
+      "Compare this frame to our code and list mismatches."
+    ],
+    "brandColor": "#F24E1E",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

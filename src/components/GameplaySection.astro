@@ -1,0 +1,149 @@
+---
+import { assets } from "../data/figmaAssets";
+
+const cards = [
+	{
+		title: "UNCOVERING ICE",
+		body: [
+			"Reveal what's under the ice",
+			"and find useful items and",
+			"locations",
+		],
+		visual: "hex",
+	},
+	{
+		title: "FINDING PETALS",
+		body: [
+			"You will need Petals to win the game. Every time you find one it will activate an event",
+		],
+		visual: "petals",
+	},
+	{
+		title: "GRAB & ESCAPE",
+		body: [
+			"When you find an item while",
+			"searching the snow, save it",
+			"in your bag and run back to",
+			"your main base.",
+		],
+		visual: "board",
+	},
+	{
+		title: "GLOBAL EVENTS",
+		body: [
+			"Events are random and affect every player. They can alter the game immediately",
+		],
+		visual: "events",
+	},
+] as const;
+---
+
+<section
+	id="gameplay"
+	class="relative flex w-full flex-col items-center overflow-hidden py-10 scroll-mt-24"
+	aria-labelledby="gameplay-heading"
+>
+	<img
+		src={assets.patternIce}
+		alt=""
+		class="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
+	/>
+
+	<div
+		class="section-inner relative z-10 flex w-full flex-col items-center gap-16 px-4 md:gap-[70px]"
+	>
+		<h2
+			id="gameplay-heading"
+			class="font-display p-2.5 text-center text-4xl tracking-wide text-[#112d57] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)] md:text-[64px] md:leading-[48px]"
+		>
+			GAMEPLAY
+		</h2>
+
+		<div
+			class="flex w-full flex-wrap justify-center gap-4 md:flex-nowrap md:justify-center"
+		>
+			{
+				cards.map((c) => (
+					<div class="flex min-h-[409px] w-[min(100%,273px)] flex-col items-center gap-4 overflow-hidden rounded-[10px] border border-[#77abbd] bg-white px-5 py-10 md:w-[273px]">
+						<div class="flex w-full items-center justify-center p-2.5">
+							<h3 class="font-tillana text-center text-2xl font-bold leading-8 tracking-wide text-black">
+								{c.title}
+							</h3>
+						</div>
+						<div class="flex min-h-[92px] w-full items-center justify-center p-2.5">
+							<div class="font-nunito text-center text-base leading-6 tracking-wide text-[#5c5c5c]">
+								{c.body.map((line) => (
+									<p class="mb-0 whitespace-pre-line">{line}</p>
+								))}
+							</div>
+						</div>
+						<div class="flex flex-1 flex-col items-center justify-end overflow-hidden pb-2">
+							{c.visual === "hex" && (
+								<div class="relative h-[150px] w-[207px] shrink-0">
+									<img
+										src={assets.altar}
+										alt=""
+										class="pointer-events-none absolute left-0 top-[-8px] h-[117px] w-[148px] object-cover"
+									/>
+									<img
+										src={assets.campfire}
+										alt=""
+										class="pointer-events-none absolute left-[69px] top-1 h-[123px] w-[156px] object-cover"
+									/>
+									<img
+										src={assets.igloo}
+										alt=""
+										class="pointer-events-none absolute left-2.5 top-[52px] h-[120px] w-[152px] object-cover"
+									/>
+								</div>
+							)}
+							{c.visual === "board" && (
+								<div class="relative h-[157px] w-[200px] shrink-0">
+									<img
+										src={assets.playerBoard}
+										alt=""
+										class="pointer-events-none absolute inset-0 size-full object-cover"
+									/>
+								</div>
+							)}
+						{c.visual === "petals" && (
+							<div class="relative mt-2 h-[180px] w-[220px]">
+								<img
+									src={assets.findingPetals}
+									alt=""
+									class="pointer-events-none absolute inset-0 size-full object-contain"
+								/>
+							</div>
+						)}
+							{c.visual === "events" && (
+								<div class="relative mt-2 h-[160px] w-[200px]">
+									<img
+										src={assets.eventCard}
+										alt=""
+										class="pointer-events-none absolute left-5 top-[-14px] h-[104px] w-[140px] -rotate-90 object-cover"
+									/>
+									<img
+										src={assets.eventCard}
+										alt=""
+										class="pointer-events-none absolute left-7 top-7 h-[104px] w-[140px] -rotate-90 object-cover"
+									/>
+									<img
+										src={assets.eventCard}
+										alt=""
+										class="pointer-events-none absolute left-9 top-5 h-[104px] w-[140px] -rotate-90 object-cover"
+									/>
+									<img
+										src={assets.eventCard}
+										alt=""
+										class="pointer-events-none absolute left-11 top-[-14px] h-[104px] w-[140px] object-cover"
+										style="transform: rotate(-66deg);"
+									/>
+								</div>
+							)}
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>

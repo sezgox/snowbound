@@ -1,0 +1,20 @@
+# Snowbound web (Astro). n8n is expected separately, e.g. docker compose -f docker-compose.n8n.yml up -d
+# From inside this container, the host machine is host.docker.internal (Docker Desktop Windows/macOS).
+services:
+  web:
+    build:
+      context: .
+      args:
+        PUBLIC_EMAILJS_PUBLIC_KEY: ${PUBLIC_EMAILJS_PUBLIC_KEY:-}
+        PUBLIC_EMAILJS_SERVICE_ID: ${PUBLIC_EMAILJS_SERVICE_ID:-}
+        PUBLIC_EMAILJS_TEMPLATE_ID: ${PUBLIC_EMAILJS_TEMPLATE_ID:-}
+    ports:
+      - "4321:4321"
+    env_file:
+      - .env
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "4321"
+      # Override localhost — inside the container, localhost is not your PC. Use host.docker.internal.
+      N8N_APPEND_WEBHOOK_URL: ${N8N_DOCKER_APPEND_WEBHOOK_URL:-http://host.docker.internal:5678/webhook/snowbound-waitlist-append}
+      N8N_EMAIL_STATUS_WEBHOOK_URL: ${N8N_DOCKER_EMAIL_STATUS_WEBHOOK_URL:-http://host.docker.internal:5678/webhook/snowbound-waitlist-email-status}

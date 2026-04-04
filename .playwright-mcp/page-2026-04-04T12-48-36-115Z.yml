@@ -1,0 +1,201 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - region "Hero" [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]:
+          - img "Snowbound"
+        - navigation "Primary" [ref=e7]:
+          - link "Home" [ref=e8] [cursor=pointer]:
+            - /url: "#top"
+          - link "The Game" [ref=e9] [cursor=pointer]:
+            - /url: "#gameplay"
+          - link "About Us" [ref=e10] [cursor=pointer]:
+            - /url: "#about"
+          - link "Contact" [ref=e11] [cursor=pointer]:
+            - /url: "#about"
+      - generic [ref=e12]:
+        - generic [ref=e14]:
+          - generic:
+            - img "Snowbound logo"
+        - generic [ref=e16]:
+          - paragraph [ref=e17]: Survive the winter.
+          - paragraph [ref=e18]: Betray your rivals.
+        - paragraph [ref=e20]: A Strategic Board Game of Exploration, Deception and Survival.
+        - button "JOIN THE WAITLIST" [ref=e22]
+        - paragraph [ref=e23]: Get notified at launch and be the first to enter Snowbound
+        - generic [ref=e27]:
+          - paragraph [ref=e28]: COMING
+          - paragraph [ref=e29]: SOON TO
+          - paragraph [ref=e30]: KICKSTARTER
+          - paragraph [ref=e31]: PLATFORM
+    - region "Game facts" [ref=e32]:
+      - generic [ref=e33]:
+        - paragraph [ref=e37]: 2 - 6
+        - paragraph [ref=e42]: 30 - 45
+        - paragraph [ref=e49]: 9+
+    - region "AN ICED PARADISE AWAITS" [ref=e50]:
+      - generic [ref=e51]:
+        - generic [ref=e52]:
+          - heading "AN ICED PARADISE AWAITS" [level=2] [ref=e54]
+          - generic [ref=e55]:
+            - paragraph [ref=e56]: In the frozen North, beneath shimmering auroras, tribes fight to survive the cold winter.
+            - paragraph [ref=e57]: Hidden under ancient ice lie the magical petals of the Thall Tree, a power worth risking everything for.
+            - paragraph [ref=e58]: For ages, the Inuit have fought to gain its power — will you be the next to claim it?
+        - generic [ref=e60]:
+          - img "Illustration of the Thall Tree"
+    - region "WHAT MAKES IT UNIQUE" [ref=e61]:
+      - generic [ref=e62]:
+        - heading "WHAT MAKES IT UNIQUE" [level=2] [ref=e63]
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - generic [ref=e66]:
+              - paragraph [ref=e67]: CHANGING
+              - paragraph [ref=e68]: BOARD
+            - paragraph [ref=e69]: Break the ice and reveal a new map every game
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - paragraph [ref=e72]: HIGH PLAYER
+              - paragraph [ref=e73]: INTERACTION
+            - paragraph [ref=e74]: Steal, block and outplay your rivals at every turn.
+          - generic [ref=e75]:
+            - paragraph [ref=e77]: RISK VS REWARD
+            - paragraph [ref=e78]: Push your luck… or play it safe and lose the race.
+          - generic [ref=e79]:
+            - generic [ref=e80]:
+              - paragraph [ref=e81]: 2 PATHS TO
+              - paragraph [ref=e82]: VICTORIES
+            - paragraph [ref=e83]: You don't need to follow everyone else's path.
+      - button "JOIN THE WAITLIST" [ref=e87]
+    - region "The Inuit tribes" [ref=e88]:
+      - generic [ref=e89]:
+        - heading "The Inuit tribes" [level=2] [ref=e90]
+        - button "Previous tribe" [ref=e91] [cursor=pointer]
+        - button "Next tribe" [ref=e95] [cursor=pointer]
+        - generic [ref=e100]:
+          - article "Tribe 1 of 6" [ref=e101]:
+            - generic [ref=e102]:
+              - paragraph [ref=e104]: THE INUIT TRIBES
+              - generic [ref=e109]:
+                - heading "IQURNAT" [level=3] [ref=e110]
+                - generic [ref=e111]:
+                  - paragraph [ref=e112]: Shamans who invoke the power of the Thal tree.
+                  - paragraph [ref=e113]: They are known for being in harmony with the spirits of the beyond.
+          - article "Tribe 2 of 6" [ref=e114]:
+            - generic [ref=e115]:
+              - paragraph [ref=e117]: THE INUIT TRIBES
+              - generic [ref=e122]:
+                - heading "Qaniktuq" [level=3] [ref=e123]
+                - generic [ref=e124]:
+                  - paragraph [ref=e125]: Tribe known for having their hair covered in ice.
+                  - paragraph [ref=e126]: Their specialty is controlling polar bears.
+          - article "Tribe 3 of 6" [ref=e127]:
+            - generic [ref=e128]:
+              - paragraph [ref=e130]: THE INUIT TRIBES
+              - generic [ref=e135]:
+                - heading "Kaviktaq" [level=3] [ref=e136]
+                - generic [ref=e137]:
+                  - paragraph [ref=e138]: Tribe known for being nomadic and undertaking long journeys in search of food.
+                  - paragraph [ref=e139]: They stand out for their skill in handling kayaks and their understanding of the environment.
+          - article "Tribe 4 of 6" [ref=e140]:
+            - generic [ref=e141]:
+              - paragraph [ref=e143]: THE INUIT TRIBES
+              - generic [ref=e148]:
+                - heading "IQURNAT" [level=3] [ref=e149]
+                - generic [ref=e150]:
+                  - paragraph [ref=e151]: Shamans who invoke the power of the Thal tree.
+                  - paragraph [ref=e152]: They are known for being in harmony with spirits from the beyond.
+          - article "Tribe 5 of 6" [ref=e153]:
+            - generic [ref=e154]:
+              - paragraph [ref=e156]: THE INUIT TRIBES
+              - generic [ref=e161]:
+                - heading "Sednaluk" [level=3] [ref=e162]
+                - generic [ref=e163]:
+                  - paragraph [ref=e164]: They are given the name "Singers of the Sea" as they worship the goddess Sedna.
+                  - paragraph [ref=e165]: Their culture is based on the sea and traditions.
+          - article "Tribe 6 of 6" [ref=e166]:
+            - generic [ref=e167]:
+              - paragraph [ref=e169]: THE INUIT TRIBES
+              - generic [ref=e174]:
+                - heading "Nunaqar" [level=3] [ref=e175]
+                - generic [ref=e176]:
+                  - paragraph [ref=e177]: Tribe known for being experts in the manufacture of snow goggles, a resource that allows them to travel during snowstorms.
+                  - paragraph [ref=e178]: Their specialty is traditional craftsmanship.
+        - tablist "Tribe slides" [ref=e179]:
+          - tab "Show tribe 1" [selected] [ref=e180]
+          - tab "Show tribe 2" [ref=e181]
+          - tab "Show tribe 3" [ref=e182]
+          - tab "Show tribe 4" [ref=e183]
+          - tab "Show tribe 5" [ref=e184]
+          - tab "Show tribe 6" [ref=e185]
+    - region "GAMEPLAY" [ref=e186]:
+      - generic [ref=e187]:
+        - heading "GAMEPLAY" [level=2] [ref=e188]
+        - generic [ref=e189]:
+          - generic [ref=e190]:
+            - heading "UNCOVERING ICE" [level=3] [ref=e192]
+            - generic [ref=e194]:
+              - paragraph [ref=e195]: Reveal what's under the ice
+              - paragraph [ref=e196]: and find useful items and
+              - paragraph [ref=e197]: locations
+          - generic [ref=e200]:
+            - heading "GRAB & ESCAPE" [level=3] [ref=e202]
+            - generic [ref=e204]:
+              - paragraph [ref=e205]: When you find an item while
+              - paragraph [ref=e206]: searching the snow, save it
+              - paragraph [ref=e207]: in your bag and run back to
+              - paragraph [ref=e208]: your main base.
+          - generic [ref=e211]:
+            - heading "FINDING PETALS" [level=3] [ref=e213]
+            - paragraph [ref=e216]: You will need Petals to win the game. Every time you find one it will activate an event
+          - generic [ref=e217]:
+            - heading "GLOBAL EVENTS" [level=3] [ref=e219]
+            - paragraph [ref=e222]: Events are random and affect every player. They can alter the game immediately
+    - region "ABOUT US" [ref=e225]:
+      - generic [ref=e226]:
+        - heading "ABOUT US" [level=2] [ref=e227]
+        - generic [ref=e228]:
+          - paragraph [ref=e234]: Juanma Mateo & Gonzalo Valle
+          - generic [ref=e235]:
+            - paragraph [ref=e236]: "We are a passionate team of game designers who, driven by our creativity, have embarked on the adventure of creating a tabletop game. Drawing from our experience in the video game industry, Snowbound brings together many of the elements we love most in tabletop gaming: competition, strategy, and unexpected twists."
+            - paragraph [ref=e237]: Your support helps turn this dream into reality and bring Snowbound to tables all around the world.
+      - generic [ref=e238]:
+        - button "JOIN THE WAITLIST" [ref=e239]
+        - paragraph [ref=e240]: Don't miss the launch
+    - contentinfo [ref=e241]:
+      - generic [ref=e242]:
+        - generic [ref=e245]:
+          - img "Snowbound"
+        - generic [ref=e246]:
+          - link "Email" [ref=e247] [cursor=pointer]:
+            - /url: mailto:snowbound.web@gmail.com
+          - link "Facebook" [ref=e249] [cursor=pointer]:
+            - /url: "#"
+          - link "Instagram" [ref=e250] [cursor=pointer]:
+            - /url: "#"
+        - paragraph [ref=e252]: Get Snowbound!
+    - dialog "JOIN THE WAITLIST" [ref=e279]:
+      - generic [ref=e281]:
+        - button "Close" [ref=e282]:
+          - img [ref=e283]
+        - heading "JOIN THE WAITLIST" [level=2] [ref=e285]
+        - paragraph [ref=e286]: Get notified at launch and be the first to enter Snowbound.
+        - generic [ref=e287]:
+          - generic [ref=e288]: Email
+          - textbox "Email" [active] [ref=e289]:
+            - /placeholder: Email for updates
+          - button "GET UPDATES" [ref=e290]
+  - generic [ref=e255]:
+    - button "Menu" [ref=e256]:
+      - img [ref=e258]
+      - generic: Menu
+    - button "Inspect" [ref=e262]:
+      - img [ref=e264]
+      - generic: Inspect
+    - button "Audit" [ref=e266]:
+      - generic [ref=e267]:
+        - img [ref=e268]
+        - img [ref=e271]
+      - generic: Audit
+    - button "Settings" [ref=e274]:
+      - img [ref=e276]
+      - generic: Settings

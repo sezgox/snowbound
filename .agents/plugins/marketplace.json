@@ -1,0 +1,20 @@
+{
+  "name": "snowbound",
+  "interface": {
+    "displayName": "Snowbound"
+  },
+  "plugins": [
+    {
+      "name": "figma",
+      "source": {
+        "source": "local",
+        "path": "./plugins/figma"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+---
+import { assets } from "../data/figmaAssets";
+
+const cards = [
+	{
+		title: ["CHANGING", "BOARD"],
+		body: "Break the ice and reveal a new map every game",
+	},
+	{
+		title: ["HIGH PLAYER", "INTERACTION"],
+		body: "Steal, block and outplay your rivals at every turn.",
+	},
+	{
+		title: ["RISK VS REWARD"],
+		body: "Push your luck… or play it safe and lose the race.",
+	},
+	{
+		title: ["2 PATHS TO", "VICTORIES"],
+		body: "You don't need to follow everyone else's path.",
+	},
+] as const;
+---
+
+<section
+	id="features"
+	class="relative flex w-full flex-col items-center gap-9 overflow-hidden py-10 scroll-mt-24 md:h-auto md:min-h-[1012px] md:gap-[35px]"
+	aria-labelledby="features-heading"
+	style="background-image: url('/images/figma/hex-board.png'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;"
+>
+<!-- 	<img
+		src={assets.hexBoard}
+		alt=""
+		class="pointer-events-none absolute inset-0 size-full max-w-none object-cover opacity-[0.33]"
+	/> -->
+
+	<div
+		class="section-inner relative z-10 flex w-full flex-col items-center gap-16 px-4 md:gap-[70px]"
+	>
+		<h2
+			id="features-heading"
+			class="font-display p-2.5 text-center text-4xl tracking-wide text-[#112d57] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)] md:text-[64px] md:leading-[48px]"
+			style="text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
+             1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;"
+		>
+			WHAT MAKES IT UNIQUE
+		</h2>
+		<div
+			class="flex w-full flex-wrap justify-center gap-6 text-center md:gap-x-6 md:gap-y-0"
+		>
+			{
+				cards.map((c) => (
+					<div class="flex h-auto min-h-[255px] w-[min(100%,229px)] flex-col items-center justify-center gap-10 rounded-[10px] border border-[#77abbd] bg-white px-5 py-10">
+						<div class="font-tillana w-full text-2xl font-bold leading-8 tracking-wide text-black">
+							{c.title.map((line) => (
+								<p class="mb-0 leading-8">{line}</p>
+							))}
+						</div>
+						<p class="font-nunito w-full text-base leading-6 tracking-wide text-[#5c5c5c]">
+							{c.body}
+						</p>
+					</div>
+				))
+			}
+		</div>
+	</div>
+
+	<div class="section-inner relative z-10 mt-2 px-4">
+		<div
+			class="h-[200px] w-full shrink-0 bg-[#8b8686] md:h-[400px]"
+			aria-hidden="true"
+		>
+			<!-- Video / trailer placeholder from design -->
+		</div>
+	</div>
+
+	<div class="relative z-10 mt-4 flex items-center justify-center">
+		<button
+			type="button"
+			data-open-waitlist
+			class="font-tillana flex h-[78px] items-center justify-center rounded-[50px] bg-[#0285e4] px-[70px] text-[48px] leading-8 tracking-[0.1px] text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2]"
+		>
+			JOIN THE WAITLIST
+		</button>
+	</div>
+</section>
