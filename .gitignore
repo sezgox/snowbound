@@ -33,6 +33,9 @@ test-results/
 playwright-report/
 .playwright-mcp/
 
+# Agent/AI screenshots — all agent validation screenshots must go here
+.agent-screenshots/
+
 # Codex / local agent plugin cache (regenerate from repo docs if needed)
 .agents/
 
