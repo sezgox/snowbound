@@ -152,69 +152,23 @@
 		}
 
 		if (!publicKey || !serviceId || !templateId) {
-			showStatus(
-				"Email not configured yet — we still noted your interest!",
-				true,
-			);
+			showStatus("Email not configured yet — we still noted your interest!", true);
 			return;
 		}
 
 		if (submitBtn) submitBtn.disabled = true;
 		showStatus("Subscribing…", false);
 
-		const time = new Date().toISOString();
-		let emailJsOk = false;
-
-		try {
-			const sheetRes = await fetch("/api/waitlist", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ step: "append", email }),
-			});
-			if (!sheetRes.ok) {
-				showStatus("Could not save your signup. Try again in a moment.", true);
-				if (submitBtn) submitBtn.disabled = false;
-				return;
-			}
-		} catch {
-			showStatus("Could not reach the server. Is the dev server running?", true);
-			if (submitBtn) submitBtn.disabled = false;
-			return;
-		}
-
 		try {
 			await emailjs.send(serviceId, templateId, {
 				title: "Snowbound newsletter",
 				email,
-				time,
+				time: new Date().toISOString(),
 			});
-			emailJsOk = true;
-		} catch {
-			emailJsOk = false;
-		}
-
-		try {
-			await fetch("/api/waitlist", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					step: "emailStatus",
-					email,
-					emailSent: emailJsOk ? "sí" : "error EmailJS",
-				}),
-			});
-		} catch {
-			// ignore
-		}
-
-		if (emailJsOk) {
 			showStatus("Thanks! You are on the list — we will be in touch.", false);
 			form.reset();
-		} else {
-			showStatus(
-				"You are on our list! We still have your email.",
-				false,
-			);
+		} catch {
+			showStatus("Something went wrong. Please try again.", true);
 		}
 
 		if (submitBtn) submitBtn.disabled = false;

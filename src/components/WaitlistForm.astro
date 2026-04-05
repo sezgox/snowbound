@@ -89,88 +89,26 @@ const isHero = variant === "hero";
 			}
 
 			if (!publicKey || !serviceId || !templateId) {
-				showStatus(
-					status,
-					"Email is not configured yet. Copy .env.example to .env and set PUBLIC_EMAILJS_PUBLIC_KEY.",
-					true,
-				);
+				showStatus(status, "Email not configured yet — we still noted your interest!", true);
 				return;
 			}
 
-			if (submitBtn) {
-				submitBtn.disabled = true;
-			}
+			if (submitBtn) submitBtn.disabled = true;
 			showStatus(status, "Subscribing…", false);
-
-			const time = new Date().toISOString();
-			let emailJsOk = false;
-
-			try {
-				const sheetRes = await fetch("/api/waitlist", {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ step: "append", email }),
-				});
-				if (!sheetRes.ok) {
-					showStatus(
-						status,
-						"Could not save your signup. Try again in a moment.",
-						true,
-					);
-					return;
-				}
-			} catch {
-				showStatus(
-					status,
-					"Could not reach the server. Is the dev server running?",
-					true,
-				);
-				return;
-			}
 
 			try {
 				await emailjs.send(serviceId, templateId, {
 					title: "Snowbound newsletter",
 					email,
-					time,
+					time: new Date().toISOString(),
 				});
-				emailJsOk = true;
-			} catch {
-				emailJsOk = false;
-			}
-
-			try {
-				await fetch("/api/waitlist", {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({
-						step: "emailStatus",
-						email,
-						emailSent: emailJsOk ? "sí" : "error EmailJS",
-					}),
-				});
-			} catch {
-				// Sheet already has the row; status column may stay "pendiente"
-			}
-
-			if (emailJsOk) {
-				showStatus(
-					status,
-					"Thanks! You are on the list — we will be in touch.",
-					false,
-				);
+				showStatus(status, "Thanks! You are on the list — we will be in touch.", false);
 				form.reset();
-			} else {
-				showStatus(
-					status,
-					"You are on our list, but we could not send the notification from this form. We still have your email.",
-					false,
-				);
+			} catch {
+				showStatus(status, "Something went wrong. Please try again.", true);
 			}
 
-			if (submitBtn) {
-				submitBtn.disabled = false;
-			}
+			if (submitBtn) submitBtn.disabled = false;
 		});
 	});
 </script>
