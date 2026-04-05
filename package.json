@@ -11,8 +11,6 @@
     "preview": "astro preview",
     "test:e2e": "playwright test",
     "astro": "astro",
-    "figma:assets": "node scripts/download-figma-assets.mjs",
-    "figma:tribes": "node scripts/download-tribes-assets.mjs",
     "docker:n8n:up": "docker compose -f docker-compose.n8n.yml up -d",
     "docker:n8n:down": "docker compose -f docker-compose.n8n.yml down",
     "docker:web:build": "docker compose build web",

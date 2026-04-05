@@ -8,10 +8,10 @@
 
 ## Figma / assets
 
-- [x] Landing art is in `public/images/figma/` (`npm run figma:assets`).
-- [x] Inuit tribes carousel art is in `public/images/figma/tribes/` (`npm run figma:tribes`; source component set [527:253](https://www.figma.com/design/L4ZUibazk0jRqKlNCE4Jg8/SNOWBOUND?node-id=527-253)).
-- [ ] When the design changes: refresh MCP URLs in `scripts/download-figma-assets.mjs` and/or `scripts/download-tribes-assets.mjs`, then rerun the matching npm script.
-- [ ] Optional: add the **Thorsten** display font if you want a closer match to the Figma headline (currently using Barlow Condensed as a substitute).
+- [x] Landing art is in `public/images/figma/`.
+- [x] Inuit tribes carousel art is in `public/images/figma/tribes/`.
+- [x] Thorsten display font installed in `public/fonts/`.
+- [ ] When the design changes: use the Figma MCP to fetch fresh asset URLs and re-download images to `public/images/figma/`.
 
 ## Automation (waitlist → spreadsheet / CRM)
 
