@@ -17,51 +17,9 @@ const n = tribeSlides.length;
 	>
 		<h2 id="tribes-heading" class="sr-only">The Inuit tribes</h2>
 
-		<button
-			type="button"
-			class="absolute left-2 top-[42%] z-20 hidden h-[62px] w-[34px] -translate-y-1/2 cursor-pointer md:left-[max(0.75rem,calc(50%-min(600px,35vw)-3rem))] md:block"
-			data-tribes-prev
-			aria-label="Previous tribe"
-		>
-			<span
-				class="flex size-full items-center justify-center overflow-hidden [container-type:size]"
-			>
-				<span class="flex h-[100cqw] w-[100cqh] rotate-90 items-center justify-center">
-					<span class="relative block size-full overflow-hidden">
-						<img
-							src={assets.tribesChevron}
-							alt=""
-							class="pointer-events-none absolute left-0 top-[-41%] h-[182%] w-full max-w-none object-cover"
-						/>
-					</span>
-				</span>
-			</span>
-		</button>
-
-		<button
-			type="button"
-			class="absolute right-2 top-[42%] z-20 hidden h-[62px] w-[34px] -translate-y-1/2 cursor-pointer md:right-[max(0.75rem,calc(50%-min(600px,35vw)-3rem))] md:block"
-			data-tribes-next
-			aria-label="Next tribe"
-		>
-			<span
-				class="flex size-full items-center justify-center overflow-hidden [container-type:size]"
-			>
-				<span class="flex h-[100cqw] w-[100cqh] -rotate-90 items-center justify-center">
-					<span class="relative block size-full overflow-hidden">
-						<img
-							src={assets.tribesChevron}
-							alt=""
-							class="pointer-events-none absolute left-0 top-[-41%] h-[182%] w-full max-w-none object-cover"
-						/>
-					</span>
-				</span>
-			</span>
-		</button>
-
 		<!-- All slides stacked in the same grid cell via CSS grid-area -->
 		<div
-			class="tribes-slides-container"
+			class="tribes-slides-container touch-pan-y"
 			data-tribes-slides
 			role="region"
 			aria-label="Tribe slides"
@@ -149,6 +107,48 @@ const n = tribeSlides.length;
 			}
 		</div>
 
+		<button
+			type="button"
+			class="absolute left-1 top-[42%] z-30 flex h-[52px] w-[36px] -translate-y-1/2 cursor-pointer items-center justify-center md:left-[max(0.75rem,calc(50%-min(600px,35vw)-3rem))] md:h-[62px] md:w-[34px]"
+			data-tribes-prev
+			aria-label="Previous tribe"
+		>
+			<span
+				class="flex size-full items-center justify-center overflow-hidden [container-type:size]"
+			>
+				<span class="flex h-[100cqw] w-[100cqh] rotate-90 items-center justify-center">
+					<span class="relative block size-full overflow-hidden">
+						<img
+							src={assets.tribesChevron}
+							alt=""
+							class="pointer-events-none absolute left-0 top-[-41%] h-[182%] w-full max-w-none object-cover"
+						/>
+					</span>
+				</span>
+			</span>
+		</button>
+
+		<button
+			type="button"
+			class="absolute right-1 top-[42%] z-30 flex h-[52px] w-[36px] -translate-y-1/2 cursor-pointer items-center justify-center md:right-[max(0.75rem,calc(50%-min(600px,35vw)-3rem))] md:h-[62px] md:w-[34px]"
+			data-tribes-next
+			aria-label="Next tribe"
+		>
+			<span
+				class="flex size-full items-center justify-center overflow-hidden [container-type:size]"
+			>
+				<span class="flex h-[100cqw] w-[100cqh] -rotate-90 items-center justify-center">
+					<span class="relative block size-full overflow-hidden">
+						<img
+							src={assets.tribesChevron}
+							alt=""
+							class="pointer-events-none absolute left-0 top-[-41%] h-[182%] w-full max-w-none object-cover"
+						/>
+					</span>
+				</span>
+			</span>
+		</button>
+
 		<div
 			class="flex justify-center gap-2 py-4"
 			data-tribes-dots
@@ -185,42 +185,87 @@ const n = tribeSlides.length;
 		grid-area: slide;
 		opacity: 0;
 		pointer-events: none;
-		transition: all 0.5s ease;
-		animation: slide-out 0.5s ease;
 	}
 
-	.tribes-slide-animate-out {
-		animation: slide-out 0.5s ease;
-	}
-
-	@keyframes slide-in {
+	/*
+	 * nav-next (siguiente): el actual sale hacia la izquierda; el nuevo entra desde la derecha.
+	 * nav-prev (anterior): el actual sale hacia la derecha; el nuevo entra desde la izquierda.
+	 * transform + animation-fill-mode: both para el frame inicial/final correcto.
+	 */
+	@keyframes tribes-in-from-right {
 		from {
-			translate: 100vw 0;
+			transform: translate3d(100vw, 0, 0);
 		}
 		to {
-			translate: 0 0;
+			transform: translate3d(0, 0, 0);
 		}
 	}
 
-	@keyframes slide-out {
+	@keyframes tribes-in-from-left {
 		from {
-			translate: 0 0;
+			transform: translate3d(-100vw, 0, 0);
 		}
 		to {
-			translate: -100vw 0;
+			transform: translate3d(0, 0, 0);
+		}
+	}
+
+	@keyframes tribes-out-left {
+		from {
+			transform: translate3d(0, 0, 0);
+		}
+		to {
+			transform: translate3d(-100vw, 0, 0);
+		}
+	}
+
+	@keyframes tribes-out-right {
+		from {
+			transform: translate3d(0, 0, 0);
+		}
+		to {
+			transform: translate3d(100vw, 0, 0);
 		}
 	}
 
 	.tribes-slide.is-active {
 		opacity: 1;
 		pointer-events: auto;
-		transform: scale(1);
-		animation: slide-in 0.5s ease;
+		z-index: 2;
+		transform: translate3d(0, 0, 0);
+	}
+
+	/* Entrante debajo del saliente */
+	.tribes-slide.is-active.tribes-nav-next {
+		z-index: 1;
+		animation: tribes-in-from-right 0.5s ease both;
+	}
+
+	.tribes-slide.is-active.tribes-nav-prev {
+		z-index: 1;
+		animation: tribes-in-from-left 0.5s ease both;
+	}
+
+	.tribes-slide.is-leaving.tribes-nav-next {
+		opacity: 1;
+		pointer-events: none;
+		z-index: 3;
+		animation: tribes-out-left 0.5s ease both;
+	}
+
+	.tribes-slide.is-leaving.tribes-nav-prev {
+		opacity: 1;
+		pointer-events: none;
+		z-index: 3;
+		animation: tribes-out-right 0.5s ease both;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.tribes-slide {
-			transition: none;
+		.tribes-slide.is-active.tribes-nav-next,
+		.tribes-slide.is-active.tribes-nav-prev,
+		.tribes-slide.is-leaving.tribes-nav-next,
+		.tribes-slide.is-leaving.tribes-nav-prev {
+			animation: none;
 		}
 	}
 
@@ -245,14 +290,15 @@ const n = tribeSlides.length;
 	if (root) {
 		const slidesContainer = root.querySelector("[data-tribes-slides]");
 		const slides = root.querySelectorAll<HTMLElement>("[data-tribes-slide-index]");
-		const prev = root.querySelector<HTMLButtonElement>("[data-tribes-prev]");
-		const next = root.querySelector<HTMLButtonElement>("[data-tribes-next]");
+		const prevBtn = root.querySelector<HTMLButtonElement>("[data-tribes-prev]");
+		const nextBtn = root.querySelector<HTMLButtonElement>("[data-tribes-next]");
 		const dots = root.querySelectorAll<HTMLButtonElement>("[data-tribes-dot]");
 
 		const count = slides.length;
 		const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 		let index = 0;
+		let animating = false;
 
 		function updateDots() {
 			dots.forEach((dot, i) => {
@@ -262,35 +308,78 @@ const n = tribeSlides.length;
 			});
 		}
 
-		function goTo(newIndex: number) {
-			const next = ((newIndex % count) + count) % count;
-			if (next === index) return;
+		/** Shortest path on the circle (for dot jumps). */
+		function directionFromIndices(from: number, to: number): 1 | -1 {
+			let d = to - from;
+			if (d > count / 2) d -= count;
+			if (d < -count / 2) d += count;
+			if (d === 0) return 1;
+			return d > 0 ? 1 : -1;
+		}
 
-			slides[index].classList.remove("is-active");
-			slides[index].setAttribute("aria-hidden", "true");
+		function goTo(newIndex: number, dir: 1 | -1) {
+			const nextIndex = ((newIndex % count) + count) % count;
+			if (nextIndex === index) return;
+			if (animating) return;
+
+			const oldSlide = slides[index];
+			const newSlide = slides[nextIndex];
 
 			if (reduceMotion) {
-				slides[next].style.transition = "none";
+				oldSlide.classList.remove("is-active");
+				oldSlide.setAttribute("aria-hidden", "true");
+				newSlide.classList.add("is-active");
+				newSlide.setAttribute("aria-hidden", "false");
+				index = nextIndex;
+				updateDots();
+				return;
 			}
 
-			slides[next].classList.add("is-active");
-			slides[next].setAttribute("aria-hidden", "false");
+			animating = true;
+			/* 1 = siguiente (índice sube), -1 = anterior (índice baja) */
+			const navNext = dir === 1;
+			const navClass = navNext ? "tribes-nav-next" : "tribes-nav-prev";
 
-			index = next;
+			oldSlide.classList.remove("is-active");
+			oldSlide.classList.add("is-leaving", navClass);
+			oldSlide.setAttribute("aria-hidden", "true");
+
+			newSlide.classList.add("is-active", navClass);
+			newSlide.setAttribute("aria-hidden", "false");
+
+			index = nextIndex;
 			updateDots();
+
+			let cleaned = false;
+			const cleanup = () => {
+				if (cleaned) return;
+				cleaned = true;
+				oldSlide.removeEventListener("animationend", onEnd);
+				oldSlide.classList.remove("is-leaving", "tribes-nav-next", "tribes-nav-prev");
+				newSlide.classList.remove("tribes-nav-next", "tribes-nav-prev");
+				animating = false;
+			};
+
+			const onEnd = (e: AnimationEvent) => {
+				if (e.target !== oldSlide) return;
+				cleanup();
+			};
+			oldSlide.addEventListener("animationend", onEnd);
+			window.setTimeout(cleanup, 520);
 		}
 
 		function go(delta: number) {
-			goTo(index + delta);
+			goTo(index + delta, delta > 0 ? 1 : -1);
 		}
 
-		prev?.addEventListener("click", () => go(-1));
-		next?.addEventListener("click", () => go(1));
+		prevBtn?.addEventListener("click", () => go(-1));
+		nextBtn?.addEventListener("click", () => go(1));
 
 		dots.forEach((dot) => {
 			dot.addEventListener("click", () => {
 				const i = Number(dot.getAttribute("data-slide-index"));
-				if (!Number.isNaN(i)) goTo(i);
+				if (Number.isNaN(i)) return;
+				goTo(i, directionFromIndices(index, i));
 			});
 		});
 
@@ -305,20 +394,54 @@ const n = tribeSlides.length;
 			}
 		});
 
+		// Touch on root. Use changedTouches + identifier: e.touches[0] is not always the finger that started on this surface.
 		let touchStartX = 0;
-		slidesContainer?.addEventListener(
+		let touchStartY = 0;
+		let touchActive = false;
+		let touchId: number | null = null;
+
+		function findTouch(list: TouchList, id: number): Touch | undefined {
+			for (let i = 0; i < list.length; i++) {
+				if (list[i].identifier === id) return list[i];
+			}
+			return undefined;
+		}
+
+		root.addEventListener(
 			"touchstart",
 			(e) => {
-				touchStartX = (e as TouchEvent).changedTouches[0]?.clientX ?? 0;
+				if (touchActive) return;
+				const t = e.changedTouches[0];
+				if (!t) return;
+				touchStartX = t.clientX;
+				touchStartY = t.clientY;
+				touchId = t.identifier;
+				touchActive = true;
 			},
 			{ passive: true },
 		);
-		slidesContainer?.addEventListener(
+		root.addEventListener(
 			"touchend",
 			(e) => {
-				const x = (e as TouchEvent).changedTouches[0]?.clientX ?? 0;
-				const d = x - touchStartX;
-				if (Math.abs(d) > 50) go(d < 0 ? 1 : -1);
+				if (!touchActive || touchId === null) return;
+				const t = findTouch(e.changedTouches, touchId);
+				if (!t) return;
+				touchActive = false;
+				touchId = null;
+				const dx = t.clientX - touchStartX;
+				const dy = t.clientY - touchStartY;
+				if (Math.abs(dx) < 48) return;
+				if (Math.abs(dx) <= Math.abs(dy)) return;
+				// Swipe left (dx < 0) → next; swipe right → previous
+				go(dx < 0 ? 1 : -1);
+			},
+			{ passive: true },
+		);
+		root.addEventListener(
+			"touchcancel",
+			() => {
+				touchActive = false;
+				touchId = null;
 			},
 			{ passive: true },
 		);

@@ -3,7 +3,7 @@ import { assets } from "../data/figmaAssets";
 ---
 
 <section
-	class="relative flex w-full flex-col items-center gap-4 overflow-hidden py-10 opacity-[0.87] md:gap-4 md:py-10"
+	class="relative flex w-full flex-col items-center gap-4 overflow-x-clip overflow-y-visible py-10 opacity-[0.87] md:gap-4 md:py-10"
 	aria-label="Hero"
 >
 	<div class="pointer-events-none absolute inset-0" aria-hidden="true">
@@ -21,41 +21,43 @@ import { assets } from "../data/figmaAssets";
 	</div>
 
 	<header
-		class="section-inner relative z-10 flex h-[50px] w-full shrink-0 items-center overflow-hidden rounded-[69px] bg-white px-2 shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+		class="section-inner relative z-10 flex h-[50px] w-full min-w-0 shrink-0 items-center justify-center rounded-[69px] bg-white px-0 shadow-[0_4px_4px_rgba(0,0,0,0.25)] sm:px-2 md:px-3"
 	>
-		<div
-			class="absolute left-[35px] top-1/2 flex h-12 w-[156px] -translate-y-1/2 items-start overflow-hidden bg-white py-2.5"
+		<a
+			href="#top"
+			class="absolute left-1 top-1/2 z-10 flex h-11 w-[52px] -translate-y-1/2 items-center justify-start overflow-hidden py-1 pl-0 sm:left-3 sm:h-12 sm:w-[112px] sm:py-2 sm:pl-1 md:left-6 md:w-[156px] md:pl-[35px]"
+			aria-label="Snowbound home"
 		>
-			<div class="relative h-full w-[186px] shrink-0">
+			<div class="relative h-full w-full max-w-[48px] sm:max-w-[104px] md:max-w-[186px]">
 				<img
 					src={assets.navLogo}
-					alt="Snowbound"
-					class="pointer-events-none absolute inset-0 size-full max-w-none object-contain"
+					alt=""
+					class="pointer-events-none absolute inset-0 size-full max-w-none object-contain object-left"
 				/>
 			</div>
-		</div>
+		</a>
 		<nav
-			class="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-8 px-2"
+			class="relative z-30 flex w-full min-w-0 flex-1 flex-nowrap items-center justify-between gap-x-0 overflow-x-auto overflow-y-hidden overscroll-x-contain py-0.5 pl-[calc(4px+52px+4px)] pr-[calc(4px+52px+4px)] [scrollbar-width:none] sm:pl-[calc(12px+112px+8px)] sm:pr-[calc(12px+112px+8px)] md:overflow-visible md:justify-center md:gap-8 md:pl-[calc(156px+28px)] md:pr-[calc(156px+28px)] [&::-webkit-scrollbar]:hidden"
 			aria-label="Primary"
 		>
 			<a
 				href="#top"
-				class="font-nunito p-2.5 text-base tracking-wide text-black hover:opacity-80"
+				class="font-nunito flex min-h-[2.25rem] shrink-0 items-center justify-center px-0.5 py-0.5 text-[11px] leading-none tracking-tight text-black hover:opacity-80 max-md:whitespace-nowrap sm:px-1 sm:text-sm md:p-2.5 md:text-base md:leading-normal md:tracking-wide"
 				>Home</a
 			>
 			<a
 				href="#gameplay"
-				class="font-nunito p-2.5 text-base tracking-wide text-black hover:opacity-80"
+				class="font-nunito flex min-h-[2.25rem] shrink-0 items-center justify-center px-0.5 py-0.5 text-[11px] leading-none tracking-tight text-black hover:opacity-80 max-md:whitespace-nowrap sm:px-1 sm:text-sm md:p-2.5 md:text-base md:leading-normal md:tracking-wide"
 				>The Game</a
 			>
 			<a
 				href="#about"
-				class="font-nunito p-2.5 text-base tracking-wide text-black hover:opacity-80"
+				class="font-nunito flex min-h-[2.25rem] shrink-0 items-center justify-center px-0.5 py-0.5 text-[11px] leading-none tracking-tight text-black hover:opacity-80 max-md:whitespace-nowrap sm:px-1 sm:text-sm md:p-2.5 md:text-base md:leading-normal md:tracking-wide"
 				>About Us</a
 			>
 			<a
 				href="#about"
-				class="font-nunito p-2.5 text-base tracking-wide text-black hover:opacity-80"
+				class="font-nunito flex min-h-[2.25rem] shrink-0 items-center justify-center px-0.5 py-0.5 text-[11px] leading-none tracking-tight text-black hover:opacity-80 max-md:whitespace-nowrap sm:px-1 sm:text-sm md:p-2.5 md:text-base md:leading-normal md:tracking-wide"
 				>Contact</a
 			>
 		</nav>
@@ -64,15 +66,17 @@ import { assets } from "../data/figmaAssets";
 	<div
 		class="section-inner relative z-10 flex flex-col items-center gap-4 px-4 md:gap-4"
 	>
-		<div class="relative z-10 flex h-[175px] w-full flex-col items-center overflow-hidden pb-5">
-			<div class="relative h-[151px] w-[min(452px,90vw)] shrink-0">
-				<div class="pointer-events-none absolute inset-0 overflow-hidden">
-					<img
-						src={assets.heroLogo}
-						alt="Snowbound logo"
-						class="absolute left-0 top-[-11%] h-[150%] w-full max-w-none object-cover"
-					/>
-				</div>
+		<div
+			class="relative z-10 flex w-full flex-col items-center justify-center px-2 pb-2 pt-1 sm:px-4 sm:pb-4 md:pb-5"
+		>
+			<div class="relative w-full max-w-[min(452px,94vw)] sm:max-w-[min(480px,92vw)]">
+				<img
+					src={assets.heroLogo}
+					alt="Snowbound logo"
+					class="mx-auto block h-auto w-full max-h-[min(42vh,280px)] object-contain object-center md:max-h-[min(52vh,360px)] md:max-w-[452px] lg:max-h-none"
+					loading="eager"
+					decoding="async"
+				/>
 			</div>
 		</div>
 
@@ -98,11 +102,11 @@ import { assets } from "../data/figmaAssets";
 		</div>
 
 		<!-- JOIN THE WAITLIST button — opens global popover -->
-		<div class="relative z-10 flex items-center">
+		<div class="relative z-10 flex w-full max-w-[min(100%,778px)] items-center justify-center px-3">
 			<button
 				type="button"
 				data-open-waitlist
-				class="font-tillana flex h-[78px] items-center justify-center rounded-[50px] bg-[#0285e4] px-[70px] text-[48px] leading-8 tracking-[0.1px] text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] md:h-[102px] md:w-[778px]"
+				class="font-tillana flex min-h-[56px] w-full max-w-full items-center justify-center rounded-[50px] bg-[#0285e4] px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:whitespace-nowrap sm:min-h-[78px] sm:px-10 sm:py-0 sm:text-[clamp(2rem,6vw,3rem)] sm:tracking-[0.1px] md:h-[102px] md:w-full md:max-w-[778px] md:text-[48px] md:leading-8"
 			>
 				JOIN THE WAITLIST
 			</button>

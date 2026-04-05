@@ -27,6 +27,11 @@ const cards = [
 	aria-labelledby="features-heading"
 	style="background-image: url('/images/figma/hex-board.png'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;"
 >
+	<!-- Velo blanco sobre el fondo fijo (no afecta al contenido: va debajo en z-index) -->
+	<div
+		class="pointer-events-none absolute inset-0 z-0 bg-white/[0.66]"
+		aria-hidden="true"
+	/>
 <!-- 	<img
 		src={assets.hexBoard}
 		alt=""
@@ -73,11 +78,11 @@ const cards = [
 		</div>
 	</div>
 
-	<div class="relative z-10 mt-4 flex items-center justify-center">
+	<div class="relative z-10 mt-4 flex w-full justify-center px-3 sm:px-4">
 		<button
 			type="button"
 			data-open-waitlist
-			class="font-tillana flex h-[78px] items-center justify-center rounded-[50px] bg-[#0285e4] px-[70px] text-[48px] leading-8 tracking-[0.1px] text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2]"
+			class="font-tillana flex w-full max-w-[min(100%,778px)] items-center justify-center rounded-[50px] bg-[#0285e4] px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:min-h-[56px] max-md:whitespace-nowrap md:h-[78px] md:px-[70px] md:py-0 md:text-[48px] md:leading-8 md:tracking-[0.1px]"
 		>
 			JOIN THE WAITLIST
 		</button>
