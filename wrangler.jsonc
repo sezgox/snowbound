@@ -9,5 +9,9 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	"routes": [
+		{ "pattern": "snowboundbg.com/*", "zone_name": "snowboundbg.com" },
+		{ "pattern": "www.snowboundbg.com/*", "zone_name": "snowboundbg.com" }
+	]
 }
