@@ -36,8 +36,9 @@ playwright-report/
 # Agent/AI screenshots — all agent validation screenshots must go here
 .agent-screenshots/
 
-# Codex / local agent plugin cache (regenerate from repo docs if needed)
+# Codex / local agent plugin cache and project plugins (regenerate from repo docs if needed)
 .agents/
+plugins/
 
 # n8n (docker-compose.n8n.yml)
 n8n_data/
