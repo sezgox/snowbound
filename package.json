@@ -8,22 +8,29 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "test:e2e": "playwright test",
     "astro": "astro",
     "docker:n8n:up": "docker compose -f docker-compose.n8n.yml up -d",
     "docker:n8n:down": "docker compose -f docker-compose.n8n.yml down",
     "docker:web:build": "docker compose build web",
     "docker:web:up": "docker compose up -d --build web",
-    "docker:web:down": "docker compose down"
+    "docker:web:down": "docker compose down",
+    "generate-types": "wrangler types",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^13.1.7",
     "@emailjs/browser": "^4.4.1",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.3",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
-    "@playwright/test": "^1.59.1"
+    "@playwright/test": "^1.59.1",
+    "wrangler": "^4.80.0"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }
