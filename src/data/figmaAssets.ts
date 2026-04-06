@@ -5,7 +5,7 @@
 export const assets = {
 	homeHero: "/images/figma/home-hero.png",
 	navLogo: "/images/figma/nav-logo.png",
-	heroLogo: "/images/figma/hero-logo.png",
+	heroLogo: "/images/figma/snowbound-logo.png",
 	pjSil: "/images/figma/pj-sil.png",
 	pjSil2: "/images/figma/pj-sil-2.png",
 	patternIce: "/images/figma/pattern-ice.png",
@@ -21,7 +21,7 @@ export const assets = {
 	character: "/images/figma/character.png",
 	eventCard: "/images/figma/event-card.png",
 	footerLogo: "/images/figma/footer-logo.png",
-	kickstarterHex: "/images/figma/kickstarter-hex.svg",
+	kickstarterHex: "/images/figma/kickstarter-hex.png",
 	hourglass: "/images/figma/hourglass.svg",
 	aboutTeam: "/images/figma/about-team.png",
 	aboutPlaceholder: "/images/figma/about-placeholder.svg",

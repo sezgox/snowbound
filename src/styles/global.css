@@ -21,6 +21,16 @@
 	--color-snowbound-muted: #5c5c5c;
 	--color-snowbound-cream: #faf9f2;
 	--color-snowbound-border: #77abbd;
+
+	--text-shadow-outline:
+		2px 0 currentColor,
+		-2px 0 currentColor,
+		0 2px currentColor,
+		0 -2px currentColor,
+		1px 1px currentColor,
+		-1px -1px currentColor,
+		1px -1px currentColor,
+		-1px 1px currentColor;
 }
 
 @layer base {
