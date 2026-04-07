@@ -2,8 +2,8 @@
 import { assets } from "../data/figmaAssets";
 ---
 
-<section class="min-h-screen flex flex-col items-center gap-4 md:gap-8 lg:gap-10 mb-[-2px] px-2" 
-style="background-image:linear-gradient(180deg,rgba(35,149,231,0.8) 0%, rgba(35,149,231,0.8) 5%, rgba(255, 255, 255, 0.9) 90%),  url('/images/figma/home-hero.png');
+<section class="min-h-screen flex flex-col items-center gap-4 md:gap-8 lg:gap-10 mb-[-2px] px-2 justify-around" 
+style="background-image:linear-gradient(180deg,rgba(35,149,231,0.8) 0%, rgba(35,149,231,0.8) 5%, rgba(255, 255, 255, 0.9) 90%, #faf9f2 97%),  url('/images/figma/home-hero.png');
 background-size: cover; background-position: center center;">
 
 	<header
@@ -68,7 +68,7 @@ background-size: cover; background-position: center center;">
 		class="relative z-10 flex min-h-9 w-full items-center justify-center overflow-hidden px-2.5 py-2.5"
 	>
 		<p
-			class="font-roboto text-center text-xl font-bold leading-7 tracking-[0.2px] text-[#112d57] md:text-[32px] md:leading-8"
+			class="font-roboto text-center text-xl font-bold leading-7 tracking-[0.2px] text-snowbound-secondary md:text-[32px] md:leading-8"
 		>
 			A Strategic Board Game of Exploration, Deception and Survival.
 		</p>
@@ -78,21 +78,230 @@ background-size: cover; background-position: center center;">
 		<button
 			type="button"
 			data-open-waitlist
-			class="font-tillana flex min-h-[56px] w-full max-w-full items-center justify-center rounded-[50px] bg-[#0285e4] px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:whitespace-nowrap sm:min-h-[78px] sm:px-10 sm:py-0 sm:text-[clamp(2rem,6vw,3rem)] sm:tracking-[0.1px] md:h-[102px] md:w-full md:max-w-[778px] md:text-[48px] md:leading-8"
+			class="font-tillana flex min-h-[56px] w-full max-w-full items-center justify-center rounded-[50px] bg-snowbound-primary px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:whitespace-nowrap sm:min-h-[78px] sm:px-10 sm:py-0 sm:text-[clamp(2rem,6vw,3rem)] sm:tracking-[0.1px] md:h-[102px] md:w-full md:max-w-[778px] md:text-[48px] md:leading-8"
 		>
 			JOIN THE WAITLIST
 		</button>
 		<p
-		class="font-roboto relative z-10 max-w-[557px] px-4 text-center text-xl leading-7 tracking-[0.2px] text-[#112d57]"
+		class="font-roboto relative z-10 max-w-[557px] px-4 text-center text-xl leading-7 tracking-[0.2px] text-snowbound-secondary"
 		>
 			Get notified at launch and be the first to enter Snowbound
 		</p>
-		<div class="mb-8 w-[124px] h-[124px] md:w-[140px] md:h-[140px] flex justify-center flex-col items-center text-center text-xs font-black tracking-wide font-roboto text-[#1978bd]" style="background-image: url('/images/figma/kickstarter-hex.png'); background-size: 100% 100%; background-position: center center;">
-			<p class="leading-tight">COMING</p>
-			<p class="leading-tight">SOON TO</p>
-			<p class="leading-tight">KICKSTARTER</p>
-			<p class="leading-tight">PLATFORM</p>
+		<div
+			class="hero-kickstarter-badge relative mb-8 flex h-[124px] w-[124px] items-center justify-center md:h-[140px] md:w-[140px]"
+			data-hero-kickstarter
+		>
+			<div class="hero-kickstarter-glow" aria-hidden="true"></div>
+			<div class="hero-kickstarter-plate" aria-hidden="true">
+				<img
+					src={assets.kickstarterHex}
+					alt=""
+					class="block h-full w-full object-contain"
+				/>
+			</div>
+			<div class="hero-kickstarter-particles" aria-hidden="true">
+				<span class="hero-kickstarter-particle particle-1"></span>
+				<span class="hero-kickstarter-particle particle-2"></span>
+				<span class="hero-kickstarter-particle particle-3"></span>
+				<span class="hero-kickstarter-particle particle-4"></span>
+				<span class="hero-kickstarter-particle particle-5"></span>
+				<span class="hero-kickstarter-particle particle-6"></span>
+			</div>
+			<div class="relative z-10 flex flex-col items-center justify-center text-center text-xs font-black tracking-wide font-roboto text-[#1978bd]">
+				<p class="leading-tight">COMING</p>
+				<p class="leading-tight">SOON TO</p>
+				<p class="leading-tight">KICKSTARTER</p>
+				<p class="leading-tight">PLATFORM</p>
+			</div>
 		</div>
 	</div>
 
 </section>
+
+<style>
+	.hero-kickstarter-badge {
+		perspective: 900px;
+		opacity: 0;
+		transform: translate3d(0, 48px, 0) scale(0.88);
+		will-change: transform, opacity;
+	}
+
+	.hero-kickstarter-badge.is-visible {
+		animation: hero-kickstarter-reveal 900ms cubic-bezier(0.2, 0.9, 0.22, 1) forwards;
+	}
+
+	.hero-kickstarter-plate,
+	.hero-kickstarter-glow {
+		position: absolute;
+		inset: 0;
+		border-radius: 9999px;
+		transform-style: preserve-3d;
+	}
+
+	.hero-kickstarter-plate {
+		filter:
+			drop-shadow(0 28px 38px rgba(17, 45, 87, 0.32))
+			drop-shadow(0 14px 18px rgba(35, 149, 231, 0.28))
+			drop-shadow(0 0 26px rgba(255, 255, 255, 0.26));
+	}
+
+	.hero-kickstarter-glow {
+		inset: 8%;
+		background:
+			radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 42%),
+			radial-gradient(circle, rgba(35, 149, 231, 0.34), rgba(35, 149, 231, 0) 70%);
+		filter: blur(18px);
+		opacity: 0.96;
+		transform: translateZ(-28px) scale(1.24);
+	}
+
+	.hero-kickstarter-particles {
+		position: absolute;
+		inset: -16%;
+		pointer-events: none;
+	}
+
+	.hero-kickstarter-particle {
+		position: absolute;
+		width: 9px;
+		height: 9px;
+		border-radius: 9999px;
+		background:
+			radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.45) 58%, rgba(255, 255, 255, 0) 100%);
+		box-shadow:
+			0 0 10px rgba(255, 255, 255, 0.7),
+			0 0 18px rgba(35, 149, 231, 0.3);
+		opacity: 0;
+		transform: translate3d(0, 12px, 0) scale(0.75);
+	}
+
+	.hero-kickstarter-badge.is-visible .hero-kickstarter-particle {
+		animation: hero-kickstarter-snow 3.6s ease-in-out infinite;
+	}
+
+	.hero-kickstarter-badge.is-visible .particle-1 {
+		top: 8%;
+		left: 18%;
+		animation-delay: 0s;
+	}
+
+	.hero-kickstarter-badge.is-visible .particle-2 {
+		top: 18%;
+		right: 6%;
+		width: 7px;
+		height: 7px;
+		animation-delay: 0.6s;
+	}
+
+	.hero-kickstarter-badge.is-visible .particle-3 {
+		right: 14%;
+		bottom: 14%;
+		width: 10px;
+		height: 10px;
+		animation-delay: 1.2s;
+	}
+
+	.hero-kickstarter-badge.is-visible .particle-4 {
+		bottom: 10%;
+		left: 12%;
+		width: 6px;
+		height: 6px;
+		animation-delay: 1.8s;
+	}
+
+	.hero-kickstarter-badge.is-visible .particle-5 {
+		top: 44%;
+		left: -2%;
+		width: 8px;
+		height: 8px;
+		animation-delay: 2.2s;
+	}
+
+	.hero-kickstarter-badge.is-visible .particle-6 {
+		top: 52%;
+		right: -3%;
+		width: 5px;
+		height: 5px;
+		animation-delay: 2.8s;
+	}
+
+	@keyframes hero-kickstarter-reveal {
+		0% {
+			opacity: 0;
+			transform: translate3d(0, 48px, 0) scale(0.88) rotateX(24deg);
+		}
+		72% {
+			opacity: 1;
+			transform: translate3d(0, -6px, 0) scale(1.04) rotateX(-7deg);
+		}
+		100% {
+			opacity: 1;
+			transform: translate3d(0, 0, 0) scale(1) rotateX(0deg);
+		}
+	}
+
+	@keyframes hero-kickstarter-snow {
+		0% {
+			opacity: 0;
+			transform: translate3d(0, 12px, 0) scale(0.75);
+		}
+		25% {
+			opacity: 0.95;
+		}
+		60% {
+			opacity: 0.8;
+			transform: translate3d(0, -10px, 0) scale(1);
+		}
+		100% {
+			opacity: 0;
+			transform: translate3d(0, -22px, 0) scale(0.7);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero-kickstarter-badge {
+			opacity: 1;
+			transform: none;
+			animation: none;
+		}
+
+		.hero-kickstarter-badge.is-visible .hero-kickstarter-plate,
+		.hero-kickstarter-badge.is-visible .hero-kickstarter-particle {
+			animation: none;
+		}
+
+		.hero-kickstarter-particle {
+			opacity: 0.5;
+			transform: none;
+		}
+	}
+</style>
+
+<script>
+	const heroKickstarterBadge = document.querySelector<HTMLElement>("[data-hero-kickstarter]");
+
+	if (heroKickstarterBadge) {
+		const revealHeroKickstarterBadge = () => {
+			heroKickstarterBadge.classList.add("is-visible");
+		};
+
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+			revealHeroKickstarterBadge();
+		} else {
+			const observer = new IntersectionObserver(
+				(entries) => {
+					const [entry] = entries;
+					if (!entry?.isIntersecting) return;
+					revealHeroKickstarterBadge();
+					observer.disconnect();
+				},
+				{
+					threshold: 0.35,
+					rootMargin: "0px 0px -8% 0px",
+				},
+			);
+
+			observer.observe(heroKickstarterBadge);
+		}
+	}
+</script>

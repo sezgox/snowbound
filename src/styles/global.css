@@ -46,5 +46,5 @@
  * Main column width vs full-bleed backgrounds (Figma desktop ~1200px, ~60–70% viewport).
  */
 .section-inner {
-	@apply mx-auto w-full max-w-full md:max-w-[min(1200px,70vw)];
+	@apply mx-auto w-full max-w-full lg:max-w-[min(1200px,70vw)];
 }

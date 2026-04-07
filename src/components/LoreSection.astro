@@ -4,60 +4,44 @@ import { assets } from "../data/figmaAssets";
 
 <section
 	id="lore"
-	class="relative flex w-full flex-col items-center gap-2.5 overflow-x-hidden py-6 scroll-mt-24"
+	class="relative w-full py-6 px-2 min-h-[75vh] content-center mb-[-2px]"
 	aria-labelledby="lore-heading"
-	style="background-image: url('/images/figma/pattern-ice.png'); background-size: cover; background-position: center;"
+	style="background-image: linear-gradient(180deg, var(--color-snowbound-cream) 0%, rgba(250, 249, 242, 0) 10%), url('/images/figma/pattern-ice.png'); background-size: 100% 100%, 100% 100%; background-position: center, center; background-repeat: no-repeat, no-repeat;"
 >
-	<!-- Figma LORE STORY: pattern 1200×479, content row h-479, text w-567 py-116, media w-335 h-448 -->
-<!-- 	<div class="pointer-events-none absolute inset-x-0 top-0 h-[479px]" aria-hidden="true">
-		<img
-			src={assets.patternIce}
-			alt=""
-			class="absolute inset-0 size-full max-w-none object-cover"
-		/>
-	</div> -->
-
-	<div
-		class="section-inner relative z-10 flex w-full flex-col items-start gap-12 px-4 md:h-[479px] md:flex-row md:gap-[50px]"
-	>
+	<div class="section-inner flex flex-col items-center gap-4 md:flex-row md:items-stretch md:justify-between">
 		<div
-			class="flex w-full max-w-[567px] flex-col gap-5 md:gap-5 md:py-[116px]"
+			class="flex md:w-full flex-col gap-5 md:gap-6 md:self-stretch"
 		>
-			<div class="flex min-w-0 items-center px-2.5 md:px-[10px]">
-				<h2
-					id="lore-heading"
-					class="font-roboto text-[clamp(1.75rem,4vw,2.5rem)] font-normal leading-tight tracking-[0.2px] text-[#112d57] md:text-[40px] md:leading-[48px] lg:whitespace-nowrap"
-				>
-					AN ICED PARADISE AWAITS
-				</h2>
-			</div>
-			<div
-				class="font-roboto w-full max-w-[557px] p-2.5 text-[20px] font-normal leading-7 tracking-[0.2px] text-black md:p-[10px] md:leading-[28px]"
+			<h2
+				id="lore-heading"
+				class="font-display text-[clamp(32px,64px,72px)] max-w-[557px] font-normal leading-tight tracking-[0.2px] text-snowbound-secondary md:leading-[48px]"
 			>
-				<p class="mb-0 md:leading-[28px]">
+				AN ICED PARADISE AWAITS...
+			</h2>
+			<div
+				class="font-roboto flex w-full max-w-[557px] flex-col gap-4 p-2.5 text-[20px] font-normal leading-7 tracking-[0.2px] text-black md:flex-1 md:justify-between md:p-[10px] md:leading-[28px]"
+			>
+				<p class="md:leading-[28px]">
 					In the frozen North, beneath shimmering auroras, tribes fight to survive the
 					cold winter.
 				</p>
-				<p class="mb-0 mt-0 md:leading-[28px]">
+				<p class="md:leading-[28px]">
 					Hidden under ancient ice lie the magical petals of the Thall Tree, a power
 					worth risking everything for.
 				</p>
-				<p class="mt-0 md:leading-[28px]">
+				<p class="md:leading-[28px]">
 					For ages, the Inuit have fought to gain its power — will you be the next to
 					claim it?
 				</p>
 			</div>
 		</div>
-		<div
-			class="relative z-10 flex h-auto w-full shrink-0 items-center justify-center p-2.5 md:h-[448px] md:w-[335px] md:p-[10px]"
-		>
-			<div class="relative aspect-square w-full max-w-[min(408.889px,85vw)] shrink-0 md:size-[408.889px] md:max-w-none">
-				<img
-					src={assets.tree}
-					alt="Illustration of the Thall Tree"
-					class="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
-				/>
-			</div>
-		</div>
+
+
+		<img
+			src={assets.tree}
+			alt="Illustration of the Thall Tree"
+			class="w-full max-w-[min(340px,85vw)] lg:max-w-[380px] shrink-0"
+		/>
 	</div>
+
 </section>
