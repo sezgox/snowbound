@@ -69,10 +69,18 @@ const cards = [
 
 	<div class="section-inner relative z-10 mt-2 px-4">
 		<div
-			class="h-[200px] w-full shrink-0 bg-[#8b8686] md:h-[400px]"
-			aria-hidden="true"
+			class="relative h-[200px] w-full shrink-0 overflow-hidden bg-[#8b8686] md:h-[400px]"
 		>
-			<!-- Video / trailer placeholder from design -->
+			<video
+				class="h-full w-full object-cover"
+				src="/videos/unique-video.mp4"
+				autoplay
+				muted
+				loop
+				playsinline
+				preload="auto"
+				aria-label="Snowbound trailer preview"
+			/>
 		</div>
 	</div>
 
@@ -80,7 +88,7 @@ const cards = [
 		<button
 			type="button"
 			data-open-waitlist
-			class="font-tillana flex w-full max-w-[min(100%,778px)] items-center justify-center rounded-[50px] bg-[#0285e4] px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:min-h-[56px] max-md:whitespace-nowrap md:h-[78px] md:px-[70px] md:py-0 md:text-[48px] md:leading-8 md:tracking-[0.1px]"
+			class="font-tillana flex w-full max-w-[min(100%,778px)] items-center justify-center rounded-[50px] bg-snowbound-primary px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:min-h-[56px] max-md:whitespace-nowrap md:h-[78px] md:px-[70px] md:py-0 md:text-[48px] md:leading-8 md:tracking-[0.1px]"
 		>
 			JOIN THE WAITLIST
 		</button>

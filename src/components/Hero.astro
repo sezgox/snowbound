@@ -1,33 +1,79 @@
 ---
 import { assets } from "../data/figmaAssets";
+import HeroSnowflakeInner from "./HeroSnowflakeInner.astro";
 
-const snowParticles = [
-	"particle-1",
-	"particle-2",
-	"particle-3",
-	"particle-4",
-	"particle-5",
-	"particle-6",
-	"particle-7",
-	"particle-8",
-	"particle-9",
-	"particle-10",
-	"particle-11",
-	"particle-12",
-	"particle-13",
-	"particle-14",
-	"particle-15",
-	"particle-16",
-	"particle-17",
-	"particle-18",
-] as const;
+/** 36 posiciones base; se duplican en 2 capas (72 copos). 10 diseños SVG en ciclo (`i % 10`). */
+const snowParticleBase = [
+	{ left: 6, w: 5, h: 5, drift: 11, delay: -3.5, dur: 28 },
+	{ left: 14, w: 8, h: 8, drift: -9, delay: -12, dur: 19 },
+	{ left: 23, w: 6, h: 6, drift: 14, delay: -7, dur: 39 },
+	{ left: 31, w: 9, h: 9, drift: -16, delay: -18, dur: 25 },
+	{ left: 40, w: 7, h: 7, drift: 7, delay: -2, dur: 17 },
+	{ left: 49, w: 5, h: 5, drift: -5, delay: -14, dur: 35 },
+	{ left: 58, w: 9, h: 9, drift: 18, delay: -9, dur: 31 },
+	{ left: 66, w: 6, h: 6, drift: -12, delay: -20, dur: 18 },
+	{ left: 74, w: 8, h: 8, drift: 6, delay: -5, dur: 37 },
+	{ left: 82, w: 5, h: 5, drift: -14, delay: -16, dur: 23 },
+	{ left: 90, w: 9, h: 9, drift: 10, delay: -11, dur: 33 },
+	{ left: 96, w: 6, h: 6, drift: -7, delay: -22, dur: 16 },
+	{ left: 10, w: 7, h: 7, drift: 15, delay: -24, dur: 29 },
+	{ left: 27, w: 5, h: 5, drift: -11, delay: -8, dur: 18 },
+	{ left: 44, w: 9, h: 9, drift: 8, delay: -17, dur: 39 },
+	{ left: 62, w: 6, h: 6, drift: -17, delay: -4.5, dur: 25 },
+	{ left: 79, w: 7, h: 7, drift: 5, delay: -12, dur: 34 },
+	{ left: 88, w: 5, h: 5, drift: -13, delay: -25, dur: 20 },
+	{ left: 3, w: 6, h: 6, drift: 9, delay: -27, dur: 32 },
+	{ left: 18, w: 7, h: 7, drift: -8, delay: -10, dur: 21 },
+	{ left: 35, w: 5, h: 5, drift: 16, delay: -21, dur: 38 },
+	{ left: 52, w: 8, h: 8, drift: -6, delay: -3, dur: 24 },
+	{ left: 68, w: 6, h: 6, drift: 12, delay: -15, dur: 27 },
+	{ left: 85, w: 9, h: 9, drift: -15, delay: -6, dur: 40 },
+	{ left: 1, w: 5, h: 5, drift: 4, delay: -29, dur: 26 },
+	{ left: 12, w: 6, h: 6, drift: -10, delay: -12, dur: 30 },
+	{ left: 29, w: 8, h: 8, drift: 13, delay: -23, dur: 18 },
+	{ left: 46, w: 5, h: 5, drift: -4, delay: -4, dur: 36 },
+	{ left: 63, w: 7, h: 7, drift: 17, delay: -18, dur: 22 },
+	{ left: 77, w: 6, h: 6, drift: -18, delay: -9, dur: 16 },
+	{ left: 92, w: 5, h: 5, drift: 6, delay: -26, dur: 32 },
+	{ left: 7, w: 9, h: 9, drift: -9, delay: -14, dur: 39 },
+	{ left: 21, w: 6, h: 6, drift: 14, delay: -19, dur: 19 },
+	{ left: 38, w: 7, h: 7, drift: -7, delay: -9.5, dur: 30 },
+	{ left: 55, w: 5, h: 5, drift: 10, delay: -24, dur: 25 },
+	{ left: 71, w: 8, h: 8, drift: -12, delay: -2.2, dur: 25 },
+];
+
+/** Copos SVG se leen más finos que las bolitas; subimos tamaño (~1,65×) respecto a la base. */
+const snowSizeScale = 1.85;
+const snowParticlesRender = [
+	...snowParticleBase.map((p) => ({
+		...p,
+		w: Math.round(p.w * snowSizeScale),
+		h: Math.round(p.h * snowSizeScale),
+	})),
+	...snowParticleBase.map((p) => ({
+		...p,
+		left: Math.min(99, p.left + 1.5),
+		delay: p.delay - 4,
+		w: Math.round(p.w * snowSizeScale),
+		h: Math.round(p.h * snowSizeScale),
+	})),
+];
 ---
 
 <section class="relative mb-[-2px] flex min-h-screen flex-col items-center justify-around gap-4 overflow-hidden px-2 md:gap-8 lg:gap-10" 
 style="background-image:linear-gradient(180deg,rgba(35,149,231,0.8) 0%, rgba(35,149,231,0.8) 5%, rgba(255, 255, 255, 0.9) 90%, #faf9f2 97%),  url('/images/figma/home-hero.png');
 background-size: cover; background-position: center center;">
 	<div class="hero-snowfield" aria-hidden="true">
-		{snowParticles.map((particleClass) => <span class:list={["hero-snowfield-particle", particleClass]}></span>)}
+		{
+			snowParticlesRender.map((p, i) => (
+				<span
+					class="hero-snowfield-particle"
+					style={`left: ${p.left}%; width: ${p.w}px; height: ${p.h}px; --snow-drift-x: ${p.drift}px; animation-delay: ${p.delay}s; animation-duration: ${p.dur}s;`}
+				>
+					<HeroSnowflakeInner variant={i % 10} />
+				</span>
+			))
+		}
 	</div>
 	<div class="hero-seam-patch" aria-hidden="true"></div>
 
@@ -179,182 +225,216 @@ background-size: cover; background-position: center center;">
 	}
 
 	.hero-snowfield-particle {
+		--snow-drift-x: 0px;
+		--snow-sway: 20px;
+		--snow-loops: 3;
 		position: absolute;
 		top: -12%;
 		left: 0;
-		width: 10px;
-		height: 10px;
-		border-radius: 9999px;
-		background:
-			radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.45) 58%, rgba(255, 255, 255, 0) 100%);
-		box-shadow:
-			0 0 15px rgba(255, 255, 255, 0.82),
-			0 0 26px rgba(35, 149, 231, 0.28);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 10px;
+		min-height: 10px;
+		color: rgba(255, 255, 255, 0.98);
 		opacity: 0;
-		transform: translate3d(0, -8vh, 0) scale(0.72);
-		animation: hero-snowfield-drift 13s ease-in-out infinite;
+		transform: translate3d(0, -8vh, 0) scale(0.88);
+		animation: hero-snowfield-drift 25s linear infinite;
 		will-change: transform, opacity;
 	}
 
-	.hero-snowfield .particle-1 {
-		left: 6%;
-		width: 5px;
-		height: 5px;
-		animation-delay: -2s;
-		animation-duration: 12s;
+	/* Rotación sobre el centro del hueco del copo (contenedor cuadrado), no solo del bbox del SVG. */
+	.hero-snowfield :global(.hero-snowflake-embed) {
+		flex-shrink: 0;
+		transform-origin: center center;
+		animation: hero-snowflake-spin 20s linear infinite;
 	}
 
-	.hero-snowfield .particle-2 {
-		left: 14%;
-		width: 8px;
-		height: 8px;
-		animation-delay: -7s;
-		animation-duration: 15s;
+	.hero-snowfield-flake {
+		display: block;
+		width: 100%;
+		height: 100%;
+		flex-shrink: 0;
+		overflow: visible;
+		transform-origin: center center;
+		transform-box: view-box;
+		filter:
+			drop-shadow(0 0 3px rgba(255, 255, 255, 1))
+			drop-shadow(0 0 8px rgba(255, 255, 255, 0.75))
+			drop-shadow(0 0 14px rgba(35, 149, 231, 0.5));
 	}
 
-	.hero-snowfield .particle-3 {
-		left: 23%;
-		width: 6px;
-		height: 6px;
-		animation-delay: -4s;
-		animation-duration: 11.5s;
+	@keyframes hero-snowflake-spin {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
 	}
 
-	.hero-snowfield .particle-4 {
-		left: 31%;
-		width: 10px;
-		height: 10px;
-		animation-delay: -10s;
-		animation-duration: 16.5s;
+	.hero-snowfield .hero-snowfield-particle:nth-child(4n + 1) :global(.hero-snowflake-embed) {
+		animation-duration: 16s;
+	}
+	.hero-snowfield .hero-snowfield-particle:nth-child(4n + 2) :global(.hero-snowflake-embed) {
+		animation-duration: 22s;
+		animation-direction: reverse;
+	}
+	.hero-snowfield .hero-snowfield-particle:nth-child(4n + 3) :global(.hero-snowflake-embed) {
+		animation-duration: 26s;
+	}
+	.hero-snowfield .hero-snowfield-particle:nth-child(4n + 4) :global(.hero-snowflake-embed) {
+		animation-duration: 30s;
+		animation-direction: reverse;
 	}
 
-	.hero-snowfield .particle-5 {
-		left: 40%;
-		width: 7px;
-		height: 7px;
-		animation-delay: -1s;
-		animation-duration: 13.5s;
+	/* Más vueltas de espiral + más vaivén (sin(2π·loops) = 0 en t=1 con loops 3 / 3.5 / 4) */
+	.hero-snowfield .hero-snowfield-particle:nth-child(3n + 1) {
+		--snow-loops: 3;
 	}
-
-	.hero-snowfield .particle-6 {
-		left: 49%;
-		width: 5px;
-		height: 5px;
-		animation-delay: -8s;
-		animation-duration: 12.8s;
+	.hero-snowfield .hero-snowfield-particle:nth-child(3n + 2) {
+		--snow-loops: 3.5;
 	}
-
-	.hero-snowfield .particle-7 {
-		left: 58%;
-		width: 9px;
-		height: 9px;
-		animation-delay: -5s;
-		animation-duration: 14.8s;
+	.hero-snowfield .hero-snowfield-particle:nth-child(3n + 3) {
+		--snow-loops: 4;
 	}
-
-	.hero-snowfield .particle-8 {
-		left: 66%;
-		width: 6px;
-		height: 6px;
-		animation-delay: -11s;
-		animation-duration: 12.2s;
+	.hero-snowfield .hero-snowfield-particle:nth-child(5n + 1) {
+		--snow-sway: 16px;
 	}
-
-	.hero-snowfield .particle-9 {
-		left: 74%;
-		width: 8px;
-		height: 8px;
-		animation-delay: -3s;
-		animation-duration: 15.4s;
+	.hero-snowfield .hero-snowfield-particle:nth-child(5n + 2) {
+		--snow-sway: 20px;
 	}
-
-	.hero-snowfield .particle-10 {
-		left: 82%;
-		width: 5px;
-		height: 5px;
-		animation-delay: -9s;
-		animation-duration: 11.8s;
+	.hero-snowfield .hero-snowfield-particle:nth-child(5n + 3) {
+		--snow-sway: 24px;
 	}
-
-	.hero-snowfield .particle-11 {
-		left: 90%;
-		width: 9px;
-		height: 9px;
-		animation-delay: -6s;
-		animation-duration: 14.2s;
+	.hero-snowfield .hero-snowfield-particle:nth-child(5n + 4) {
+		--snow-sway: 28px;
 	}
-
-	.hero-snowfield .particle-12 {
-		left: 96%;
-		width: 6px;
-		height: 6px;
-		animation-delay: -12s;
-		animation-duration: 13.1s;
-	}
-
-	.hero-snowfield .particle-13 {
-		left: 10%;
-		width: 7px;
-		height: 7px;
-		animation-delay: -13s;
-		animation-duration: 14.6s;
-	}
-
-	.hero-snowfield .particle-14 {
-		left: 27%;
-		width: 5px;
-		height: 5px;
-		animation-delay: -4.5s;
-		animation-duration: 12.6s;
-	}
-
-	.hero-snowfield .particle-15 {
-		left: 44%;
-		width: 9px;
-		height: 9px;
-		animation-delay: -9.5s;
-		animation-duration: 16.1s;
-	}
-
-	.hero-snowfield .particle-16 {
-		left: 62%;
-		width: 6px;
-		height: 6px;
-		animation-delay: -2.5s;
-		animation-duration: 13.9s;
-	}
-
-	.hero-snowfield .particle-17 {
-		left: 79%;
-		width: 7px;
-		height: 7px;
-		animation-delay: -6.5s;
-		animation-duration: 12.4s;
-	}
-
-	.hero-snowfield .particle-18 {
-		left: 88%;
-		width: 5px;
-		height: 5px;
-		animation-delay: -14s;
-		animation-duration: 15.8s;
+	.hero-snowfield .hero-snowfield-particle:nth-child(5n + 5) {
+		--snow-sway: 18px;
 	}
 
 	@keyframes hero-snowfield-drift {
 		0% {
 			opacity: 0;
-			transform: translate3d(0, -8vh, 0) scale(0.72);
+			transform: translate3d(
+					calc(
+						sin(calc(2 * pi * var(--snow-loops) * 0 * 1rad)) * var(--snow-sway) + 0 * var(--snow-drift-x)
+					),
+					-8vh,
+					0
+				)
+				scale(0.88);
 		}
-		12% {
-			opacity: 0.52;
+		10% {
+			opacity: 0.72;
+			transform: translate3d(
+					calc(
+						sin(calc(2 * pi * var(--snow-loops) * 0.1 * 1rad)) * var(--snow-sway) + 0.1 * var(--snow-drift-x)
+					),
+					calc(-8vh + 0.1 * 128vh),
+					0
+				)
+				scale(calc(0.88 + 0.1 * 0.06));
 		}
-		55% {
-			opacity: 0.4;
-			transform: translate3d(14px, 54vh, 0) scale(1);
+		12.5% {
+			opacity: 0.72;
+			transform: translate3d(
+					calc(
+						sin(calc(2 * pi * var(--snow-loops) * 0.125 * 1rad)) * var(--snow-sway) + 0.125 * var(--snow-drift-x)
+					),
+					calc(-8vh + 0.125 * 128vh),
+					0
+				)
+				scale(calc(0.88 + 0.125 * 0.06));
+		}
+		25% {
+			opacity: 0.72;
+			transform: translate3d(
+					calc(
+						sin(calc(2 * pi * var(--snow-loops) * 0.25 * 1rad)) * var(--snow-sway) + 0.25 * var(--snow-drift-x)
+					),
+					calc(-8vh + 0.25 * 128vh),
+					0
+				)
+				scale(calc(0.88 + 0.25 * 0.06));
+		}
+		37.5% {
+			opacity: 0.72;
+			transform: translate3d(
+					calc(
+						sin(calc(2 * pi * var(--snow-loops) * 0.375 * 1rad)) * var(--snow-sway) + 0.375 * var(--snow-drift-x)
+					),
+					calc(-8vh + 0.375 * 128vh),
+					0
+				)
+				scale(calc(0.88 + 0.375 * 0.06));
+		}
+		50% {
+			opacity: 0.62;
+			transform: translate3d(
+					calc(
+						sin(calc(2 * pi * var(--snow-loops) * 0.5 * 1rad)) * var(--snow-sway) + 0.5 * var(--snow-drift-x)
+					),
+					calc(-8vh + 0.5 * 128vh),
+					0
+				)
+				scale(calc(0.88 + 0.5 * 0.06));
+		}
+		62.5% {
+			opacity: 0.62;
+			transform: translate3d(
+					calc(
+						sin(calc(2 * pi * var(--snow-loops) * 0.625 * 1rad)) * var(--snow-sway) + 0.625 * var(--snow-drift-x)
+					),
+					calc(-8vh + 0.625 * 128vh),
+					0
+				)
+				scale(calc(0.88 + 0.625 * 0.06));
+		}
+		75% {
+			opacity: 0.62;
+			transform: translate3d(
+					calc(
+						sin(calc(2 * pi * var(--snow-loops) * 0.75 * 1rad)) * var(--snow-sway) + 0.75 * var(--snow-drift-x)
+					),
+					calc(-8vh + 0.75 * 128vh),
+					0
+				)
+				scale(calc(0.88 + 0.75 * 0.06));
+		}
+		87.5% {
+			opacity: 0.58;
+			transform: translate3d(
+					calc(
+						sin(calc(2 * pi * var(--snow-loops) * 0.875 * 1rad)) * var(--snow-sway) + 0.875 * var(--snow-drift-x)
+					),
+					calc(-8vh + 0.875 * 128vh),
+					0
+				)
+				scale(calc(0.88 + 0.875 * 0.06));
+		}
+		88% {
+			opacity: 0.58;
+			transform: translate3d(
+					calc(
+						sin(calc(2 * pi * var(--snow-loops) * 0.88 * 1rad)) * var(--snow-sway) + 0.88 * var(--snow-drift-x)
+					),
+					calc(-8vh + 0.88 * 128vh),
+					0
+				)
+				scale(calc(0.88 + 0.88 * 0.06));
 		}
 		100% {
 			opacity: 0;
-			transform: translate3d(-10px, 108vh, 0) scale(0.78);
+			transform: translate3d(
+					calc(
+						sin(calc(2 * pi * var(--snow-loops) * 1 * 1rad)) * var(--snow-sway) + 1 * var(--snow-drift-x)
+					),
+					calc(-8vh + 128vh),
+					0
+				)
+				scale(0.92);
 		}
 	}
 
@@ -363,6 +443,15 @@ background-size: cover; background-position: center center;">
 			animation: none;
 			transform: none;
 			opacity: 0.35;
+		}
+
+		.hero-snowfield :global(.hero-snowflake-embed) {
+			animation: none;
+			transform: none;
+		}
+
+		.hero-snowfield-flake {
+			transform: none;
 		}
 	}
 </style>
