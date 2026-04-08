@@ -4,9 +4,9 @@ import { assets } from "../data/figmaAssets";
 
 <section
 	id="lore"
-	class="relative w-full py-6 px-2 min-h-[75vh] content-center mb-[-2px]"
+	class="lore-section relative w-full py-6 px-2 min-h-[75vh] content-center mb-[-2px]"
 	aria-labelledby="lore-heading"
-	style="background-image: linear-gradient(180deg, var(--color-snowbound-cream) 0%, rgba(250, 249, 242, 0) 10%), url('/images/figma/pattern-ice.png'); background-size: 100% 100%, 100% 100%; background-position: center, center; background-repeat: no-repeat, no-repeat;"
+	style="background-image: linear-gradient(180deg, var(--color-snowbound-cream) 0%, rgba(250, 249, 242, 0) 10%), url('/images/figma/pattern-ice.png'); background-position: center, center; background-repeat: no-repeat, no-repeat;"
 >
 	<div class="section-inner flex flex-col items-center gap-4 md:flex-row md:items-stretch md:justify-between">
 		<div
@@ -45,3 +45,11 @@ import { assets } from "../data/figmaAssets";
 	</div>
 
 </section>
+
+<style>
+	@media (min-width: 768px) {
+		.lore-section {
+			background-size: 100% 100%, cover;
+		}
+	}
+</style>
