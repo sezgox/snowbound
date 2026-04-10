@@ -60,9 +60,13 @@ const snowParticlesRender = [
 ];
 ---
 
-<section class="relative mb-[-2px] flex min-h-screen flex-col items-center justify-around gap-4 overflow-hidden px-2 md:gap-8 lg:gap-10" 
-style="background-image:linear-gradient(180deg,rgba(35,149,231,0.8) 0%, rgba(35,149,231,0.8) 5%, rgba(255, 255, 255, 0.9) 90%, #faf9f2 97%),  url('/images/figma/home-hero.png');
-background-size: cover; background-position: center center;">
+<section
+	id="hero"
+	class="relative mb-[-2px] flex min-h-screen flex-col items-center justify-around gap-4 overflow-hidden px-2 md:gap-8 lg:gap-10"
+	data-page-snap="start"
+	style="background-image:linear-gradient(180deg,rgba(35,149,231,0.8) 0%, rgba(35,149,231,0.8) 5%, rgba(255, 255, 255, 0.9) 90%, #faf9f2 97%),  url('/images/figma/home-hero.png');
+background-size: cover; background-position: center center;"
+>
 	<div class="hero-snowfield" aria-hidden="true">
 		{
 			snowParticlesRender.map((p, i) => (
