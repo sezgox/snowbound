@@ -147,7 +147,7 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 		width: 100%;
 		margin: 0;
 		padding: 0.75rem 1rem;
-		font-size: clamp(1.5rem, 4vw, 4rem);
+		font-size: clamp(2.25rem, 6vw, 4rem);
 		line-height: 1.1;
 		opacity: 1;
 		transform: none;
@@ -156,10 +156,11 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 	}
 
 	.features-intro-title {
+		display: none;
 		width: min(92vw, 920px);
 		margin: 0;
 		padding: 0.75rem 1rem;
-		font-size: clamp(2rem, 7.5vw, 4rem);
+		font-size: clamp(2.25rem, 7.5vw, 4rem);
 		line-height: 1.05;
 		opacity: 0;
 		transform: translate3d(-50%, calc(-50% + 18vh), 0);
@@ -167,16 +168,20 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 			left 0.75s cubic-bezier(0.22, 1, 0.36, 1),
 			top 0.75s cubic-bezier(0.22, 1, 0.36, 1),
 			transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-			opacity 0.35s ease;
+			opacity 0.35s ease,
+			display 0.75s allow-discrete;
+		transition-behavior: allow-discrete;
 		will-change: left, top, transform, opacity;
 	}
 
 	#features[data-features-stage="intro"] .features-intro-title {
+		display: block;
 		opacity: 1;
 		transform: translate3d(-50%, -50%, 0);
 	}
 
 	#features[data-features-stage="transition-down"] .features-intro-title {
+		display: block;
 		opacity: 1;
 		left: var(--features-intro-target-x);
 		top: var(--features-intro-target-y);
@@ -184,11 +189,13 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 	}
 
 	#features[data-features-stage="exit-up"] .features-intro-title {
+		display: block;
 		opacity: 0;
 		transform: translate3d(-50%, calc(-50% + 22vh), 0);
 	}
 
 	#features[data-features-stage="content"] .features-intro-title {
+		display: none;
 		opacity: 0;
 		left: var(--features-intro-target-x);
 		top: var(--features-intro-target-y);
@@ -197,7 +204,15 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 
 	#features[data-features-stage="intro-prep"] .features-intro-title,
 	#features[data-features-stage="entry-pending"] .features-intro-title {
+		display: none;
 		opacity: 0;
+	}
+
+	@starting-style {
+		#features[data-features-stage="intro"] .features-intro-title {
+			opacity: 0;
+			transform: translate3d(-50%, calc(-50% + 18vh), 0);
+		}
 	}
 
 	#features[data-features-stage="intro-prep"] .features-title-wrap,
@@ -408,9 +423,10 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 		flowTitle.style.visibility = shouldHide ? "hidden" : "visible";
 	}
 
-function syncFeaturesIntroTitleVisual(section) {
-	const introTitle = section.querySelector(".features-intro-title");
-	if (!(introTitle instanceof HTMLElement)) return;
+	function syncFeaturesIntroTitleVisual(section) {
+		const introTitle = section.querySelector(".features-intro-title");
+		if (!(introTitle instanceof HTMLElement)) return;
+		if (canUseNativeFeaturesIntroTransition()) return;
 
 		const stage = getFeaturesStage(section);
 		const offscreenTransform = "translate3d(-50%, calc(-50% + 18vh), 0)";
@@ -449,51 +465,52 @@ function syncFeaturesIntroTitleVisual(section) {
 			return;
 		}
 
-	introTitle.style.opacity = "0";
-	introTitle.style.transform = offscreenTransform;
-}
-
-function playFeaturesIntroEntry(section) {
-	const introTitle = section.querySelector(".features-intro-title");
-	if (!(introTitle instanceof HTMLElement)) return;
-
-	if (featuresIntroAnimation) {
-		featuresIntroAnimation.cancel();
-		featuresIntroAnimation = null;
+		introTitle.style.opacity = "0";
+		introTitle.style.transform = offscreenTransform;
 	}
 
-	const offscreenTransform = "translate3d(-50%, calc(-50% + 18vh), 0)";
-	const centeredTransform = "translate3d(-50%, -50%, 0)";
+	function playFeaturesIntroEntry(section) {
+		const introTitle = section.querySelector(".features-intro-title");
+		if (!(introTitle instanceof HTMLElement)) return;
+		if (canUseNativeFeaturesIntroTransition()) return;
 
-	introTitle.hidden = false;
-	introTitle.style.left = "50%";
-	introTitle.style.top = "50%";
-	introTitle.style.opacity = "0";
-	introTitle.style.transform = offscreenTransform;
-	void introTitle.offsetHeight;
+		if (featuresIntroAnimation) {
+			featuresIntroAnimation.cancel();
+			featuresIntroAnimation = null;
+		}
 
-	featuresIntroAnimation = introTitle.animate(
-		[
-			{ opacity: 0, transform: offscreenTransform },
-			{ opacity: 1, transform: centeredTransform },
-		],
-		{
-			duration: FEATURES_LOCK_DURATION_MS,
-			easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-			fill: "forwards",
-		},
-	);
+		const offscreenTransform = "translate3d(-50%, calc(-50% + 18vh), 0)";
+		const centeredTransform = "translate3d(-50%, -50%, 0)";
 
-	introTitle.style.opacity = "1";
-	introTitle.style.transform = centeredTransform;
+		introTitle.hidden = false;
+		introTitle.style.left = "50%";
+		introTitle.style.top = "50%";
+		introTitle.style.opacity = "0";
+		introTitle.style.transform = offscreenTransform;
+		void introTitle.offsetHeight;
 
-	featuresIntroAnimation.onfinish = () => {
-		featuresIntroAnimation = null;
-	};
-	featuresIntroAnimation.oncancel = () => {
-		featuresIntroAnimation = null;
-	};
-}
+		featuresIntroAnimation = introTitle.animate(
+			[
+				{ opacity: 0, transform: offscreenTransform },
+				{ opacity: 1, transform: centeredTransform },
+			],
+			{
+				duration: FEATURES_LOCK_DURATION_MS,
+				easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+				fill: "forwards",
+			},
+		);
+
+		introTitle.style.opacity = "1";
+		introTitle.style.transform = centeredTransform;
+
+		featuresIntroAnimation.onfinish = () => {
+			featuresIntroAnimation = null;
+		};
+		featuresIntroAnimation.oncancel = () => {
+			featuresIntroAnimation = null;
+		};
+	}
 
 	function setFeaturesStage(section, stage) {
 		section.dataset.featuresStage = stage;
@@ -627,6 +644,18 @@ let featuresScrollAbort = null;
 let featuresStageTimeoutId = null;
 let featuresIntroEntryFrameId = null;
 let featuresIntroAnimation = null;
+let supportsFeaturesIntroDiscreteTransition = null;
+
+	function canUseNativeFeaturesIntroTransition() {
+		if (supportsFeaturesIntroDiscreteTransition !== null) {
+			return supportsFeaturesIntroDiscreteTransition;
+		}
+
+		supportsFeaturesIntroDiscreteTransition =
+			typeof CSS !== "undefined" && CSS.supports("transition-behavior: allow-discrete");
+
+		return supportsFeaturesIntroDiscreteTransition;
+	}
 
 	function initFeaturesScrollDriver() {
 		const section = document.getElementById("features");
@@ -754,8 +783,6 @@ let featuresIntroAnimation = null;
 				setIntroTargetPosition(section);
 
 				setFeaturesStage(section, FEATURES_STAGE_INTRO_PREP);
-				const introTitle = section.querySelector(".features-intro-title");
-				if (introTitle instanceof HTMLElement) void introTitle.offsetHeight;
 				featuresIntroEntryFrameId = window.requestAnimationFrame(() => {
 					featuresIntroEntryFrameId = null;
 					setFeaturesStage(section, FEATURES_STAGE_INTRO);
