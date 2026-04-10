@@ -9,40 +9,31 @@ flowchart LR
   subgraph browser [Navegador]
     Form[WaitlistForm]
   end
-  subgraph astro [Astro Node]
+  subgraph astro [Astro servidor]
     API["POST /api/waitlist"]
   end
-  subgraph n8n [n8n]
-    W1[Webhook append]
-    W2[Webhook email status]
+  subgraph resend [Resend]
+    R1[Correo interno]
+    R2[Correo al usuario]
   end
-  subgraph sheets [Google Sheets]
-    DB[(Filas waitlist)]
-  end
-  subgraph emailjs [EmailJS]
-    T[Template equipo]
-  end
-  Form -->|1. append| API
-  API --> W1
-  W1 --> DB
-  Form -->|2. EmailJS| T
-  Form -->|3. emailStatus| API
-  API --> W2
-  W2 --> DB
+  Form -->|JSON email title time| API
+  API --> R1
+  API --> R2
 ```
 
-1. El formulario llama primero a **`/api/waitlist`** con `step: "append"` → el servidor reenvía a n8n → fila nueva en Sheets (`emailSent` pendiente).
-2. En el navegador, **EmailJS** envía el correo al template configurado (p. ej. aviso al equipo).
-3. El formulario vuelve a llamar a **`/api/waitlist`** con `step: "emailStatus"` para actualizar la columna **`emailSent`** en Sheets.
+1. El formulario envía **`POST /api/waitlist`** con **`email`**, **`title`**, **`time`** (JSON).
+2. El servidor envía **dos correos HTML** vía **Resend**: aviso al equipo (**`RESEND_NOTIFY_TO`**) y confirmación al suscriptor.
 
-Los webhooks de n8n validan el header **`X-Waitlist-Secret`**; debe coincidir con **`WAITLIST_N8N_SECRET`** en Astro y en el contenedor n8n.
+**n8n y Google Sheets** (opcional): si más adelante conectas workflows que añadan filas o actualicen estado, usa las URLs y **`WAITLIST_N8N_SECRET`** descritas en [`n8n.md`](./n8n.md). El código actual de **`/api/waitlist`** solo gestiona Resend.
+
+Los webhooks de n8n validan el header **`X-Waitlist-Secret`**; debe coincidir con **`WAITLIST_N8N_SECRET`** en Astro y en el contenedor n8n cuando uses esos workflows.
 
 ## Stack técnico
 
 | Pieza | Detalle |
 |--------|---------|
 | Framework | [Astro](https://astro.build/) 6.x |
-| Runtime producción | [Adapter Node](https://docs.astro.build/en/guides/integrations-guide/node/) en modo **`standalone`** → `node ./dist/server/entry.mjs` |
+| Runtime producción | [Adapter Cloudflare](https://docs.astro.build/en/guides/integrations-guide/cloudflare/) (Workers / Pages) |
 | Imagen Docker | Multi-stage: **Node 22** (bookworm-slim), build + imagen final mínima |
 | Automatización opcional | **n8n** (`docker-compose.n8n.yml`), datos en **`./n8n_data`** |
 
@@ -51,7 +42,7 @@ Los webhooks de n8n validan el header **`X-Waitlist-Secret`**; debe coincidir co
 - **Stage `builder`**: copia dependencias, `npm ci`, copia el repo, **`npm run build`** (Astro).
 - **Stage `runner`**: solo `dist/`, `node_modules/` y `package.json`; **`CMD`** ejecuta el servidor Node en **`PORT`** (por defecto **4321**).
 
-**Importante:** las variables **`PUBLIC_*`** de EmailJS deben existir **en el momento del build** del cliente Astro (se inyectan en el bundle). En Docker se pasan como **`ARG`/`ENV`** en el stage builder (ver tabla abajo). Las variables **solo servidor** (n8n, secretos) **no** van en el Dockerfile: se resuelven en **runtime** con `process.env` vía `env_file` / `environment` en Compose o el orquestador que uses.
+**Importante:** las variables de **Resend** y n8n son **solo servidor**; se resuelven en **runtime** con `env_file` / `environment` en Compose o el orquestador (no hace falta inyectarlas en el stage de build del front).
 
 El **`.dockerignore`** excluye entre otras cosas `node_modules`, `dist`, `.env` y `*.md`; el contenedor **no** incluye tu `.env` — debes inyectar runtime env en el despliegue.
 
@@ -66,21 +57,18 @@ En **Docker Desktop (Windows/macOS)**, el servicio `web` usa por defecto **`host
 
 ## Variables de entorno
 
-### Cliente (build time) — prefijo `PUBLIC_`
+### Servidor (runtime) — Resend y waitlist
 
-Definidas en **`.env`** para `npm run dev` / `npm run build` local, y como **build args** en `docker compose build` para la imagen `web`.
+Definidas en **`.env`** (y en el dashboard de Cloudflare para producción). Leídas en [`src/pages/api/waitlist.ts`](../src/pages/api/waitlist.ts) vía **`import.meta.env`**.
 
 | Variable | Uso |
 |----------|-----|
-| `PUBLIC_EMAILJS_PUBLIC_KEY` | Inicialización de `@emailjs/browser` |
-| `PUBLIC_EMAILJS_SERVICE_ID` | Servicio EmailJS |
-| `PUBLIC_EMAILJS_TEMPLATE_ID` | Plantilla del correo enviado desde el navegador |
+| `RESEND_API_KEY` | Clave API Resend (solo servidor; nunca `PUBLIC_`) |
+| `RESEND_FROM` | Remitente verificado (p. ej. `Snowbound <noreply@snowbound.com>`) |
+| `RESEND_NOTIFY_TO` | Correo donde recibes el aviso de nuevo alta |
+| `RESEND_REPLY_TO` | Opcional: cabecera Reply-To |
 
-Plantilla: el formulario envía **`title`**, **`email`**, **`time`**. Autorespuestas al suscriptor se configuran en el panel de EmailJS si las necesitas.
-
-### Servidor (runtime) — Astro `/api/waitlist`
-
-Leídas con **`serverEnv()`** en [`src/pages/api/waitlist.ts`](../src/pages/api/waitlist.ts): primero **`process.env`**, luego `import.meta.env` (útil en desarrollo). En Docker, **`process.env`** debe llevar los valores en tiempo de ejecución (p. ej. `env_file: .env` + `environment` en Compose).
+### Servidor (runtime) — n8n (opcional)
 
 | Variable | Uso |
 |----------|-----|
@@ -112,7 +100,7 @@ Plantilla de todas las variables del proyecto: **`.env.example`** (copiar a **`.
 
 ```bash
 cp .env.example .env
-# Editar .env: EmailJS, WAITLIST_N8N_SECRET, URLs de webhooks n8n
+# Editar .env: Resend, WAITLIST_N8N_SECRET, URLs de webhooks n8n
 npm install
 npm run dev
 ```
@@ -121,7 +109,7 @@ n8n en local: `npm run docker:n8n:up` o `docker compose -f docker-compose.n8n.ym
 
 ## Despliegue: app en Docker (n8n en el host)
 
-1. `.env` con `PUBLIC_EMAILJS_*`, `WAITLIST_N8N_SECRET` y (para dev en host) URLs locales si aplica.
+1. `.env` con `RESEND_*`, `WAITLIST_N8N_SECRET` y (para dev en host) URLs locales si aplica.
 2. n8n en marcha en el host (puerto 5678).
 3. Desde la raíz del repo:
 
@@ -140,7 +128,7 @@ n8n en local: `npm run docker:n8n:up` o `docker compose -f docker-compose.n8n.ym
 
 1. **Secretos:** generar un `WAITLIST_N8N_SECRET` fuerte; mismo valor en Astro y n8n.
 2. **URLs de webhooks:** deben ser alcanzables **desde el servidor donde corre Astro** (no desde el navegador). Si Astro y n8n están en la misma red Docker, usar `http://n8n:5678/webhook/...` o el nombre de servicio que definas.
-3. **EmailJS:** volver a pasar **`PUBLIC_*`** en el **build** de la imagen (CI/CD o `docker compose build --build-arg ...`).
+3. **Resend:** configurar **`RESEND_API_KEY`**, **`RESEND_FROM`**, **`RESEND_NOTIFY_TO`** en runtime (env del contenedor o secretos).
 4. **HTTPS:** proxy inverso (Caddy, Traefik, nginx) delante de Astro y, si aplica, de n8n; actualizar **`WEBHOOK_URL`** y variables `N8N_*` según la [documentación n8n](https://docs.n8n.io/hosting/configuration/environment-variables/).
 5. **Migración n8n:** copiar el directorio **`n8n_data`** completo al servidor y montarlo igual (`./n8n_data:/home/node/.n8n`). Si usas **`N8N_ENCRYPTION_KEY`**, debe ser la misma que en el origen. Más detalle en [`n8n.md`](./n8n.md).
 
@@ -158,4 +146,4 @@ n8n en local: `npm run docker:n8n:up` o `docker compose -f docker-compose.n8n.ym
 
 - **Workflows waitlist, Google Sheet, nodos Code:** [`n8n.md`](./n8n.md)
 - **Código API waitlist:** [`src/pages/api/waitlist.ts`](../src/pages/api/waitlist.ts)
-- **Formulario + EmailJS:** [`src/components/WaitlistForm.astro`](../src/components/WaitlistForm.astro)
+- **Formulario:** [`src/components/WaitlistForm.astro`](../src/components/WaitlistForm.astro)

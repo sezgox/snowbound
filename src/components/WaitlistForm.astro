@@ -51,11 +51,7 @@ const isHero = variant === "hero";
 </form>
 
 <script>
-	import emailjs from "@emailjs/browser";
-
-	const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
-	const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID ?? "";
-	const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
+	import { submitWaitlist } from "../scripts/waitlist-submit";
 
 	function showStatus(
 		el: HTMLElement | null,
@@ -69,10 +65,6 @@ const isHero = variant === "hero";
 	}
 
 	const forms = document.querySelectorAll<HTMLFormElement>("[data-waitlist-form]");
-
-	if (publicKey) {
-		emailjs.init({ publicKey });
-	}
 
 	forms.forEach((form) => {
 		form.addEventListener("submit", async (e) => {
@@ -88,24 +80,21 @@ const isHero = variant === "hero";
 				return;
 			}
 
-			if (!publicKey || !serviceId || !templateId) {
-				showStatus(status, "Email not configured yet — we still noted your interest!", true);
-				return;
-			}
-
 			if (submitBtn) submitBtn.disabled = true;
 			showStatus(status, "Subscribing…", false);
 
 			try {
-				await emailjs.send(serviceId, templateId, {
-					title: "Snowbound newsletter",
-					email,
-					time: new Date().toISOString(),
-				});
+				await submitWaitlist(email);
 				showStatus(status, "Thanks! You are on the list — we will be in touch.", false);
 				form.reset();
-			} catch {
-				showStatus(status, "Something went wrong. Please try again.", true);
+			} catch (err) {
+				const msg =
+					err instanceof Error && err.message === "not_configured"
+						? "Email not configured yet — we still noted your interest!"
+						: err instanceof Error && err.message !== "request_failed"
+							? err.message
+							: "Something went wrong. Please try again.";
+				showStatus(status, msg, true);
 			}
 
 			if (submitBtn) submitBtn.disabled = false;

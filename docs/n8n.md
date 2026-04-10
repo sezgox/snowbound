@@ -48,7 +48,7 @@ The compose file uses **`n8nio/n8n`** from Docker Hub. You can switch to **`dock
 Use **`docker-compose.yml`** at the repo root. It builds the Astro site and listens on **http://localhost:4321**.
 
 1. Keep n8n running (e.g. `npm run docker:n8n:up`).
-2. Ensure **`.env`** has **`WAITLIST_N8N_SECRET`** (same as in the n8n container) and your **`PUBLIC_EMAILJS_*`** keys.
+2. Ensure **`.env`** has **`WAITLIST_N8N_SECRET`** (same as in the n8n container) and your **`RESEND_*`** keys for the web app.
 3. From the repo root:
 
    ```bash
@@ -63,9 +63,11 @@ Stop the web container: **`npm run docker:web:down`**.
 
 If your webhook paths differ from `snowbound-waitlist-append` / `snowbound-waitlist-email-status`, set **`N8N_DOCKER_APPEND_WEBHOOK_URL`** and **`N8N_DOCKER_EMAIL_STATUS_WEBHOOK_URL`** in `.env`.
 
-## Waitlist → Google Sheets + EmailJS
+## Waitlist → Resend + optional Google Sheets (n8n)
 
-The site posts newsletter signups through **`POST /api/waitlist`** (same origin, no CORS issues in dev). That route forwards to two n8n webhooks with header **`X-Waitlist-Secret`** (must match **`WAITLIST_N8N_SECRET`** in both Snowbound `.env` and the n8n container — see `docker-compose.n8n.yml`).
+The browser posts newsletter signups to **`POST /api/waitlist`** (same origin). That route sends **two emails via Resend** (internal notification + subscriber confirmation). **Optional** n8n workflows can append/update Google Sheet rows if you call those webhooks from your own automation or extend the API later.
+
+When you use n8n webhooks, they expect header **`X-Waitlist-Secret`** (must match **`WAITLIST_N8N_SECRET`** in both Snowbound `.env` and the n8n container — see `docker-compose.n8n.yml`).
 
 ### Google Sheet
 
@@ -79,7 +81,7 @@ The site posts newsletter signups through **`POST /api/waitlist`** (same origin,
 | Workflow | Purpose |
 |----------|---------|
 | **Snowbound Waitlist — Append row** | Inserts `timestamp`, derived `nombre`, `email`, `emailSent` = `pendiente` |
-| **Snowbound Waitlist — Email status** | After EmailJS runs in the browser, updates `emailSent` to `sí` or `error EmailJS` (match on `email`) |
+| **Snowbound Waitlist — Email status** | After Resend succeeds (or if you wire a callback), updates `emailSent` to `sí` or `error Resend` (match on `email`) |
 
 1. In each workflow, open **Append to Sheet1** / **Upsert emailSent** and attach your **Google Sheets OAuth2** credential.
 2. **Activate** both workflows.
@@ -91,9 +93,9 @@ The site posts newsletter signups through **`POST /api/waitlist`** (same origin,
 
 **Webhooks** are set to respond **when the last node finishes**, so your app only gets HTTP 200 after Google Sheets runs (or an error if something fails). Earlier, **“Respond immediately”** could return success before the sheet step and hide failures.
 
-### EmailJS
+### Resend
 
-The form sends **`title`**, **`email`**, **`time`** to **`PUBLIC_EMAILJS_TEMPLATE_ID`** (e.g. notify the team). Subscriber **auto-replies** can be configured in the EmailJS dashboard for that template or service — the app does not send a second template.
+The API route sends HTML emails defined in the repo (**internal** + **user** templates in `src/lib/email/waitlist-templates.ts`). Configure **`RESEND_API_KEY`**, **`RESEND_FROM`**, and **`RESEND_NOTIFY_TO`** in server environment (see [`infrastructure.md`](./infrastructure.md)).
 
 ### Same server: Docker network
 
@@ -105,6 +107,6 @@ When Astro and n8n run in **one Compose file** on a **shared network**:
 
 ### Order of operations (reliability)
 
-1. Append row to Sheets (most reliable).
-2. Send EmailJS from the browser.
-3. Call **`/api/waitlist`** with **`step: "emailStatus"`** so **`emailSent`** reflects success or failure while the row already exists.
+1. Append row to Sheets (most reliable), if you use that workflow.
+2. **`POST /api/waitlist`** sends mail via Resend from the server.
+3. If you track status in Sheets, call your n8n **`emailStatus`** webhook (or extend the Astro route) so **`emailSent`** reflects success or failure while the row already exists.

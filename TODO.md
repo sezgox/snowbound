@@ -13,14 +13,14 @@
 - [x] Thorsten display font installed in `public/fonts/`.
 - [ ] When the design changes: use the Figma MCP to fetch fresh asset URLs and re-download images to `public/images/figma/`.
 
-## EmailJS (waitlist form)
+## Resend (waitlist)
 
-- [ ] Create `.env` from `.env.example` and set the three `PUBLIC_EMAILJS_*` vars (public key, service ID, template ID).
-- [ ] In the EmailJS template, confirm these variables are used: `title`, `email`, `time`.
+- [ ] Create `.env` from `.env.example` and set **`RESEND_API_KEY`**, **`RESEND_FROM`**, **`RESEND_NOTIFY_TO`** (dominio verificado en Resend).
+- [ ] In Cloudflare Pages/Workers, add the same server-side variables (no `PUBLIC_` prefix for the API key).
 
 ## Deploy (Cloudflare Pages)
 
 - [ ] Connect the GitHub repo (`sezgox/snowbound`) to a Cloudflare Pages project.
 - [ ] Build command: `npm run build` · Output directory: `dist`
-- [ ] Add the three `PUBLIC_EMAILJS_*` environment variables in the Pages dashboard (Settings → Environment variables).
+- [ ] Add **`RESEND_API_KEY`**, **`RESEND_FROM`**, **`RESEND_NOTIFY_TO`** (and optional **`RESEND_REPLY_TO`**) in the environment/secrets settings.
 - [ ] Trigger a deploy — done.

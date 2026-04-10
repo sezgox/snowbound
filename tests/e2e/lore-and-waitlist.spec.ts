@@ -16,7 +16,7 @@ test.describe("Landing page", () => {
 		expect(fs.color).toBe("rgb(17, 45, 87)");
 	});
 
-	test("hero waitlist submits via EmailJS and shows success", async ({
+	test("hero waitlist submits via API and shows success", async ({
 		page,
 	}) => {
 		await page.route("**/api/waitlist", async (route) => {

@@ -4,10 +4,6 @@ services:
   web:
     build:
       context: .
-      args:
-        PUBLIC_EMAILJS_PUBLIC_KEY: ${PUBLIC_EMAILJS_PUBLIC_KEY:-}
-        PUBLIC_EMAILJS_SERVICE_ID: ${PUBLIC_EMAILJS_SERVICE_ID:-}
-        PUBLIC_EMAILJS_TEMPLATE_ID: ${PUBLIC_EMAILJS_TEMPLATE_ID:-}
     ports:
       - "4321:4321"
     env_file:
@@ -15,6 +11,12 @@ services:
     environment:
       HOST: "0.0.0.0"
       PORT: "4321"
+      # Resend (waitlist emails)
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      RESEND_FROM: ${RESEND_FROM:-}
+      RESEND_NOTIFY_TO: ${RESEND_NOTIFY_TO:-}
+      RESEND_REPLY_TO: ${RESEND_REPLY_TO:-}
+      PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-}
       # Override localhost — inside the container, localhost is not your PC. Use host.docker.internal.
       N8N_APPEND_WEBHOOK_URL: ${N8N_DOCKER_APPEND_WEBHOOK_URL:-http://host.docker.internal:5678/webhook/snowbound-waitlist-append}
       N8N_EMAIL_STATUS_WEBHOOK_URL: ${N8N_DOCKER_EMAIL_STATUS_WEBHOOK_URL:-http://host.docker.internal:5678/webhook/snowbound-waitlist-email-status}

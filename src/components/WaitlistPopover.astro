@@ -76,11 +76,7 @@
 </div>
 
 <script>
-	import emailjs from "@emailjs/browser";
-
-	const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
-	const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID ?? "";
-	const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
+	import { submitWaitlist } from "../scripts/waitlist-submit";
 
 	const popover = document.querySelector<HTMLElement>("[data-waitlist-popover]");
 	const card = popover?.querySelector<HTMLElement>("[data-waitlist-card]");
@@ -89,10 +85,6 @@
 	const form = popover?.querySelector<HTMLFormElement>("[data-waitlist-form]");
 	const statusEl = popover?.querySelector<HTMLElement>("[data-waitlist-status]");
 	const submitBtn = popover?.querySelector<HTMLButtonElement>("[data-waitlist-submit]");
-
-	if (publicKey) {
-		emailjs.init({ publicKey });
-	}
 
 	function openPopover() {
 		if (!popover || !card) return;
@@ -151,24 +143,21 @@
 			return;
 		}
 
-		if (!publicKey || !serviceId || !templateId) {
-			showStatus("Email not configured yet — we still noted your interest!", true);
-			return;
-		}
-
 		if (submitBtn) submitBtn.disabled = true;
 		showStatus("Subscribing…", false);
 
 		try {
-			await emailjs.send(serviceId, templateId, {
-				title: "Snowbound newsletter",
-				email,
-				time: new Date().toISOString(),
-			});
+			await submitWaitlist(email);
 			showStatus("Thanks! You are on the list — we will be in touch.", false);
 			form.reset();
-		} catch {
-			showStatus("Something went wrong. Please try again.", true);
+		} catch (err) {
+			const msg =
+				err instanceof Error && err.message === "not_configured"
+					? "Email not configured yet — we still noted your interest!"
+					: err instanceof Error && err.message !== "request_failed"
+						? err.message
+						: "Something went wrong. Please try again.";
+			showStatus(msg, true);
 		}
 
 		if (submitBtn) submitBtn.disabled = false;

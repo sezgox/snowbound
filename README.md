@@ -1,12 +1,12 @@
 # Snowbound
 
-Sitio Astro (Node adapter) con formulario de waitlist: **Google Sheets** vía **n8n**, **EmailJS** en el cliente, API **`/api/waitlist`** en el servidor.
+Sitio Astro con adaptador **Cloudflare**, formulario de waitlist: correos vía **Resend** (`POST /api/waitlist`), y opcionalmente **Google Sheets** vía **n8n** (variables de webhook en `.env`).
 
 ## Desarrollo rápido
 
 ```bash
 cp .env.example .env
-# Rellenar .env (EmailJS, secretos n8n, URLs de webhooks)
+# Rellenar .env (Resend, secretos n8n si aplica, URLs de webhooks)
 npm install
 npm run dev
 ```
@@ -32,6 +32,6 @@ Abre [http://localhost:4321](http://localhost:4321).
 
 ## Estructura relevante
 
-- `src/pages/api/waitlist.ts` — proxy firmado hacia n8n
-- `src/components/WaitlistForm.astro` — formulario, EmailJS, llamadas a la API
+- `src/pages/api/waitlist.ts` — `POST` waitlist: envío a Resend (aviso interno + correo al usuario)
+- `src/components/WaitlistForm.astro` — formulario, `fetch` a `/api/waitlist`
 - `Dockerfile`, `docker-compose.yml`, `docker-compose.n8n.yml` — contenedores

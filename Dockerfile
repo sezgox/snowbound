@@ -1,14 +1,7 @@
-# Astro + @astrojs/node (standalone). PUBLIC_* must be available at build time for client bundles.
+# Astro + Cloudflare adapter: production deploy is typically `npm run build` + Wrangler/Pages.
+# This Dockerfile kept for optional Node-style runs; ensure adapter matches your deployment target.
 FROM node:22-bookworm-slim AS builder
 WORKDIR /app
-
-ARG PUBLIC_EMAILJS_PUBLIC_KEY=
-ARG PUBLIC_EMAILJS_SERVICE_ID=
-ARG PUBLIC_EMAILJS_TEMPLATE_ID=
-
-ENV PUBLIC_EMAILJS_PUBLIC_KEY=$PUBLIC_EMAILJS_PUBLIC_KEY
-ENV PUBLIC_EMAILJS_SERVICE_ID=$PUBLIC_EMAILJS_SERVICE_ID
-ENV PUBLIC_EMAILJS_TEMPLATE_ID=$PUBLIC_EMAILJS_TEMPLATE_ID
 
 COPY package.json package-lock.json ./
 RUN npm ci
@@ -22,6 +15,7 @@ ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=4321
 
+# Resend and n8n URLs are read at runtime (e.g. env_file / compose environment), not at build.
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./
