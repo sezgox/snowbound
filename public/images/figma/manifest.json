@@ -3,7 +3,7 @@
   "hero-logo": "/images/figma/snowbound-logo.png",
   "home-hero": "/images/figma/home-hero.png",
   "pattern-ice": "/images/figma/pattern-ice.png",
-  "tree": "/images/figma/tree.png",
+  "tree": "/images/figma/tree.webp",
   "hex-board": "/images/figma/hex-board.png",
   "altar": "/images/figma/altar.png",
   "campfire": "/images/figma/campfire.png",
@@ -18,17 +18,11 @@
   "icon-facebook": "/images/figma/icon-facebook.svg",
   "icon-instagram": "/images/figma/icon-instagram.svg",
   "tribes-shared-chevron": "/images/figma/tribes/shared-chevron.png",
-  "tribes-shared-parchment": "/images/figma/tribes/shared-parchment.png",
+  "tribes-panel-bg-rotated": "/images/figma/tribes/tribe-desc-bg-rotated.png",
   "tribes-01-character": "/images/figma/tribes/01-character.png",
-  "tribes-01-border": "/images/figma/tribes/01-border.png",
   "tribes-02-character": "/images/figma/tribes/02-character.png",
-  "tribes-02-border": "/images/figma/tribes/02-border.png",
   "tribes-03-character": "/images/figma/tribes/03-character.png",
-  "tribes-03-border": "/images/figma/tribes/03-border.png",
   "tribes-04-character": "/images/figma/tribes/04-character.png",
-  "tribes-04-border": "/images/figma/tribes/04-border.png",
   "tribes-05-character": "/images/figma/tribes/05-character.png",
-  "tribes-05-border": "/images/figma/tribes/05-border.png",
-  "tribes-06-character": "/images/figma/tribes/06-character.png",
-  "tribes-06-border": "/images/figma/tribes/06-border.png"
+  "tribes-06-character": "/images/figma/tribes/06-character.png"
 }
