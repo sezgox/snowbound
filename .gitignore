@@ -48,6 +48,7 @@ public/videos/
 
 # Local dev scratch logs
 .tmp-dev.*
+.codex-astro-*.log
 
 # Windows
 Thumbs.db

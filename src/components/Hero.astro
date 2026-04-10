@@ -60,9 +60,12 @@ const snowParticlesRender = [
 ];
 ---
 
-<section class="relative mb-[-2px] flex min-h-screen flex-col items-center justify-around gap-4 overflow-hidden px-2 md:gap-8 lg:gap-10" 
-style="background-image:linear-gradient(180deg,rgba(35,149,231,0.8) 0%, rgba(35,149,231,0.8) 5%, rgba(255, 255, 255, 0.9) 90%, #faf9f2 97%),  url('/images/figma/home-hero.png');
-background-size: cover; background-position: center center;">
+<section
+	id="hero"
+	class="relative mb-[-2px] flex min-h-screen flex-col items-center justify-around gap-4 overflow-hidden px-2 md:gap-8 lg:gap-10"
+	style="background-image:linear-gradient(180deg,rgba(35,149,231,0.8) 0%, rgba(35,149,231,0.8) 5%, rgba(255, 255, 255, 0.9) 90%, #faf9f2 97%),  url('/images/figma/home-hero.png');
+background-size: cover; background-position: center center;"
+>
 	<div class="hero-snowfield" aria-hidden="true">
 		{
 			snowParticlesRender.map((p, i) => (
@@ -124,7 +127,7 @@ background-size: cover; background-position: center center;">
 	/>
 
 	<div
-	class="relative z-10 font-display text-center text-[clamp(2rem,5vw,4rem)] tracking-[0.2px] text-[#2095f7] md:text-[64px] md:leading-[64px] text-shadow-outline text-shadow-white"
+	class="relative z-10 font-display text-center text-[clamp(2.25rem,5vw,4rem)] tracking-[0.2px] text-[#2095f7] md:text-[64px] md:leading-[64px] text-shadow-outline text-shadow-white"
 	>
 		<p class="mb-0 leading-[1.1] whitespace-pre md:leading-[64px]">{`Survive the winter. `}</p>
 		<p class="leading-[1.1] whitespace-pre md:leading-[64px]">Betray your rivals.</p>

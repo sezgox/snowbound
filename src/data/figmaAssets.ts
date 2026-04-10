@@ -7,7 +7,6 @@ export const assets = {
 	heroLogo: "/images/figma/snowbound-logo.png",
 	patternIce: "/images/figma/pattern-ice.png",
 	tree: "/images/figma/tree.webp",
-	hexBoard: "/images/figma/hex-board.png",
 	altar: "/images/figma/altar.png",
 	campfire: "/images/figma/campfire.png",
 	igloo: "/images/figma/igloo.png",
@@ -21,6 +20,8 @@ export const assets = {
 	iconMail: "/images/figma/icon-mail.svg",
 	iconFacebook: "/images/figma/icon-facebook.svg",
 	iconInstagram: "/images/figma/icon-instagram.svg",
+	/** Tribes description parchment background, rotated for panel layout. */
+	tribesDescBgRotated: "/images/figma/tribes/tribe-desc-bg-rotated.png",
 	/** Tribes carousel chevron (Figma 599:320). */
 	tribesChevron: "/images/figma/tribes/shared-chevron.png",
 } as const;
