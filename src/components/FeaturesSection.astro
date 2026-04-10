@@ -1,6 +1,4 @@
 ---
-import { assets } from "../data/figmaAssets";
-
 const cards = [
 	{
 		title: ["CHANGING", "BOARD"],
@@ -43,16 +41,20 @@ const cards = [
 	>
 		<h2
 			id="features-heading"
-			class="font-display text-shadow-outline text-shadow-white p-2.5 text-center text-4xl tracking-wide text-[#112d57] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)] md:text-[64px] md:leading-[48px]"
+			data-features-reveal
+			class="features-reveal-title font-display text-shadow-outline text-shadow-white p-2.5 text-center text-4xl tracking-wide text-[#112d57] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)] md:text-[64px] md:leading-[48px]"
 		>
 			WHAT MAKES IT UNIQUE
 		</h2>
 		<div
-			class="flex w-full flex-wrap justify-center gap-6 text-center md:gap-x-6 md:gap-y-0"
+			class="features-cards-row flex w-full flex-wrap justify-center gap-6 text-center md:gap-x-6 md:gap-y-0"
 		>
 			{
 				cards.map((c) => (
-					<div class="flex h-auto min-h-[255px] w-[min(100%,229px)] flex-col items-center justify-center gap-10 rounded-[10px] border border-[#77abbd] bg-white px-5 py-10">
+					<div
+						data-features-reveal
+						class="features-reveal-card flex h-auto min-h-[255px] w-[min(100%,229px)] flex-col items-center justify-center gap-10 rounded-[10px] border border-[#77abbd] bg-white px-5 py-10"
+					>
 						<div class="font-tillana w-full text-2xl font-bold leading-8 tracking-wide text-black">
 							{c.title.map((line) => (
 								<p class="mb-0 leading-8">{line}</p>
@@ -86,3 +88,146 @@ const cards = [
 		</button>
 	</div>
 </section>
+
+<noscript>
+	<style>
+		[data-features-reveal] {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+			animation: none !important;
+		}
+	</style>
+</noscript>
+
+<style>
+	.features-reveal-title {
+		opacity: 0;
+		transform: translate3d(0, clamp(3.25rem, 14vw, 6.5rem), 0);
+		transition:
+			opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+		will-change: opacity, transform;
+	}
+
+	.features-reveal-title.is-in-view {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+
+	.features-reveal-card {
+		opacity: 0;
+		transform: translate3d(0, clamp(3.5rem, 15vw, 7rem), 0);
+		transition:
+			opacity 0.78s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 0.78s cubic-bezier(0.22, 1, 0.36, 1);
+		will-change: opacity, transform;
+	}
+
+	.features-reveal-card.is-in-view {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+
+	/* Escalonado al revelarse (orden visual: título → tarjetas) */
+	.features-cards-row > .features-reveal-card:nth-child(1) {
+		transition-delay: 0s;
+	}
+	.features-cards-row > .features-reveal-card:nth-child(2) {
+		transition-delay: 0.07s;
+	}
+	.features-cards-row > .features-reveal-card:nth-child(3) {
+		transition-delay: 0.14s;
+	}
+	.features-cards-row > .features-reveal-card:nth-child(4) {
+		transition-delay: 0.21s;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.features-reveal-title,
+		.features-reveal-card {
+			opacity: 1;
+			transform: none;
+			transition: none;
+			will-change: auto;
+		}
+	}
+</style>
+
+<script is:inline>
+	function featuresHeightVisibleRatio(el, marginBottomRatio) {
+		const rect = el.getBoundingClientRect();
+		const vh = window.innerHeight;
+		const m = marginBottomRatio ?? 0;
+		const viewportBottom = vh * (1 - m);
+		const visibleTop = Math.max(0, rect.top);
+		const visibleBottom = Math.min(viewportBottom, rect.bottom);
+		const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+		if (rect.height <= 0) return 0;
+		return visibleHeight / rect.height;
+	}
+
+	function initFeaturesReveal() {
+		const blocks = document.querySelectorAll("[data-features-reveal]");
+		if (!blocks.length) return;
+
+		/* Trigger tardío: el bloque entra más arriba en pantalla y se lee el desplazamiento */
+		const baseMinRatio = 0.45;
+		const baseRootMarginBottomPct = 28;
+
+		function getRevealParams(el) {
+			const isTitle = el.classList.contains("features-reveal-title");
+			/* Título: umbral un 10% menor → se dispara antes al hacer scroll */
+			return {
+				minRatio: isTitle ? baseMinRatio * 0.9 : baseMinRatio,
+				rootMarginBottomPct: baseRootMarginBottomPct,
+			};
+		}
+
+		const markIfNeeded = (el) => {
+			if (el.classList.contains("is-in-view")) return;
+			const { minRatio, rootMarginBottomPct } = getRevealParams(el);
+			if (
+				featuresHeightVisibleRatio(el, rootMarginBottomPct / 100) >=
+				minRatio - 0.02
+			) {
+				el.classList.add("is-in-view");
+			}
+		};
+
+		const observeOne = (el) => {
+			const { minRatio, rootMarginBottomPct } = getRevealParams(el);
+			markIfNeeded(el);
+			if (el.classList.contains("is-in-view")) return;
+
+			if (!("IntersectionObserver" in window)) {
+				el.classList.add("is-in-view");
+				return;
+			}
+
+			const io = new IntersectionObserver(
+				(entries) => {
+					for (const e of entries) {
+						if (e.intersectionRatio >= minRatio) {
+							e.target.classList.add("is-in-view");
+							io.unobserve(e.target);
+							break;
+						}
+					}
+				},
+				{
+					threshold: minRatio,
+					rootMargin: `0px 0px -${rootMarginBottomPct}% 0px`,
+				},
+			);
+			io.observe(el);
+		};
+
+		for (const el of blocks) {
+			observeOne(el);
+		}
+	}
+
+	initFeaturesReveal();
+	document.addEventListener("astro:page-load", initFeaturesReveal);
+</script>

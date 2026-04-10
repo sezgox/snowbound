@@ -1,9 +1,19 @@
-<section class="w-full bg-snowbound-cream pb-10 pt-10 md:pt-20 flex sm:flex-col md:flex-row justify-between" aria-label="Game details" id="game-details">
+<section
+	class="game-stats w-full bg-snowbound-cream pb-10 pt-10 md:pt-20 flex sm:flex-col md:flex-row justify-between"
+	aria-label="Game details"
+	id="game-details"
+	data-game-stats
+>
 	<div
-		class="section-inner flex flex-wrap items-center justify-center gap-12 px-4 md:justify-between md:gap-8"
+		class="game-stats-inner section-inner flex items-center justify-center gap-12 px-4 md:justify-between md:gap-8"
 	>
-		<div class="relative flex flex-col items-center gap-0.5 w-[160px] h-[160px] justify-between">
-			<svg width="148" height="118" viewBox="0 0 148 118" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<div
+			class="game-stats-column relative flex h-[128px] w-[128px] flex-col items-center justify-between gap-0.5 md:h-[152px] md:w-[152px] lg:h-[160px] lg:w-[160px]"
+			role="group"
+			aria-label="Number of players"
+			title="Number of players"
+		>
+			<svg class="game-stats-svg origin-center h-[118px] w-[148px] max-md:h-[100px] max-md:w-[126px]" viewBox="0 0 148 118" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false">
 				<path d="M29.5503 3.39129C29.5503 1.51833 31.0686 0 32.9416 0H114.45C116.323 0 117.841 1.51833 117.841 3.39129V117.721H29.5503V3.39129Z" fill="url(#pattern0_599_663)"/>
 				<path d="M0 12.426C0 10.553 1.51833 9.03467 3.39129 9.03467H68.6087C70.4817 9.03467 72 10.553 72 12.426V110.035H0V12.426Z" fill="url(#pattern1_599_663)" fill-opacity="0.6"/>
 				<path d="M75.3914 12.426C75.3914 10.553 76.9097 9.03467 78.7826 9.03467H144C145.873 9.03467 147.391 10.553 147.391 12.426V110.035H75.3914V12.426Z" fill="url(#pattern2_599_663)" fill-opacity="0.6"/>
@@ -21,25 +31,34 @@
 				</defs>
 			</svg>
 			<p
-				class="font-display text-center text-2xl text-black uppercase"
+				class="font-display text-center text-[16px] md:text-2xl text-black uppercase"
 			>
 				2 - 6
 			</p>
 		</div>
 
-		<div class="flex flex-col items-center gap-0.5 w-[160px] h-[160px] justify-between">
-				
-			<svg width="54" height="86" viewBox="0 0 54 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<div
+			class="game-stats-column flex h-[128px] w-[128px] flex-col items-center justify-between gap-0.5 md:h-[152px] md:w-[152px] lg:h-[160px] lg:w-[160px]"
+			role="group"
+			aria-label="Time per game"
+			title="Time per game"
+		>
+			<svg class="game-stats-svg origin-center h-[86px] w-[54px] max-md:h-[73px] max-md:w-[46px]" viewBox="0 0 54 86" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 				<path d="M45.6208 32.9435C47.0279 31.832 50.3211 29.2285 50.3211 22.922V9.92785H51.8912C52.6094 9.92785 53.1977 9.26176 53.1977 8.44883V1.4783C53.1977 0.665369 52.6094 0 51.8912 0H1.3054C0.586822 0 0 0.665369 0 1.4783V8.44883C0 9.26194 0.586822 9.92785 1.3054 9.92785H2.8759V23.1576C2.8759 29.4037 4.55578 30.8661 7.52379 32.9145L20.4355 41.8229V45.6221C17.1838 47.8363 8.68879 53.6322 7.57511 54.513C6.1693 55.6238 2.87606 58.2264 2.87606 64.5347V75.7225H1.30556C0.586981 75.7225 0.000159809 76.388 0.000159809 77.2009V84.1711C0.000159809 84.984 0.586981 85.6503 1.30556 85.6503H51.8913C52.6096 85.6503 53.1978 84.984 53.1978 84.1711V77.2009C53.1978 76.388 52.6096 75.7225 51.8913 75.7225H50.3213V64.2973C50.3213 58.0523 48.6414 56.5895 45.6726 54.5413L32.7624 45.6331V41.8334C36.0129 39.62 44.5084 33.8247 45.6208 32.9435ZM29.1877 49.4019L43.2262 59.0882C44.3053 59.8322 44.8798 60.2421 45.1451 60.7181C45.4643 61.2909 45.6187 62.4611 45.6187 64.2971V75.7223H7.57703V64.5345C7.57703 61.0027 9.13107 59.7748 10.2659 58.878C11.1525 58.1783 18.9628 52.8329 23.9967 49.411C24.7037 48.9297 25.1367 48.0637 25.1367 47.1277V40.3268C25.1367 39.3993 24.7103 38.5375 24.009 38.0546L9.96909 28.3675C8.89202 27.6243 8.31767 27.2144 8.05176 26.7364C7.73197 26.165 7.57671 24.9936 7.57671 23.1576V9.92803H45.6186V22.9222C45.6186 26.4527 44.0645 27.6817 42.9304 28.5774C42.0438 29.2784 34.2341 34.6236 29.1996 38.0455C28.4919 38.5268 28.0587 39.3929 28.0587 40.327V47.1279C28.059 48.057 28.4874 48.9183 29.1877 49.4019Z" fill="black"/>
 				<path d="M9.81254 65.1079C9.49274 65.3783 9.31702 65.5608 9.31702 66.2068C9.31702 66.8539 9.31702 73.0901 9.31702 73.0901C9.31702 73.0901 9.25402 73.7613 9.92159 73.7613C10.2455 73.7613 18.3047 73.7712 26.5368 73.7814C34.7686 73.7711 42.8284 73.7613 43.1512 73.7613C43.8181 73.7613 43.7551 73.0901 43.7551 73.0901C43.7551 73.0901 43.7551 66.8543 43.7551 66.2068C43.7551 65.5608 43.5789 65.3783 43.2604 65.1079C41.0011 63.1956 30.9573 54.222 26.5366 54.222C22.1147 54.2217 12.0704 63.1958 9.81254 65.1079Z" fill="black"/>
 			</svg>
-			<p class="font-display text-center text-2xl text-black uppercase">
+			<p class="font-display text-center text-[16px] md:text-2xl text-black uppercase">
 				30 - 45
 			</p>
 		</div>
 
-		<div class="flex flex-col items-center gap-0.5 w-[160px] h-[160px] justify-between">
-			<svg width="102" height="106" viewBox="0 0 102 106" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<div
+			class="game-stats-column flex h-[128px] w-[128px] flex-col items-center justify-between gap-0.5 md:h-[152px] md:w-[152px] lg:h-[160px] lg:w-[160px]"
+			role="group"
+			aria-label="Recommended for ages"
+			title="Recommended for ages"
+		>
+			<svg class="game-stats-svg origin-center h-[106px] w-[102px] max-md:h-[90px] max-md:w-[87px]" viewBox="0 0 102 106" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false">
 				<rect y="26.7427" width="47.7334" height="67.9317" fill="url(#pattern0_599_663)"/>
 				<rect x="22.5554" width="79.1833" height="105.07" fill="url(#pattern1_599_663)"/>
 				<defs>
@@ -54,7 +73,142 @@
 				</defs>
 			</svg>
 				
-			<p class="font-display text-center text-[28px] text-black uppercase">9+</p>
+			<p class="font-display text-center text-[16px] md:text-2xl text-black uppercase">9+</p>
 		</div>
 	</div>
 </section>
+
+<noscript>
+	<style>
+		[data-game-stats] .game-stats-inner,
+		[data-game-stats] .game-stats-svg {
+			opacity: 1 !important;
+			transform: none !important;
+			animation: none !important;
+		}
+	</style>
+</noscript>
+
+<style>
+	.game-stats-inner {
+		opacity: 0;
+		transform: translate3d(-2.5rem, 0, 0);
+		transition:
+			opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+		will-change: opacity, transform;
+	}
+
+	.game-stats.is-in-view .game-stats-inner {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+
+	.game-stats-svg {
+		opacity: 0;
+		transform: rotate(-540deg) scale(0.92);
+		transform-origin: center center;
+	}
+
+	.game-stats.is-in-view .game-stats-svg {
+		animation: game-stats-svg-spin-in 0.95s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+	}
+
+	.game-stats.is-in-view .game-stats-column:nth-child(1) .game-stats-svg {
+		animation-delay: 0.08s;
+	}
+
+	.game-stats.is-in-view .game-stats-column:nth-child(2) .game-stats-svg {
+		animation-delay: 0.22s;
+	}
+
+	.game-stats.is-in-view .game-stats-column:nth-child(3) .game-stats-svg {
+		animation-delay: 0.36s;
+	}
+
+	@keyframes game-stats-svg-spin-in {
+		from {
+			opacity: 0;
+			transform: rotate(-540deg) scale(0.92);
+		}
+		to {
+			opacity: 1;
+			transform: rotate(0deg) scale(1);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.game-stats-inner {
+			opacity: 1;
+			transform: none;
+			transition: none;
+			will-change: auto;
+		}
+
+		.game-stats-svg {
+			opacity: 1;
+			transform: none;
+			animation: none !important;
+		}
+	}
+</style>
+
+<script>
+	/** Alineado con Lore: ratio visible / alto; `marginBottomRatio` = rootMargin inferior (p. ej. 0.15). */
+	function gameStatsHeightVisibleRatio(el, marginBottomRatio) {
+		const rect = el.getBoundingClientRect();
+		const vh = window.innerHeight;
+		const m = marginBottomRatio ?? 0;
+		const viewportBottom = vh * (1 - m);
+		const visibleTop = Math.max(0, rect.top);
+		const visibleBottom = Math.min(viewportBottom, rect.bottom);
+		const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+		if (rect.height <= 0) return 0;
+		return visibleHeight / rect.height;
+	}
+
+	function initGameStatsReveal() {
+		const root = document.querySelector("[data-game-stats]");
+		if (!root) return;
+
+		const minRatio = 0.3;
+		const rootMarginBottomPct = 15;
+
+		const markInView = () => {
+			root.classList.add("is-in-view");
+		};
+
+		if (
+			gameStatsHeightVisibleRatio(root, rootMarginBottomPct / 100) >=
+			minRatio - 0.02
+		) {
+			markInView();
+			return;
+		}
+
+		if (!("IntersectionObserver" in window)) {
+			markInView();
+			return;
+		}
+
+		const io = new IntersectionObserver(
+			(entries) => {
+				for (const e of entries) {
+					if (e.intersectionRatio >= minRatio) {
+						markInView();
+						io.unobserve(e.target);
+						break;
+					}
+				}
+			},
+			{
+				threshold: minRatio,
+				rootMargin: `0px 0px -${rootMarginBottomPct}% 0px`,
+			},
+		);
+		io.observe(root);
+	}
+
+	initGameStatsReveal();
+	document.addEventListener("astro:page-load", initGameStatsReveal);
+</script>

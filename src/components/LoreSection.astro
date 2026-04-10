@@ -8,18 +8,22 @@ import { assets } from "../data/figmaAssets";
 	aria-labelledby="lore-heading"
 	style="background-image: linear-gradient(180deg, var(--color-snowbound-cream) 0%, rgba(250, 249, 242, 0) 10%), url('/images/figma/pattern-ice.png'); background-position: center, center; background-repeat: no-repeat, no-repeat;"
 >
-	<div class="section-inner flex flex-col items-center gap-4 md:flex-row md:items-stretch md:justify-between">
+	<div
+		class="section-inner flex flex-col items-center gap-4 md:flex-row md:items-stretch md:justify-between"
+	>
 		<div
 			class="flex md:w-full flex-col gap-5 md:gap-6 md:self-stretch"
 		>
 			<h2
 				id="lore-heading"
-				class="font-display text-[clamp(32px,64px,72px)] max-w-[557px] font-normal leading-tight tracking-[0.2px] text-snowbound-secondary md:leading-[48px]"
+				data-lore-reveal
+				class="lore-reveal-block lore-reveal-block--ltr font-display text-[clamp(32px,64px,72px)] max-w-[557px] font-normal leading-tight tracking-[0.2px] text-snowbound-secondary md:leading-[48px]"
 			>
 				AN ICED PARADISE AWAITS...
 			</h2>
 			<div
-				class="font-roboto flex w-full max-w-[557px] flex-col gap-4 p-2.5 text-[20px] font-normal leading-7 tracking-[0.2px] text-black md:flex-1 md:justify-between md:p-[10px] md:leading-[28px]"
+				data-lore-reveal
+				class="lore-reveal-block lore-reveal-block--paragraph font-roboto flex w-full max-w-[557px] flex-col gap-4 p-2.5 text-[20px] font-normal leading-7 tracking-[0.2px] text-black md:flex-1 md:justify-between md:p-[10px] md:leading-[28px]"
 			>
 				<p class="md:leading-[28px]">
 					In the frozen North, beneath shimmering auroras, tribes fight to survive the
@@ -40,11 +44,21 @@ import { assets } from "../data/figmaAssets";
 		<img
 			src={assets.tree}
 			alt="Illustration of the Thall Tree"
-			class="w-full max-w-[min(340px,85vw)] lg:max-w-[380px] shrink-0"
+			data-lore-reveal
+			class="lore-reveal-block lore-reveal-block--image w-full max-w-[min(340px,85vw)] lg:max-w-[380px] shrink-0"
 		/>
 	</div>
 
 </section>
+
+<noscript>
+	<style>
+		[data-lore-reveal] {
+			opacity: 1 !important;
+			transform: none !important;
+		}
+	</style>
+</noscript>
 
 <style>
 	.lore-section {
@@ -55,4 +69,120 @@ import { assets } from "../data/figmaAssets";
 			background-size: cover;
 		}
 	}
+
+	/*
+	 * Direcciones solo cuando aún no ha terminado la revelación (:not(.is-in-view)),
+	 * para que no compitan con .is-in-view a igual especificidad y el título pueda ser LTR.
+	 */
+	#lore .lore-reveal-block {
+		opacity: 0;
+		transition:
+			opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+		will-change: opacity, transform;
+	}
+
+	#lore .lore-reveal-block:not(.is-in-view) {
+		transform: translate3d(clamp(3.25rem, 6vw, 5.25rem), 0, 0);
+	}
+
+	#lore .lore-reveal-block.lore-reveal-block--ltr:not(.is-in-view) {
+		transform: translate3d(calc(-1 * clamp(3.25rem, 6vw, 5.25rem)), 0, 0);
+	}
+
+	/* Párrafo: LTR en desktop (lg+); móvil/tablet = RTL (regla base de :not(.is-in-view)). */
+	@media (min-width: 1024px) {
+		#lore .lore-reveal-block.lore-reveal-block--paragraph:not(.is-in-view) {
+			transform: translate3d(calc(-1 * clamp(3.25rem, 6vw, 5.25rem)), 0, 0);
+		}
+	}
+
+	/* Imagen: LTR en móvil/tablet; desktop = RTL (regla base). */
+	@media (max-width: 1023px) {
+		#lore .lore-reveal-block.lore-reveal-block--image:not(.is-in-view) {
+			transform: translate3d(calc(-1 * clamp(3.25rem, 6vw, 5.25rem)), 0, 0);
+		}
+	}
+
+	#lore .lore-reveal-block.is-in-view {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#lore .lore-reveal-block {
+			opacity: 1;
+			transform: none;
+			transition: none;
+			will-change: auto;
+		}
+	}
 </style>
+
+<script is:inline>
+	/** Aproxima el ratio visible / alto del elemento; `marginBottomRatio` alinea con rootMargin inferior (p. ej. 0.15 = -15%). */
+	function loreHeightVisibleRatio(el, marginBottomRatio) {
+		const rect = el.getBoundingClientRect();
+		const vh = window.innerHeight;
+		const m = marginBottomRatio ?? 0;
+		const viewportBottom = vh * (1 - m);
+		const visibleTop = Math.max(0, rect.top);
+		const visibleBottom = Math.min(viewportBottom, rect.bottom);
+		const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+		if (rect.height <= 0) return 0;
+		return visibleHeight / rect.height;
+	}
+
+	function initLoreReveal() {
+		const blocks = document.querySelectorAll("[data-lore-reveal]");
+		if (!blocks.length) return;
+
+		/** Disparo cuando el bloque está bien entrado: ~80–100% del alto visible en viewport. */
+		const minRatio = 0.8;
+		const rootMarginBottomPct = 0;
+
+		const markIfNeeded = (el) => {
+			if (el.classList.contains("is-in-view")) return;
+			if (
+				loreHeightVisibleRatio(el, rootMarginBottomPct / 100) >=
+				minRatio - 0.02
+			) {
+				el.classList.add("is-in-view");
+			}
+		};
+
+		const observeOne = (el) => {
+			markIfNeeded(el);
+			if (el.classList.contains("is-in-view")) return;
+
+			if (!("IntersectionObserver" in window)) {
+				el.classList.add("is-in-view");
+				return;
+			}
+
+			const io = new IntersectionObserver(
+				(entries) => {
+					for (const e of entries) {
+						if (e.intersectionRatio >= minRatio) {
+							e.target.classList.add("is-in-view");
+							io.unobserve(e.target);
+							break;
+						}
+					}
+				},
+				{
+					threshold: [0, 0.25, 0.5, 0.75, 0.8, 0.9, 1],
+					rootMargin: `0px 0px -${rootMarginBottomPct}% 0px`,
+				},
+			);
+			io.observe(el);
+		};
+
+		for (const el of blocks) {
+			observeOne(el);
+		}
+	}
+
+	initLoreReveal();
+	document.addEventListener("astro:page-load", initLoreReveal);
+</script>
