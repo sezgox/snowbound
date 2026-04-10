@@ -136,41 +136,6 @@ const scrollSnapRules: ScrollSnapRuleState[] = [
 		armed: true,
 		rule: {
 			align: "start",
-			direction: "up",
-			id: "hero-return-up",
-			rearmWhen: ({ targetRect }) => targetRect.bottom <= 0,
-			shouldSnap: ({ direction, targetRect, viewportHeight }) => {
-				const snapZone = viewportHeight * HERO_SNAP_UP_MAX_RATIO;
-				return (
-					direction === "up" &&
-					targetRect.top < 0 &&
-					targetRect.top > -snapZone &&
-					targetRect.bottom > 0
-				);
-			},
-			targetSelector: "#hero",
-		},
-	},
-	{
-		armed: true,
-		rule: {
-			align: "start",
-			direction: "down",
-			id: "hero-to-game-stats",
-			minVisibleRatio: DOWN_SNAP_MIN_VISIBLE_RATIO,
-			rearmWhen: ({ targetRect, viewportHeight }) =>
-				targetRect.top >= viewportHeight - DOWN_SNAP_REARM_TOLERANCE_PX,
-			shouldSnap: ({ direction, targetRect, visibleRatio }) =>
-				direction === "down" &&
-				targetRect.top > 0 &&
-				visibleRatio >= DOWN_SNAP_MIN_VISIBLE_RATIO,
-			targetSelector: "#game-details",
-		},
-	},
-	{
-		armed: true,
-		rule: {
-			align: "start",
 			direction: "down",
 			id: "lore-to-features",
 			minVisibleRatio: FEATURES_ENTRY_MIN_VISIBLE_RATIO,

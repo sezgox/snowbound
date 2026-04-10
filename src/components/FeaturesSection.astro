@@ -17,71 +17,115 @@ const cards = [
 		body: "You don't need to follow everyone else's path.",
 	},
 ] as const;
-
-const cardCount = cards.length;
-const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 ---
 
 <section
 	id="features"
 	class="features-scroll-track relative w-full scroll-mt-0"
-	style={`min-height: ${trackVh}vh; background-image: url('/images/figma/hex-board.png'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;`}
+	style="min-height: 100dvh; background-image: url('/images/figma/hex-board.png'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;"
 	aria-labelledby="features-heading"
 	data-features-scroll
-	data-features-stage="content"
+	data-features-stage="entry-pending"
+	data-features-step-index="-1"
 	data-page-snap="start"
 >
 	<div class="pointer-events-none absolute inset-0 z-0 bg-white/[0.66]" aria-hidden="true" />
 
-	<div
-		class="features-sticky-wrap sticky top-0 z-10 flex min-h-[100dvh] w-full flex-col items-center gap-9 overflow-hidden py-10 md:min-h-[1012px] md:gap-[35px]"
-	>
-		<p
-			class="features-intro-title font-display text-shadow-outline text-shadow-white pointer-events-none fixed left-1/2 top-1/2 z-40 text-center tracking-wide text-[#112d57]"
-			aria-hidden="true"
-		>
-			WHAT MAKES IT UNIQUE
-		</p>
-
-		<div class="section-inner relative z-10 flex w-full flex-col items-center gap-16 px-4 md:gap-[70px]">
-			<h2
-				id="features-heading"
-				class="features-title-wrap font-display text-shadow-outline text-shadow-white text-center tracking-wide text-[#112d57] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)]"
+	<div class="features-shell relative z-10 flex min-h-[100dvh] w-full items-center justify-center overflow-hidden py-4 md:py-8">
+		<div class="pointer-events-none fixed inset-0 z-40" aria-hidden="true">
+			<p
+				class="features-overlay-item features-overlay-item--title font-display text-shadow-outline text-shadow-white text-center tracking-wide text-[#112d57]"
+				data-features-overlay-item="title"
+				hidden
 			>
 				WHAT MAKES IT UNIQUE
-			</h2>
-			<div
-				data-features-cards
-				class="features-cards-row flex w-full flex-wrap justify-center gap-6 text-center md:gap-x-6 md:gap-y-0"
-			>
-				{
-					cards.map((c, i) => (
-						<div class="features-card-slot flex min-h-[255px] w-[min(100%,229px)] shrink-0 justify-center">
-							<div
-								data-features-card
-								data-card-index={i}
-								class="features-reveal-card relative flex h-auto min-h-[255px] w-full max-w-full flex-col items-center justify-center gap-10 rounded-[10px] border border-[#77abbd] bg-white px-5 py-10"
-							>
-								<div class="font-tillana w-full text-2xl font-bold leading-8 tracking-wide text-black">
-									{c.title.map((line) => (
-										<p class="mb-0 leading-8">{line}</p>
-									))}
-								</div>
-								<p class="font-nunito w-full text-base leading-6 tracking-wide text-[#5c5c5c]">
-									{c.body}
-								</p>
+			</p>
+
+			{
+				cards.map((card, index) => (
+					<div
+						class="features-overlay-item features-overlay-item--card"
+						data-features-overlay-item={`card-${index}`}
+						hidden
+					>
+						<div class="features-card-surface features-card-surface--overlay">
+							<div class="features-card-title font-tillana">
+								{card.title.map((line) => (
+									<p class="mb-0 leading-inherit">{line}</p>
+								))}
 							</div>
+							<p class="features-card-body font-nunito">
+								{card.body}
+							</p>
 						</div>
-					))
-				}
+					</div>
+				))
+			}
+
+			<div
+				class="features-overlay-item features-overlay-item--media"
+				data-features-overlay-item="media"
+				hidden
+			>
+				<div class="features-media-frame" aria-hidden="true"></div>
 			</div>
 		</div>
 
-		<div class="section-inner relative z-10 mt-2 px-4">
-			<div
-				class="features-video-block h-[200px] w-full shrink-0 bg-[#8b8686] md:h-[400px]"
-				aria-hidden="true"
-			>
+		<div class="section-inner relative z-10 flex min-h-[100dvh] w-full items-center justify-center px-4 py-4 md:py-6">
+			<div class="features-board">
+				<h2
+					id="features-heading"
+					class="features-title-wrap features-slot-item font-display text-shadow-outline text-shadow-white text-center tracking-wide text-[#112d57] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)]"
+					data-features-slot-item="title"
+					data-features-placed="false"
+				>
+					WHAT MAKES IT UNIQUE
+				</h2>
+
+				<div class="features-cards-grid" data-features-cards>
+					{
+						cards.map((card, index) => (
+							<div
+								class="features-card-slot features-slot-item"
+								data-features-slot-item={`card-${index}`}
+								data-features-placed="false"
+							>
+								<div class="features-card-surface features-card-surface--slot">
+									<div class="features-card-title font-tillana">
+										{card.title.map((line) => (
+											<p class="mb-0 leading-inherit">{line}</p>
+										))}
+									</div>
+									<p class="features-card-body font-nunito">
+										{card.body}
+									</p>
+								</div>
+							</div>
+						))
+					}
+				</div>
+
+				<div
+					class="features-media-slot features-slot-item"
+					data-features-slot-item="media"
+					data-features-placed="false"
+				>
+					<div class="features-media-frame" aria-hidden="true"></div>
+				</div>
+
+				<div
+					class="features-cta-wrap relative flex w-full justify-center"
+					data-features-cta
+					data-features-visible="false"
+				>
+					<button
+						type="button"
+						data-open-waitlist
+						class="font-tillana flex w-full max-w-[min(100%,778px)] items-center justify-center rounded-[50px] bg-snowbound-primary px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:min-h-[52px] max-md:whitespace-nowrap md:h-[78px] md:px-[70px] md:py-0 md:text-[48px] md:leading-8 md:tracking-[0.1px]"
+					>
+						JOIN THE WAITLIST
+					</button>
+				</div>
 			</div>
 		</div>
 
@@ -96,41 +140,21 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 				Keep scrolling
 			</span>
 		</p>
-
-		<div class="features-cta-wrap relative z-10 mt-4 flex w-full justify-center px-3 sm:px-4">
-			<button
-				type="button"
-				data-open-waitlist
-				class="font-tillana flex w-full max-w-[min(100%,778px)] items-center justify-center rounded-[50px] bg-snowbound-primary px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:min-h-[56px] max-md:whitespace-nowrap md:h-[78px] md:px-[70px] md:py-0 md:text-[48px] md:leading-8 md:tracking-[0.1px]"
-			>
-				JOIN THE WAITLIST
-			</button>
-		</div>
 	</div>
 </section>
 
 <noscript>
 	<style>
-		#features .features-intro-title {
+		#features [data-features-overlay-item],
+		#features .features-scroll-hint {
 			display: none !important;
 		}
-		#features .features-title-wrap {
-			opacity: 1 !important;
-			transform: none !important;
-		}
-		[data-features-card] {
-			opacity: 1 !important;
-			transform: none !important;
-			transition: none !important;
-		}
-		.features-scroll-hint {
-			display: none !important;
-		}
-		#features .features-cards-row,
-		#features .features-video-block,
-		#features .features-cta-wrap {
+
+		#features [data-features-slot-item],
+		#features [data-features-cta] {
 			opacity: 1 !important;
 			visibility: visible !important;
+			transform: none !important;
 			pointer-events: auto !important;
 		}
 	</style>
@@ -138,144 +162,222 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 
 <style>
 	#features[data-features-scroll] {
-		--features-p: 0;
-		--features-intro-target-x: 50vw;
-		--features-intro-target-y: 50vh;
+		--features-card-slot-width: min(100%, 148px);
+		--features-card-slot-height: 176px;
+		--features-card-center-scale: 1.82;
+		--features-media-center-scale: 1.16;
 	}
 
-	.features-title-wrap {
-		width: 100%;
-		margin: 0;
-		padding: 0.75rem 1rem;
-		font-size: clamp(2.25rem, 6vw, 4rem);
-		line-height: 1.1;
-		opacity: 1;
-		transform: none;
-		transition: opacity 0.28s ease;
-		will-change: opacity;
-	}
-
-	.features-intro-title {
-		display: none;
-		width: min(92vw, 920px);
-		margin: 0;
-		padding: 0.75rem 1rem;
-		font-size: clamp(2.25rem, 7.5vw, 4rem);
-		line-height: 1.05;
-		opacity: 0;
-		transform: translate3d(-50%, calc(-50% + 18vh), 0);
-		transition:
-			left 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-			top 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-			transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-			opacity 0.35s ease,
-			display 0.75s allow-discrete;
-		transition-behavior: allow-discrete;
-		will-change: left, top, transform, opacity;
-	}
-
-	#features[data-features-stage="intro"] .features-intro-title {
-		display: block;
-		opacity: 1;
-		transform: translate3d(-50%, -50%, 0);
-	}
-
-	#features[data-features-stage="transition-down"] .features-intro-title {
-		display: block;
-		opacity: 1;
-		left: var(--features-intro-target-x);
-		top: var(--features-intro-target-y);
-		transform: translate3d(-50%, -50%, 0);
-	}
-
-	#features[data-features-stage="exit-up"] .features-intro-title {
-		display: block;
-		opacity: 0;
-		transform: translate3d(-50%, calc(-50% + 22vh), 0);
-	}
-
-	#features[data-features-stage="content"] .features-intro-title {
-		display: none;
-		opacity: 0;
-		left: var(--features-intro-target-x);
-		top: var(--features-intro-target-y);
-		transform: translate3d(-50%, -50%, 0);
-	}
-
-	#features[data-features-stage="intro-prep"] .features-intro-title,
-	#features[data-features-stage="entry-pending"] .features-intro-title {
-		display: none;
-		opacity: 0;
-	}
-
-	@starting-style {
-		#features[data-features-stage="intro"] .features-intro-title {
-			opacity: 0;
-			transform: translate3d(-50%, calc(-50% + 18vh), 0);
+	@media (min-width: 768px) {
+		#features[data-features-scroll] {
+			--features-card-slot-width: min(100%, 208px);
+			--features-card-slot-height: 196px;
+			--features-card-center-scale: 1.46;
+			--features-media-center-scale: 1.08;
 		}
 	}
 
-	#features[data-features-stage="intro-prep"] .features-title-wrap,
-	#features[data-features-stage="entry-pending"] .features-title-wrap,
-	#features[data-features-stage="intro"] .features-title-wrap,
-	#features[data-features-stage="transition-down"] .features-title-wrap,
-	#features[data-features-stage="exit-up"] .features-title-wrap {
-		opacity: 0;
+	.features-board {
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+		align-items: center;
+		gap: clamp(0.8rem, 1.8vw, 1.4rem);
 	}
 
-	#features[data-features-stage="content"][data-features-viewport="below"] .features-title-wrap {
-		opacity: 0;
+	.features-title-wrap {
+		width: min(100%, 720px);
+		margin: 0;
+		padding: 0.5rem 1rem;
+		font-size: clamp(2.25rem, 6vw, 4rem);
+		line-height: 1.1;
 	}
 
-	#features[data-features-stage="entry-pending"] .features-cards-row,
-	#features[data-features-stage="entry-pending"] .features-video-block,
-	#features[data-features-stage="entry-pending"] .features-cta-wrap,
-	#features[data-features-stage="intro-prep"] .features-cards-row,
-	#features[data-features-stage="intro-prep"] .features-video-block,
-	#features[data-features-stage="intro-prep"] .features-cta-wrap,
-	#features[data-features-stage="intro"] .features-cards-row,
-	#features[data-features-stage="intro"] .features-video-block,
-	#features[data-features-stage="intro"] .features-cta-wrap,
-	#features[data-features-stage="transition-down"] .features-cards-row,
-	#features[data-features-stage="transition-down"] .features-video-block,
-	#features[data-features-stage="transition-down"] .features-cta-wrap,
-	#features[data-features-stage="exit-up"] .features-cards-row,
-	#features[data-features-stage="exit-up"] .features-video-block,
-	#features[data-features-stage="exit-up"] .features-cta-wrap {
+	.features-cards-grid {
+		display: grid;
+		width: 100%;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.75rem;
+		justify-items: center;
+	}
+
+	@media (min-width: 768px) {
+		.features-cards-grid {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 1rem;
+		}
+	}
+
+	.features-card-slot {
+		display: flex;
+		width: 100%;
+		justify-content: center;
+	}
+
+	.features-card-surface {
+		box-sizing: border-box;
+		display: flex;
+		width: min(100%, var(--features-card-slot-width));
+		height: var(--features-card-slot-height);
+		aspect-ratio: 37 / 44;
+		flex-shrink: 0;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: clamp(0.55rem, 1.5vw, 1rem);
+		border-radius: 10px;
+		border: 1px solid #77abbd;
+		background: rgba(255, 255, 255, 0.96);
+		padding: 0.9rem 0.8rem;
+		box-shadow: 0 10px 28px rgba(17, 45, 87, 0.12);
+		overflow: hidden;
+	}
+
+	.features-card-surface--overlay {
+		box-shadow:
+			0 26px 64px rgba(17, 45, 87, 0.26),
+			0 10px 26px rgba(0, 0, 0, 0.16);
+	}
+
+	.features-card-title {
+		width: 100%;
+		margin: 0;
+		text-align: center;
+		font-size: 0.98rem;
+		font-weight: 700;
+		line-height: 1.22;
+		letter-spacing: 0.02em;
+		color: #000;
+		text-wrap: balance;
+	}
+
+	.features-card-body {
+		width: 100%;
+		margin: 0;
+		text-align: center;
+		font-size: 0.9rem;
+		line-height: 1.45;
+		letter-spacing: 0.01em;
+		color: #5c5c5c;
+		text-wrap: balance;
+	}
+
+	@media (min-width: 768px) {
+		.features-card-surface {
+			gap: clamp(0.75rem, 1.8vw, 1.25rem);
+			padding: 1rem 0.95rem;
+		}
+
+		.features-card-title {
+			font-size: 1.25rem;
+			line-height: 1.2;
+		}
+
+		.features-card-body {
+			font-size: 0.94rem;
+			line-height: 1.45;
+		}
+	}
+
+	.features-media-slot {
+		width: min(100%, 760px);
+	}
+
+	.features-media-frame {
+		height: clamp(104px, 17vh, 124px);
+		width: 100%;
+		border-radius: 18px;
+		border: 1px solid rgba(119, 171, 189, 0.9);
+		background:
+			linear-gradient(135deg, rgba(17, 45, 87, 0.14), rgba(2, 133, 228, 0.26)),
+			rgba(255, 255, 255, 0.88);
+		box-shadow: 0 10px 28px rgba(17, 45, 87, 0.12);
+	}
+
+	@media (min-width: 768px) {
+		.features-media-frame {
+			height: clamp(150px, 20vh, 188px);
+		}
+	}
+
+	.features-slot-item {
 		opacity: 0;
 		visibility: hidden;
+		transform: scale(0.96);
+		transition:
+			opacity 0.28s ease,
+			transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+			visibility 0s linear 0.28s;
+	}
+
+	.features-slot-item[data-features-placed="true"] {
+		opacity: 1;
+		visibility: visible;
+		transform: none;
+		transition-delay: 0s;
+	}
+
+	.features-cta-wrap {
+		width: min(100%, 760px);
+		opacity: 0;
+		visibility: hidden;
+		transform: translate3d(0, 0.75rem, 0);
 		pointer-events: none;
+		transition:
+			opacity 0.3s ease,
+			transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+			visibility 0s linear 0.3s;
 	}
 
-	#features[data-features-stage="content"] .features-cards-row {
-		opacity: clamp(0, calc((var(--features-p) - 0.14) / 0.06), 1);
+	.features-cta-wrap[data-features-visible="true"] {
+		opacity: 1;
 		visibility: visible;
+		transform: none;
 		pointer-events: auto;
+		transition-delay: 0s;
 	}
 
-	#features[data-features-stage="content"] .features-reveal-card {
-		--f: var(--card-focus, 0);
-		opacity: calc(0.2 + 0.8 * min(1, var(--f) * 2.2));
-		transform: translate3d(
-				0,
-				calc((1 - min(1, var(--f) * 1.4)) * clamp(2rem, 10vw, 5rem)),
-				0
-			)
-			scale(calc(1 + var(--f) * 1.05));
-		z-index: calc(10 + var(--f) * 25);
-		box-shadow:
-			0 calc(var(--f) * 24px) calc(var(--f) * 56px) rgba(17, 45, 87, 0.22),
-			0 calc(var(--f) * 8px) calc(var(--f) * 20px) rgba(0, 0, 0, 0.12);
-		transition: none;
-		will-change: transform, opacity;
+	.features-overlay-item {
+		position: fixed;
+		left: 50%;
+		top: 50%;
+		margin: 0;
+		opacity: 0;
+		transform: translate3d(-50%, -50%, 0) scale(1);
+		transition:
+			left 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+			top 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+			opacity 0.32s ease;
+		will-change: left, top, transform, opacity;
 	}
 
-	#features[data-features-stage="content"] .features-video-block,
-	#features[data-features-stage="content"] .features-cta-wrap {
-		opacity: clamp(0, calc((var(--features-p) - 0.72) / 0.18), 1);
-		visibility: visible;
-		pointer-events: auto;
-		transition: none;
+	.features-overlay-item[data-immediate="true"] {
+		transition: none !important;
+	}
+
+	.features-overlay-item--title {
+		width: min(92vw, 920px);
+		padding: 0.5rem 1rem;
+		font-size: clamp(2.25rem, 7.5vw, 4rem);
+		line-height: 1.05;
+	}
+
+	@media (min-width: 1024px) {
+		.features-title-wrap,
+		.features-overlay-item--title {
+			width: auto;
+			max-width: calc(100vw - 3rem);
+			white-space: nowrap;
+		}
+	}
+
+	.features-overlay-item--card {
+		width: min(92vw, var(--features-card-slot-width));
+	}
+
+	.features-overlay-item--media {
+		width: min(92vw, 760px);
 	}
 
 	.features-scroll-hint {
@@ -291,15 +393,6 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 		opacity: 1;
 		visibility: visible;
 		transition-delay: 0s;
-	}
-
-	#features[data-features-stage="entry-pending"] .features-scroll-hint,
-	#features[data-features-stage="intro-prep"] .features-scroll-hint,
-	#features[data-features-stage="transition-down"] .features-scroll-hint,
-	#features[data-features-stage="exit-up"] .features-scroll-hint,
-	#features[data-features-stage="content"] .features-scroll-hint {
-		opacity: 0;
-		visibility: hidden;
 	}
 
 	.features-scroll-hint__pill {
@@ -341,27 +434,17 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		#features .features-intro-title {
-			display: none;
+		#features [data-features-overlay-item],
+		#features .features-scroll-hint {
+			display: none !important;
 		}
-		#features .features-title-wrap {
-			opacity: 1;
-		}
-		#features .features-reveal-card {
-			opacity: 1;
-			transform: none;
-			box-shadow: none;
-			will-change: auto;
-		}
-		#features .features-cards-row,
-		#features .features-video-block,
-		#features .features-cta-wrap {
-			opacity: 1;
-			visibility: visible;
-			pointer-events: auto;
-		}
-		.features-scroll-hint {
-			display: none;
+
+		#features [data-features-slot-item],
+		#features [data-features-cta] {
+			opacity: 1 !important;
+			visibility: visible !important;
+			transform: none !important;
+			pointer-events: auto !important;
 		}
 	}
 </style>
@@ -370,15 +453,30 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 	const FEATURES_STAGE_ENTRY_PENDING = "entry-pending";
 	const FEATURES_STAGE_INTRO_PREP = "intro-prep";
 	const FEATURES_STAGE_INTRO = "intro";
-	const FEATURES_STAGE_TRANSITION_DOWN = "transition-down";
+	const FEATURES_STAGE_SEQUENCE = "sequence";
+	const FEATURES_STAGE_COMPLETE = "complete";
 	const FEATURES_STAGE_EXIT_UP = "exit-up";
-	const FEATURES_STAGE_CONTENT = "content";
 	const FEATURES_ENTRY_RULE_ID = "lore-to-features";
-	const FEATURES_INTERNAL_SNAP_LOCK_ID = "features-intro-to-content";
+	const FEATURES_STEP_LOCK_ID = "features-sequence-step";
 	const FEATURES_EXIT_TO_LORE_LOCK_ID = "features-intro-back-to-lore";
-	const FEATURES_INTERNAL_SNAP_PROGRESS = 0.24;
-	const FEATURES_INTERNAL_SNAP_TRIGGER_OFFSET_PX = 4;
-	const FEATURES_LOCK_DURATION_MS = 750;
+	const FEATURES_LOCK_DURATION_MS = 720;
+	const FEATURES_WHEEL_THRESHOLD = 44;
+	const FEATURES_TOUCH_THRESHOLD = 40;
+	const FEATURES_CONTROL_TOP_TOLERANCE_PX = 120;
+	const FEATURES_SEQUENCE_STEPS = [
+		{ item: "card-0", phase: "center" },
+		{ item: "card-0", phase: "slot" },
+		{ item: "card-1", phase: "center" },
+		{ item: "card-1", phase: "slot" },
+		{ item: "card-2", phase: "center" },
+		{ item: "card-2", phase: "slot" },
+		{ item: "card-3", phase: "center" },
+		{ item: "card-3", phase: "slot" },
+		{ item: "media", phase: "center" },
+		{ item: "media", phase: "slot" },
+	];
+	const FEATURES_ITEMS = ["title", "card-0", "card-1", "card-2", "card-3", "media"];
+	let featuresSequenceCompletedThisLoad = false;
 
 	function isHomepageScrollSnapLocked() {
 		return Boolean(document.documentElement.dataset.scrollSnapLock);
@@ -401,167 +499,547 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 	}
 
 	function getFeaturesStage(section) {
-		return section.dataset.featuresStage ?? FEATURES_STAGE_CONTENT;
-	}
-
-	function resetFeaturesCardFocus(section) {
-		section.querySelectorAll("[data-features-card]").forEach((el) => {
-			el.style.setProperty("--card-focus", "0");
-		});
-	}
-
-	function syncFeaturesFlowTitleVisibility(section) {
-		const flowTitle = section.querySelector(".features-title-wrap");
-		if (!(flowTitle instanceof HTMLElement)) return;
-
-		const stage = getFeaturesStage(section);
-		const viewportState = section.dataset.featuresViewport ?? "entered";
-		const shouldHide =
-			stage !== FEATURES_STAGE_CONTENT || viewportState === "below";
-
-		flowTitle.style.opacity = shouldHide ? "0" : "1";
-		flowTitle.style.visibility = shouldHide ? "hidden" : "visible";
-	}
-
-	function syncFeaturesIntroTitleVisual(section) {
-		const introTitle = section.querySelector(".features-intro-title");
-		if (!(introTitle instanceof HTMLElement)) return;
-		if (canUseNativeFeaturesIntroTransition()) return;
-
-		const stage = getFeaturesStage(section);
-		const offscreenTransform = "translate3d(-50%, calc(-50% + 18vh), 0)";
-		const exitTransform = "translate3d(-50%, calc(-50% + 22vh), 0)";
-		const centeredTransform = "translate3d(-50%, -50%, 0)";
-
-		if (stage === FEATURES_STAGE_TRANSITION_DOWN || stage === FEATURES_STAGE_CONTENT) {
-			introTitle.style.left = "var(--features-intro-target-x)";
-			introTitle.style.top = "var(--features-intro-target-y)";
-		} else {
-			introTitle.style.left = "50%";
-			introTitle.style.top = "50%";
-		}
-
-		if (stage === FEATURES_STAGE_INTRO) {
-			introTitle.style.opacity = "1";
-			introTitle.style.transform = centeredTransform;
-			return;
-		}
-
-		if (stage === FEATURES_STAGE_TRANSITION_DOWN) {
-			introTitle.style.opacity = "1";
-			introTitle.style.transform = centeredTransform;
-			return;
-		}
-
-		if (stage === FEATURES_STAGE_EXIT_UP) {
-			introTitle.style.opacity = "0";
-			introTitle.style.transform = exitTransform;
-			return;
-		}
-
-		if (stage === FEATURES_STAGE_CONTENT) {
-			introTitle.style.opacity = "0";
-			introTitle.style.transform = centeredTransform;
-			return;
-		}
-
-		introTitle.style.opacity = "0";
-		introTitle.style.transform = offscreenTransform;
-	}
-
-	function playFeaturesIntroEntry(section) {
-		const introTitle = section.querySelector(".features-intro-title");
-		if (!(introTitle instanceof HTMLElement)) return;
-		if (canUseNativeFeaturesIntroTransition()) return;
-
-		if (featuresIntroAnimation) {
-			featuresIntroAnimation.cancel();
-			featuresIntroAnimation = null;
-		}
-
-		const offscreenTransform = "translate3d(-50%, calc(-50% + 18vh), 0)";
-		const centeredTransform = "translate3d(-50%, -50%, 0)";
-
-		introTitle.hidden = false;
-		introTitle.style.left = "50%";
-		introTitle.style.top = "50%";
-		introTitle.style.opacity = "0";
-		introTitle.style.transform = offscreenTransform;
-		void introTitle.offsetHeight;
-
-		featuresIntroAnimation = introTitle.animate(
-			[
-				{ opacity: 0, transform: offscreenTransform },
-				{ opacity: 1, transform: centeredTransform },
-			],
-			{
-				duration: FEATURES_LOCK_DURATION_MS,
-				easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-				fill: "forwards",
-			},
-		);
-
-		introTitle.style.opacity = "1";
-		introTitle.style.transform = centeredTransform;
-
-		featuresIntroAnimation.onfinish = () => {
-			featuresIntroAnimation = null;
-		};
-		featuresIntroAnimation.oncancel = () => {
-			featuresIntroAnimation = null;
-		};
+		return section.dataset.featuresStage ?? FEATURES_STAGE_ENTRY_PENDING;
 	}
 
 	function setFeaturesStage(section, stage) {
 		section.dataset.featuresStage = stage;
 
-		if (stage !== FEATURES_STAGE_INTRO && featuresIntroAnimation) {
-			featuresIntroAnimation.cancel();
-			featuresIntroAnimation = null;
-		}
-
 		const scrollHint = section.querySelector("[data-features-scroll-hint]");
 		if (scrollHint instanceof HTMLElement) {
 			scrollHint.hidden = stage !== FEATURES_STAGE_INTRO;
 		}
+	}
 
-		syncFeaturesIntroTitleVisual(section);
-		syncFeaturesFlowTitleVisibility(section);
+	function getFeaturesStepIndex(section) {
+		return Number(section.dataset.featuresStepIndex ?? "-1");
+	}
 
-		if (stage !== FEATURES_STAGE_CONTENT) {
-			section.style.setProperty("--features-p", "0");
-			resetFeaturesCardFocus(section);
+	function setFeaturesStepIndex(section, stepIndex) {
+		section.dataset.featuresStepIndex = String(stepIndex);
+	}
+
+	function getFeaturesOverlay(section, itemId) {
+		return section.querySelector(`[data-features-overlay-item="${itemId}"]`);
+	}
+
+	function getFeaturesSlot(section, itemId) {
+		return section.querySelector(`[data-features-slot-item="${itemId}"]`);
+	}
+
+	function getFeaturesCta(section) {
+		return section.querySelector("[data-features-cta]");
+	}
+
+	function getFeaturesSequenceStep(stepIndex) {
+		return FEATURES_SEQUENCE_STEPS[stepIndex] ?? null;
+	}
+
+	function getFeaturesCenterPoint() {
+		const { clientWidth, clientHeight } = document.documentElement;
+		return {
+			x: (clientWidth || window.innerWidth) / 2,
+			y: (clientHeight || window.innerHeight) / 2,
+		};
+	}
+
+	function getFeaturesOffscreenPoint() {
+		const center = getFeaturesCenterPoint();
+		return {
+			x: center.x,
+			y: center.y + window.innerHeight * 0.18,
+		};
+	}
+
+	function getFeaturesSlotCenter(section, itemId) {
+		const slot = getFeaturesSlot(section, itemId);
+		if (!(slot instanceof HTMLElement)) {
+			return getFeaturesCenterPoint();
+		}
+
+		const rect = slot.getBoundingClientRect();
+		return {
+			x: rect.left + rect.width / 2,
+			y: rect.top + rect.height / 2,
+		};
+	}
+
+	function getFeaturesCenterScale(itemId) {
+		if (itemId.startsWith("card-")) {
+			return window.matchMedia("(min-width: 768px)").matches ? 1.46 : 1.82;
+		}
+
+		if (itemId === "media") {
+			return window.matchMedia("(min-width: 768px)").matches ? 1.08 : 1.16;
+		}
+
+		return 1;
+	}
+
+	function getPlacedItemsForSequenceStep(stepIndex) {
+		const placedItems = new Set(["title"]);
+
+		for (let index = 0; index <= stepIndex; index += 1) {
+			const step = getFeaturesSequenceStep(index);
+			if (step?.phase === "slot") {
+				placedItems.add(step.item);
+			}
+		}
+
+		return placedItems;
+	}
+
+	function hideAllFeaturesOverlays(section) {
+		section.querySelectorAll("[data-features-overlay-item]").forEach((overlay) => {
+			if (!(overlay instanceof HTMLElement)) return;
+			overlay.hidden = true;
+			setFeaturesOverlayImmediate(overlay, true);
+			overlay.style.opacity = "0";
+		});
+	}
+
+	function setFeaturesOverlayImmediate(overlay, immediate) {
+		overlay.dataset.immediate = immediate ? "true" : "false";
+	}
+
+	function positionFeaturesOverlay(overlay, state) {
+		overlay.style.left = `${state.x}px`;
+		overlay.style.top = `${state.y}px`;
+		overlay.style.opacity = String(state.opacity);
+		overlay.style.transform = `translate3d(-50%, -50%, 0) scale(${state.scale})`;
+	}
+
+	function prepareFeaturesOverlay(section, itemId, state, immediate = false) {
+		const overlay = getFeaturesOverlay(section, itemId);
+		if (!(overlay instanceof HTMLElement)) return null;
+
+		overlay.hidden = false;
+		setFeaturesOverlayImmediate(overlay, immediate);
+		positionFeaturesOverlay(overlay, state);
+		return overlay;
+	}
+
+	function showFeaturesOverlay(section, itemId, state, immediate = false) {
+		hideAllFeaturesOverlays(section);
+		return prepareFeaturesOverlay(section, itemId, state, immediate);
+	}
+
+	function syncFeaturesPlacedItems(section) {
+		const stage = getFeaturesStage(section);
+		const stepIndex = getFeaturesStepIndex(section);
+		const placedItems =
+			stage === FEATURES_STAGE_COMPLETE
+				? new Set(FEATURES_ITEMS)
+				: stage === FEATURES_STAGE_SEQUENCE
+					? getPlacedItemsForSequenceStep(stepIndex)
+					: new Set();
+
+		FEATURES_ITEMS.forEach((itemId) => {
+			const slot = getFeaturesSlot(section, itemId);
+			if (!(slot instanceof HTMLElement)) return;
+			slot.dataset.featuresPlaced = placedItems.has(itemId) ? "true" : "false";
+		});
+
+		const cta = getFeaturesCta(section);
+		if (cta instanceof HTMLElement) {
+			cta.dataset.featuresVisible = stage === FEATURES_STAGE_COMPLETE ? "true" : "false";
 		}
 	}
 
-	function getFeaturesSectionStartY(section) {
-		return Math.round(section.getBoundingClientRect().top + window.scrollY);
+	function syncFeaturesStableVisuals(section) {
+		syncFeaturesPlacedItems(section);
+
+		const stage = getFeaturesStage(section);
+		const step = getFeaturesSequenceStep(getFeaturesStepIndex(section));
+
+		if (stage === FEATURES_STAGE_INTRO) {
+			showFeaturesOverlay(section, "title", {
+				...getFeaturesCenterPoint(),
+				scale: 1,
+				opacity: 1,
+			}, true);
+			return;
+		}
+
+		if (stage === FEATURES_STAGE_SEQUENCE && step?.phase === "center") {
+			showFeaturesOverlay(section, step.item, {
+				...getFeaturesCenterPoint(),
+				scale: getFeaturesCenterScale(step.item),
+				opacity: 1,
+			}, true);
+			return;
+		}
+
+		hideAllFeaturesOverlays(section);
 	}
 
-	function getFeaturesScrollProgress(section) {
-		const vh = window.innerHeight;
-		const h = section.offsetHeight;
-		const range = Math.max(0, h - vh);
-		if (range <= 0) return 1;
-		const top = section.getBoundingClientRect().top;
-		const scrolled = -top;
-		return Math.min(1, Math.max(0, scrolled / range));
-	}
-
-	function syncFeaturesViewportState(section) {
-		section.dataset.featuresViewport =
-			section.getBoundingClientRect().top > 0 ? "below" : "entered";
-		syncFeaturesFlowTitleVisibility(section);
-	}
-
-	function getFeaturesInternalSnapY(section) {
-		const range = Math.max(0, section.offsetHeight - window.innerHeight);
-		return Math.max(
-			0,
-			Math.round(
-				getFeaturesSectionStartY(section) + range * FEATURES_INTERNAL_SNAP_PROGRESS,
-			),
+	function isFeaturesStableStage(stage) {
+		return (
+			stage === FEATURES_STAGE_ENTRY_PENDING ||
+			stage === FEATURES_STAGE_INTRO ||
+			stage === FEATURES_STAGE_SEQUENCE ||
+			stage === FEATURES_STAGE_COMPLETE
 		);
+	}
+
+	function isFeaturesTransientStage(stage) {
+		return (
+			stage === FEATURES_STAGE_INTRO_PREP ||
+			stage === FEATURES_STAGE_EXIT_UP
+		);
+	}
+
+	let featuresAnimationTimeoutId = null;
+	let featuresAnimationSessionId = 0;
+	const featuresAnimationFrameIds = new Set();
+
+	function clearFeaturesAnimationTimeout() {
+		if (featuresAnimationTimeoutId === null) return;
+		window.clearTimeout(featuresAnimationTimeoutId);
+		featuresAnimationTimeoutId = null;
+	}
+
+	function clearFeaturesAnimationFrames() {
+		for (const frameId of featuresAnimationFrameIds) {
+			window.cancelAnimationFrame(frameId);
+		}
+
+		featuresAnimationFrameIds.clear();
+	}
+
+	function queueFeaturesAnimationFrame(callback) {
+		const frameId = window.requestAnimationFrame(() => {
+			featuresAnimationFrameIds.delete(frameId);
+			callback();
+		});
+
+		featuresAnimationFrameIds.add(frameId);
+		return frameId;
+	}
+
+	function beginFeaturesAnimationSession() {
+		clearFeaturesAnimationTimeout();
+		return ++featuresAnimationSessionId;
+	}
+
+	function invalidateFeaturesAnimationSession() {
+		featuresAnimationSessionId += 1;
+		clearFeaturesAnimationTimeout();
+		clearFeaturesAnimationFrames();
+	}
+
+	function animateFeaturesOverlay(section, itemId, fromState, toState, onDone) {
+		const sessionId = beginFeaturesAnimationSession();
+		const overlay = showFeaturesOverlay(section, itemId, fromState, true);
+		if (!(overlay instanceof HTMLElement)) {
+			onDone();
+			return;
+		}
+
+		queueFeaturesAnimationFrame(() => {
+			if (sessionId !== featuresAnimationSessionId) return;
+
+			queueFeaturesAnimationFrame(() => {
+				if (sessionId !== featuresAnimationSessionId) return;
+				setFeaturesOverlayImmediate(overlay, false);
+				positionFeaturesOverlay(overlay, toState);
+			});
+		});
+
+		featuresAnimationTimeoutId = window.setTimeout(() => {
+			featuresAnimationTimeoutId = null;
+			if (sessionId !== featuresAnimationSessionId) return;
+			onDone();
+		}, FEATURES_LOCK_DURATION_MS);
+	}
+
+	function animateFeaturesOverlays(section, overlayConfigs, onDone) {
+		const sessionId = beginFeaturesAnimationSession();
+		hideAllFeaturesOverlays(section);
+
+		const overlays = overlayConfigs
+			.map((config) => {
+				const overlay = prepareFeaturesOverlay(
+					section,
+					config.itemId,
+					config.fromState,
+					true,
+				);
+				return overlay ? { overlay, toState: config.toState } : null;
+			})
+			.filter(Boolean);
+
+		if (!overlays.length) {
+			onDone();
+			return;
+		}
+
+		queueFeaturesAnimationFrame(() => {
+			if (sessionId !== featuresAnimationSessionId) return;
+
+			queueFeaturesAnimationFrame(() => {
+				if (sessionId !== featuresAnimationSessionId) return;
+				overlays.forEach(({ overlay, toState }) => {
+					setFeaturesOverlayImmediate(overlay, false);
+					positionFeaturesOverlay(overlay, toState);
+				});
+			});
+		});
+
+		featuresAnimationTimeoutId = window.setTimeout(() => {
+			featuresAnimationTimeoutId = null;
+			if (sessionId !== featuresAnimationSessionId) return;
+			onDone();
+		}, FEATURES_LOCK_DURATION_MS);
+	}
+
+	function runFeaturesIntroEntry(section) {
+		const fromState = {
+			...getFeaturesOffscreenPoint(),
+			scale: 1,
+			opacity: 0,
+		};
+		const toState = {
+			...getFeaturesCenterPoint(),
+			scale: 1,
+			opacity: 1,
+		};
+
+		animateFeaturesOverlay(section, "title", fromState, toState, () => {
+			setFeaturesStage(section, FEATURES_STAGE_INTRO);
+			syncFeaturesStableVisuals(section);
+			featuresSequenceAnimating = false;
+		});
+	}
+
+	function transitionFeaturesStep(section, direction) {
+		const stage = getFeaturesStage(section);
+		const stepIndex = getFeaturesStepIndex(section);
+		const currentStep = getFeaturesSequenceStep(stepIndex);
+
+		if (direction === "down") {
+			if (stage === FEATURES_STAGE_INTRO) {
+				setFeaturesStage(section, FEATURES_STAGE_SEQUENCE);
+				setFeaturesStepIndex(section, 0);
+
+				animateFeaturesOverlays(
+					section,
+					[
+						{
+							itemId: "title",
+							fromState: {
+								...getFeaturesCenterPoint(),
+								scale: 1,
+								opacity: 1,
+							},
+							toState: {
+								...getFeaturesSlotCenter(section, "title"),
+								scale: 1,
+								opacity: 1,
+							},
+						},
+						{
+							itemId: "card-0",
+							fromState: {
+								...getFeaturesOffscreenPoint(),
+								scale: getFeaturesCenterScale("card-0") * 0.92,
+								opacity: 0,
+							},
+							toState: {
+								...getFeaturesCenterPoint(),
+								scale: getFeaturesCenterScale("card-0"),
+								opacity: 1,
+							},
+						},
+					],
+					() => {
+						syncFeaturesStableVisuals(section);
+						setHomepageScrollSnapLock(null);
+						featuresSequenceAnimating = false;
+					},
+				);
+				return;
+			}
+
+			if (stage === FEATURES_STAGE_SEQUENCE) {
+				const nextStepIndex = stepIndex + 1;
+				const nextStep = getFeaturesSequenceStep(nextStepIndex);
+
+				if (!nextStep) {
+					resolveFeaturesSequenceComplete(section, true);
+					setHomepageScrollSnapLock(null);
+					featuresSequenceAnimating = false;
+					return;
+				}
+
+				setFeaturesStepIndex(section, nextStepIndex);
+				setFeaturesStage(section, FEATURES_STAGE_SEQUENCE);
+
+				if (nextStep.phase === "center") {
+					syncFeaturesPlacedItems(section);
+					animateFeaturesOverlay(
+						section,
+						nextStep.item,
+						{
+							...getFeaturesOffscreenPoint(),
+							scale: getFeaturesCenterScale(nextStep.item) * 0.92,
+							opacity: 0,
+						},
+						{
+							...getFeaturesCenterPoint(),
+							scale: getFeaturesCenterScale(nextStep.item),
+							opacity: 1,
+						},
+						() => {
+							syncFeaturesStableVisuals(section);
+							setHomepageScrollSnapLock(null);
+							featuresSequenceAnimating = false;
+						},
+					);
+					return;
+				}
+
+				if (currentStep?.phase === "center" && currentStep.item === nextStep.item) {
+					animateFeaturesOverlay(
+						section,
+						currentStep.item,
+						{
+							...getFeaturesCenterPoint(),
+							scale: getFeaturesCenterScale(currentStep.item),
+							opacity: 1,
+						},
+						{
+							...getFeaturesSlotCenter(section, currentStep.item),
+							scale: 1,
+							opacity: 1,
+						},
+						() => {
+							syncFeaturesStableVisuals(section);
+							setHomepageScrollSnapLock(null);
+							featuresSequenceAnimating = false;
+						},
+					);
+					return;
+				}
+			}
+		}
+
+		if (direction === "up") {
+			if (stage === FEATURES_STAGE_COMPLETE) {
+				setFeaturesStage(section, FEATURES_STAGE_SEQUENCE);
+				setFeaturesStepIndex(section, FEATURES_SEQUENCE_STEPS.length - 1);
+				syncFeaturesStableVisuals(section);
+				setHomepageScrollSnapLock(null);
+				featuresSequenceAnimating = false;
+				return;
+			}
+
+			if (stage === FEATURES_STAGE_SEQUENCE) {
+				if (currentStep?.phase === "slot") {
+					setFeaturesStepIndex(section, stepIndex - 1);
+					setFeaturesStage(section, FEATURES_STAGE_SEQUENCE);
+					syncFeaturesPlacedItems(section);
+
+					animateFeaturesOverlay(
+						section,
+						currentStep.item,
+						{
+							...getFeaturesSlotCenter(section, currentStep.item),
+							scale: 1,
+							opacity: 1,
+						},
+						{
+							...getFeaturesCenterPoint(),
+							scale: getFeaturesCenterScale(currentStep.item),
+							opacity: 1,
+						},
+						() => {
+							syncFeaturesStableVisuals(section);
+							setHomepageScrollSnapLock(null);
+							featuresSequenceAnimating = false;
+						},
+					);
+					return;
+				}
+
+				if (currentStep?.phase === "center") {
+					if (stepIndex === 0 && currentStep.item === "card-0") {
+						setFeaturesStepIndex(section, -1);
+						setFeaturesStage(section, FEATURES_STAGE_INTRO);
+
+						animateFeaturesOverlays(
+							section,
+							[
+								{
+									itemId: "title",
+									fromState: {
+										...getFeaturesSlotCenter(section, "title"),
+										scale: 1,
+										opacity: 1,
+									},
+									toState: {
+										...getFeaturesCenterPoint(),
+										scale: 1,
+										opacity: 1,
+									},
+								},
+								{
+									itemId: "card-0",
+									fromState: {
+										...getFeaturesCenterPoint(),
+										scale: getFeaturesCenterScale("card-0"),
+										opacity: 1,
+									},
+									toState: {
+										...getFeaturesOffscreenPoint(),
+										scale: getFeaturesCenterScale("card-0") * 0.92,
+										opacity: 0,
+									},
+								},
+							],
+							() => {
+								syncFeaturesStableVisuals(section);
+								setHomepageScrollSnapLock(null);
+								featuresSequenceAnimating = false;
+							},
+						);
+						return;
+					}
+
+					const previousStepIndex = stepIndex - 1;
+					const previousStage =
+						previousStepIndex >= 0 ? FEATURES_STAGE_SEQUENCE : FEATURES_STAGE_INTRO;
+
+					setFeaturesStepIndex(section, previousStepIndex);
+					setFeaturesStage(section, previousStage);
+					syncFeaturesPlacedItems(section);
+
+					animateFeaturesOverlay(
+						section,
+						currentStep.item,
+						{
+							...getFeaturesCenterPoint(),
+							scale: getFeaturesCenterScale(currentStep.item),
+							opacity: 1,
+						},
+						{
+							...getFeaturesOffscreenPoint(),
+							scale: getFeaturesCenterScale(currentStep.item) * 0.92,
+							opacity: 0,
+						},
+						() => {
+							syncFeaturesStableVisuals(section);
+							setHomepageScrollSnapLock(null);
+							featuresSequenceAnimating = false;
+						},
+					);
+					return;
+				}
+			}
+		}
+
+		setHomepageScrollSnapLock(null);
+		featuresSequenceAnimating = false;
 	}
 
 	function getLoreReturnY() {
@@ -574,88 +1052,80 @@ const trackVh = Math.min(440, Math.max(300, 72 * cardCount + 140));
 		return Math.max(0, Math.round(topDoc + lore.offsetHeight - vh));
 	}
 
-	function setIntroTargetPosition(section) {
-		const title = section.querySelector(".features-title-wrap");
-		if (!title) return;
-
-		const rect = title.getBoundingClientRect();
-		const centerX = rect.left + rect.width / 2;
-		const centerY = rect.top + rect.height / 2;
-
-		section.style.setProperty("--features-intro-target-x", `${centerX}px`);
-		section.style.setProperty("--features-intro-target-y", `${centerY}px`);
+	function getFeaturesSectionStartY(section) {
+		return Math.round(section.getBoundingClientRect().top + window.scrollY);
 	}
 
-	function smoothstep(edge0, edge1, x) {
-		const t = Math.min(1, Math.max(0, (x - edge0) / (edge1 - edge0)));
-		return t * t * (3 - 2 * t);
+	function resetFeaturesSequence(section, stage = FEATURES_STAGE_ENTRY_PENDING) {
+		setFeaturesStepIndex(section, -1);
+		setFeaturesStage(section, stage);
+		hideAllFeaturesOverlays(section);
+		syncFeaturesStableVisuals(section);
 	}
 
-	function updateFeaturesScrollDriven() {
-		const section = document.getElementById("features");
-		if (!section || !section.hasAttribute("data-features-scroll")) return;
-
-		syncFeaturesViewportState(section);
-
-		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-			setFeaturesStage(section, FEATURES_STAGE_CONTENT);
-			section.style.setProperty("--features-p", "1");
-			resetFeaturesCardFocus(section);
-			return;
+	function resolveFeaturesSequenceComplete(section, markCompleted = true) {
+		if (markCompleted) {
+			featuresSequenceCompletedThisLoad = true;
 		}
 
-		if (getFeaturesStage(section) !== FEATURES_STAGE_CONTENT) {
-			section.style.setProperty("--features-p", "0");
-			resetFeaturesCardFocus(section);
-			return;
-		}
+		setFeaturesStepIndex(section, FEATURES_SEQUENCE_STEPS.length - 1);
+		setFeaturesStage(section, FEATURES_STAGE_COMPLETE);
+		hideAllFeaturesOverlays(section);
+		syncFeaturesStableVisuals(section);
+	}
 
-		if (isHomepageScrollSnapLocked()) {
-			return;
-		}
+	function completeFeaturesAndExitToLore(section) {
+		invalidateFeaturesAnimationSession();
+		featuresSequenceAnimating = false;
+		featuresWheelAccumulator = 0;
+		featuresTouchStartY = null;
+		featuresTouchDeltaY = 0;
+		setHomepageScrollSnapLock(null);
+		resolveFeaturesSequenceComplete(section, true);
 
-		const p = getFeaturesScrollProgress(section);
-		section.style.setProperty("--features-p", String(p));
-
-		const cards = section.querySelectorAll("[data-features-card]");
-		const n = cards.length;
-		if (n < 1) return;
-
-		const startCards = 0.16;
-		const endCards = 0.68;
-		const span = (endCards - startCards) / n;
-
-		cards.forEach((card, i) => {
-			const a = startCards + i * span;
-			const b = a + span;
-			const mid = (a + b) / 2;
-			const half = span * 0.42;
-			let focus = 0;
-			if (p >= a && p <= b) {
-				const dist = Math.abs(p - mid);
-				focus = Math.max(0, 1 - dist / half);
-				focus = smoothstep(0, 1, focus);
-			}
-			card.style.setProperty("--card-focus", String(focus));
+		window.scrollTo({
+			top: getLoreReturnY(),
+			behavior: "smooth",
 		});
 	}
 
-let featuresScrollAbort = null;
-let featuresStageTimeoutId = null;
-let featuresIntroEntryFrameId = null;
-let featuresIntroAnimation = null;
-let supportsFeaturesIntroDiscreteTransition = null;
+	function isFeaturesAtControlPoint(section) {
+		const rect = section.getBoundingClientRect();
+		return (
+			Math.abs(rect.top) <= FEATURES_CONTROL_TOP_TOLERANCE_PX &&
+			rect.bottom > window.innerHeight * 0.5
+		);
+	}
 
-	function canUseNativeFeaturesIntroTransition() {
-		if (supportsFeaturesIntroDiscreteTransition !== null) {
-			return supportsFeaturesIntroDiscreteTransition;
+	function handleFeaturesSequenceInput(section, direction) {
+		if (featuresSequenceAnimating) return;
+
+		window.scrollTo({
+			top: getFeaturesSectionStartY(section),
+			behavior: "instant",
+		});
+
+		const stage = getFeaturesStage(section);
+		if (
+			direction === "up" &&
+			(stage === FEATURES_STAGE_INTRO || stage === FEATURES_STAGE_SEQUENCE)
+		) {
+			completeFeaturesAndExitToLore(section);
+			return;
 		}
 
-		supportsFeaturesIntroDiscreteTransition =
-			typeof CSS !== "undefined" && CSS.supports("transition-behavior: allow-discrete");
-
-		return supportsFeaturesIntroDiscreteTransition;
+		featuresSequenceAnimating = true;
+		setHomepageScrollSnapLock(FEATURES_STEP_LOCK_ID);
+		transitionFeaturesStep(section, direction);
 	}
+
+	let featuresScrollAbort = null;
+	let featuresIntroEntryFrameId = null;
+	let featuresScrollSettleTimeoutId = null;
+	let featuresSequenceAnimating = false;
+	let featuresWheelAccumulator = 0;
+	let featuresTouchStartY = null;
+	let featuresTouchDeltaY = 0;
 
 	function initFeaturesScrollDriver() {
 		const section = document.getElementById("features");
@@ -666,145 +1136,223 @@ let supportsFeaturesIntroDiscreteTransition = null;
 			featuresScrollAbort = null;
 		}
 
-		if (featuresStageTimeoutId !== null) {
-			window.clearTimeout(featuresStageTimeoutId);
-			featuresStageTimeoutId = null;
-		}
-
 		if (featuresIntroEntryFrameId !== null) {
 			window.cancelAnimationFrame(featuresIntroEntryFrameId);
 			featuresIntroEntryFrameId = null;
 		}
 
-		if (featuresIntroAnimation) {
-			featuresIntroAnimation.cancel();
-			featuresIntroAnimation = null;
+		if (featuresScrollSettleTimeoutId !== null) {
+			window.clearTimeout(featuresScrollSettleTimeoutId);
+			featuresScrollSettleTimeoutId = null;
 		}
 
+		featuresSequenceAnimating = false;
+		featuresWheelAccumulator = 0;
+		featuresTouchStartY = null;
+		featuresTouchDeltaY = 0;
 		featuresScrollAbort = new AbortController();
 		const { signal } = featuresScrollAbort;
-
-		let lastScrollY = window.scrollY;
-		let ticking = false;
 		let pendingEntryIntro = false;
 
-		const queueUpdate = () => {
-			if (ticking) return;
-			ticking = true;
-			requestAnimationFrame(() => {
-				ticking = false;
-				updateFeaturesScrollDriven();
-			});
-		};
+		const abortFeaturesSequence = () => {
+			pendingEntryIntro = false;
 
-		const finishTransition = (nextStage) => {
-			featuresStageTimeoutId = null;
-			setFeaturesStage(section, nextStage);
+			if (featuresIntroEntryFrameId !== null) {
+				window.cancelAnimationFrame(featuresIntroEntryFrameId);
+				featuresIntroEntryFrameId = null;
+			}
+
+			invalidateFeaturesAnimationSession();
+			featuresSequenceAnimating = false;
+			featuresWheelAccumulator = 0;
+			featuresTouchStartY = null;
+			featuresTouchDeltaY = 0;
 			setHomepageScrollSnapLock(null);
-			updateFeaturesScrollDriven();
-			lastScrollY = window.scrollY;
+			resolveFeaturesSequenceComplete(section, true);
 		};
 
-		const runInternalSnapDown = () => {
-			setIntroTargetPosition(section);
-			setFeaturesStage(section, FEATURES_STAGE_TRANSITION_DOWN);
-			setHomepageScrollSnapLock(FEATURES_INTERNAL_SNAP_LOCK_ID);
-			window.scrollTo({
-				top: getFeaturesInternalSnapY(section),
-				behavior: "smooth",
-			});
+		const reconcileFeaturesStateFromScroll = () => {
+			const stage = getFeaturesStage(section);
+			const atControlPoint = isFeaturesAtControlPoint(section);
 
-			if (featuresStageTimeoutId !== null) {
-				window.clearTimeout(featuresStageTimeoutId);
-			}
-
-			featuresStageTimeoutId = window.setTimeout(() => {
-				finishTransition(FEATURES_STAGE_CONTENT);
-			}, FEATURES_LOCK_DURATION_MS);
-		};
-
-		const runExitToLore = () => {
-			setFeaturesStage(section, FEATURES_STAGE_EXIT_UP);
-			setHomepageScrollSnapLock(FEATURES_EXIT_TO_LORE_LOCK_ID);
-			window.scrollTo({
-				top: getLoreReturnY(),
-				behavior: "smooth",
-			});
-
-			if (featuresStageTimeoutId !== null) {
-				window.clearTimeout(featuresStageTimeoutId);
-			}
-
-			featuresStageTimeoutId = window.setTimeout(() => {
-				finishTransition(FEATURES_STAGE_CONTENT);
-			}, FEATURES_LOCK_DURATION_MS);
-		};
-
-		const tryHandleIntroScroll = () => {
-			if (getFeaturesStage(section) !== FEATURES_STAGE_INTRO) return;
-			if (isHomepageScrollSnapLocked()) return;
-
-			const scrollY = window.scrollY;
-			const goingDown = scrollY > lastScrollY + 4;
-			const goingUp = scrollY < lastScrollY - 4;
-			const sectionStartY = getFeaturesSectionStartY(section);
-
-			if (goingDown && scrollY > sectionStartY + FEATURES_INTERNAL_SNAP_TRIGGER_OFFSET_PX) {
-				runInternalSnapDown();
+			if (
+				atControlPoint &&
+				featuresSequenceCompletedThisLoad &&
+				stage !== FEATURES_STAGE_COMPLETE &&
+				!isHomepageScrollSnapLocked()
+			) {
+				featuresSequenceAnimating = false;
+				resolveFeaturesSequenceComplete(section, false);
 				return;
 			}
 
-			if (goingUp) {
-				runExitToLore();
+			if (
+				atControlPoint &&
+				stage === FEATURES_STAGE_ENTRY_PENDING &&
+				!featuresSequenceCompletedThisLoad &&
+				!pendingEntryIntro &&
+				!isHomepageScrollSnapLocked()
+			) {
+				featuresSequenceAnimating = false;
+				setFeaturesStage(section, FEATURES_STAGE_INTRO);
+				syncFeaturesStableVisuals(section);
+				return;
+			}
+
+			if (
+				atControlPoint &&
+				stage === FEATURES_STAGE_INTRO_PREP &&
+				!featuresSequenceCompletedThisLoad &&
+				!isHomepageScrollSnapLocked()
+			) {
+				featuresSequenceAnimating = false;
+				setFeaturesStage(section, FEATURES_STAGE_INTRO);
+				syncFeaturesStableVisuals(section);
+				return;
+			}
+
+			if (
+				!atControlPoint &&
+				!featuresSequenceCompletedThisLoad &&
+				(featuresSequenceAnimating ||
+					isFeaturesTransientStage(stage) ||
+					(stage !== FEATURES_STAGE_ENTRY_PENDING &&
+						(isHomepageScrollSnapLocked() || isFeaturesStableStage(stage))))
+			) {
+				abortFeaturesSequence();
 			}
 		};
-
-		function onScrollOrResize() {
-			tryHandleIntroScroll();
-			queueUpdate();
-			lastScrollY = window.scrollY;
-		}
 
 		const onSnapLockChange = (event) => {
 			const ruleId =
 				event instanceof CustomEvent ? (event.detail?.ruleId ?? null) : null;
 
 			if (ruleId === FEATURES_ENTRY_RULE_ID) {
-				pendingEntryIntro = true;
-
-				if (featuresIntroEntryFrameId !== null) {
-					window.cancelAnimationFrame(featuresIntroEntryFrameId);
-					featuresIntroEntryFrameId = null;
+				if (featuresSequenceCompletedThisLoad) {
+					pendingEntryIntro = false;
+					resolveFeaturesSequenceComplete(section, false);
+					return;
 				}
 
-				setFeaturesStage(section, FEATURES_STAGE_ENTRY_PENDING);
-			} else if (!ruleId && pendingEntryIntro) {
-				pendingEntryIntro = false;
-				setIntroTargetPosition(section);
+				pendingEntryIntro = true;
+				resetFeaturesSequence(section, FEATURES_STAGE_ENTRY_PENDING);
+				return;
+			}
 
+			if (!ruleId && pendingEntryIntro && getFeaturesStage(section) === FEATURES_STAGE_ENTRY_PENDING) {
+				pendingEntryIntro = false;
+				window.scrollTo({
+					top: getFeaturesSectionStartY(section),
+					behavior: "instant",
+				});
 				setFeaturesStage(section, FEATURES_STAGE_INTRO_PREP);
+				featuresSequenceAnimating = true;
 				featuresIntroEntryFrameId = window.requestAnimationFrame(() => {
 					featuresIntroEntryFrameId = null;
-					setFeaturesStage(section, FEATURES_STAGE_INTRO);
-					playFeaturesIntroEntry(section);
+					runFeaturesIntroEntry(section);
 				});
 			}
-
-			if (!isHomepageScrollSnapLocked()) {
-				queueUpdate();
-			}
-
-			lastScrollY = window.scrollY;
 		};
 
-		setIntroTargetPosition(section);
-		syncFeaturesViewportState(section);
-		updateFeaturesScrollDriven();
-		window.addEventListener("scroll", onScrollOrResize, { passive: true, signal });
-		window.addEventListener("resize", onScrollOrResize, { passive: true, signal });
+		const onWheel = (event) => {
+			const stage = getFeaturesStage(section);
+			const shouldIntercept =
+				isFeaturesAtControlPoint(section) &&
+				!featuresSequenceCompletedThisLoad &&
+				(stage === FEATURES_STAGE_INTRO || stage === FEATURES_STAGE_SEQUENCE);
+
+			if (!shouldIntercept) {
+				featuresWheelAccumulator = 0;
+				return;
+			}
+
+			event.preventDefault();
+
+			if (featuresSequenceAnimating) return;
+
+			featuresWheelAccumulator += event.deltaY;
+			if (Math.abs(featuresWheelAccumulator) < FEATURES_WHEEL_THRESHOLD) return;
+
+			const direction = featuresWheelAccumulator > 0 ? "down" : "up";
+			featuresWheelAccumulator = 0;
+			handleFeaturesSequenceInput(section, direction);
+		};
+
+		const onTouchStart = (event) => {
+			if (event.touches.length !== 1) return;
+			featuresTouchStartY = event.touches[0].clientY;
+			featuresTouchDeltaY = 0;
+		};
+
+		const onTouchMove = (event) => {
+			if (featuresTouchStartY === null || event.touches.length !== 1) return;
+
+			const currentY = event.touches[0].clientY;
+			featuresTouchDeltaY = currentY - featuresTouchStartY;
+			const stage = getFeaturesStage(section);
+			const shouldPrevent =
+				isFeaturesAtControlPoint(section) &&
+				!featuresSequenceCompletedThisLoad &&
+				(stage === FEATURES_STAGE_INTRO || stage === FEATURES_STAGE_SEQUENCE);
+
+			if (shouldPrevent) {
+				event.preventDefault();
+			}
+		};
+
+		const onTouchEnd = () => {
+			if (featuresTouchStartY === null) return;
+
+			const stage = getFeaturesStage(section);
+			const shouldHandle =
+				isFeaturesAtControlPoint(section) &&
+				!featuresSequenceCompletedThisLoad &&
+				(stage === FEATURES_STAGE_INTRO || stage === FEATURES_STAGE_SEQUENCE);
+
+			if (
+				shouldHandle &&
+				Math.abs(featuresTouchDeltaY) >= FEATURES_TOUCH_THRESHOLD &&
+				!featuresSequenceAnimating
+			) {
+				handleFeaturesSequenceInput(
+					section,
+					featuresTouchDeltaY < 0 ? "down" : "up",
+				);
+			}
+
+			featuresTouchStartY = null;
+			featuresTouchDeltaY = 0;
+		};
+
+		const onResize = () => {
+			if (!featuresSequenceAnimating) {
+				syncFeaturesStableVisuals(section);
+			}
+		};
+
+		const onScroll = () => {
+			reconcileFeaturesStateFromScroll();
+
+			if (featuresScrollSettleTimeoutId !== null) {
+				window.clearTimeout(featuresScrollSettleTimeoutId);
+			}
+
+			featuresScrollSettleTimeoutId = window.setTimeout(() => {
+				featuresScrollSettleTimeoutId = null;
+				reconcileFeaturesStateFromScroll();
+			}, 90);
+		};
+
 		document.addEventListener("snowbound:scroll-snap-lock-change", onSnapLockChange, {
 			signal,
 		});
+		window.addEventListener("scroll", onScroll, { passive: true, signal });
+		window.addEventListener("wheel", onWheel, { passive: false, signal });
+		window.addEventListener("touchstart", onTouchStart, { passive: true, signal });
+		window.addEventListener("touchmove", onTouchMove, { passive: false, signal });
+		window.addEventListener("touchend", onTouchEnd, { passive: true, signal });
+		window.addEventListener("resize", onResize, { passive: true, signal });
+		reconcileFeaturesStateFromScroll();
 	}
 
 	function initFeaturesSection() {
@@ -812,13 +1360,17 @@ let supportsFeaturesIntroDiscreteTransition = null;
 		if (!section) return;
 
 		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-			setFeaturesStage(section, FEATURES_STAGE_CONTENT);
-			section.style.setProperty("--features-p", "1");
-			resetFeaturesCardFocus(section);
+			resolveFeaturesSequenceComplete(section, true);
 			return;
 		}
 
-		setFeaturesStage(section, FEATURES_STAGE_CONTENT);
+		if (featuresSequenceCompletedThisLoad) {
+			resolveFeaturesSequenceComplete(section, false);
+			initFeaturesScrollDriver();
+			return;
+		}
+
+		resetFeaturesSequence(section, FEATURES_STAGE_ENTRY_PENDING);
 		initFeaturesScrollDriver();
 	}
 
