@@ -49,3 +49,45 @@
 .section-inner {
 	@apply mx-auto w-full max-w-full lg:max-w-[min(1200px,70vw)];
 }
+
+/**
+ * Tooltips estilizados: el contenedor debe tener `position: relative` y `data-tooltip="texto"`.
+ * No usar `title` en el mismo elemento (evita el tooltip nativo negro duplicado).
+ */
+[data-tooltip]:not([data-tooltip=""])::after {
+	content: attr(data-tooltip);
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 0.6rem);
+	z-index: 50;
+	min-width: max-content;
+	max-width: min(80vw, 18rem);
+	padding: 0.35rem 0.55rem;
+	border-radius: 0.5rem;
+	background: rgba(255, 255, 255, 0.96);
+	color: #112d57;
+	font-family: var(--font-roboto);
+	font-size: 0.75rem;
+	line-height: 1.2;
+	text-align: center;
+	box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+	opacity: 0;
+	transform: translate3d(-50%, 0.25rem, 0);
+	pointer-events: none;
+	transition:
+		opacity 0.18s ease,
+		transform 0.18s ease;
+	white-space: normal;
+}
+
+[data-tooltip]:not([data-tooltip=""]):hover::after,
+[data-tooltip]:not([data-tooltip=""]):focus-visible::after {
+	opacity: 1;
+	transform: translate3d(-50%, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	[data-tooltip]:not([data-tooltip=""])::after {
+		transition: none;
+	}
+}

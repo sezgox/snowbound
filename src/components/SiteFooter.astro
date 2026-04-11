@@ -33,20 +33,20 @@ const footerTaglineChars = Array.from(footerTagline);
 		<div class="flex items-center gap-7">
 			<a
 				href="mailto:support@snowboundbg.com"
-				class="footer-social-link relative block size-[50px] overflow-hidden rounded-full hover:opacity-90"
+				class="footer-social-link relative block size-[50px] hover:opacity-90"
 				aria-label={messages.emailLabel}
-				title="support@snowboundbg.com"
 				data-tooltip="support@snowboundbg.com"
 			>
-				<span class="absolute inset-[16.67%_8.33%]">
-					<img src={assets.iconMail} alt="" class="block size-full max-w-none" />
+				<span class="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
+					<span class="absolute inset-[16.67%_8.33%]">
+						<img src={assets.iconMail} alt="" class="block size-full max-w-none" />
+					</span>
 				</span>
 			</a>
 			<a
 				href="#"
 				class="footer-social-link relative block size-[50px] hover:opacity-90"
 				aria-label={messages.facebookLabel}
-				title={messages.facebookTooltip}
 				data-tooltip={messages.facebookTooltip}
 			>
 				<img
@@ -57,13 +57,14 @@ const footerTaglineChars = Array.from(footerTagline);
 			</a>
 			<a
 				href="https://www.instagram.com/bigc.ountrygames/"
-				class="footer-social-link relative block size-12 overflow-hidden hover:opacity-90"
+				class="footer-social-link relative block size-12 hover:opacity-90"
 				aria-label={messages.instagramLabel}
-				title={messages.instagramTooltip}
 				data-tooltip={messages.instagramTooltip}
 			>
-				<span class="absolute inset-[8.33%]">
-					<img src={assets.iconInstagram} alt="" class="block size-full max-w-none" />
+				<span class="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
+					<span class="absolute inset-[8.33%]">
+						<img src={assets.iconInstagram} alt="" class="block size-full max-w-none" />
+					</span>
 				</span>
 			</a>
 		</div>
@@ -94,38 +95,6 @@ const footerTaglineChars = Array.from(footerTagline);
 		justify-content: center;
 	}
 
-	.footer-social-link::after {
-		content: attr(data-tooltip);
-		position: absolute;
-		left: 50%;
-		bottom: calc(100% + 0.6rem);
-		z-index: 20;
-		min-width: max-content;
-		max-width: min(80vw, 18rem);
-		padding: 0.35rem 0.55rem;
-		border-radius: 0.5rem;
-		background: rgba(255, 255, 255, 0.96);
-		color: #112d57;
-		font-family: var(--font-roboto);
-		font-size: 0.75rem;
-		line-height: 1.2;
-		text-align: center;
-		box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
-		opacity: 0;
-		transform: translate3d(-50%, 0.25rem, 0);
-		pointer-events: none;
-		transition:
-			opacity 0.18s ease,
-			transform 0.18s ease;
-		white-space: nowrap;
-	}
-
-	.footer-social-link:hover::after,
-	.footer-social-link:focus-visible::after {
-		opacity: 1;
-		transform: translate3d(-50%, 0, 0);
-	}
-
 	.footer-glow-letter {
 		display: inline-block;
 		color: rgba(255, 255, 255, 0.7);
@@ -152,10 +121,6 @@ const footerTaglineChars = Array.from(footerTagline);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.footer-social-link::after {
-			transition: none;
-		}
-
 		.footer-glow-letter {
 			color: rgba(255, 255, 255, 1);
 			text-shadow: none;
