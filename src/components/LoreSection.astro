@@ -1,54 +1,48 @@
 ---
 import { assets } from "../data/figmaAssets";
+import type { Messages } from "../i18n";
+
+interface Props {
+	messages: Messages["lore"];
+}
+
+const { messages } = Astro.props;
 ---
 
 <section
 	id="lore"
-	class="lore-section relative w-full py-6 px-2 min-h-[75vh] content-center mb-[-2px]"
+	class="lore-section relative mb-[-2px] min-h-[75vh] w-full content-center px-2 py-6"
 	aria-labelledby="lore-heading"
 	style="background-image: linear-gradient(180deg, var(--color-snowbound-cream) 0%, rgba(250, 249, 242, 0) 10%), url('/images/figma/pattern-ice.png'); background-position: center, center; background-repeat: no-repeat, no-repeat;"
 >
 	<div
 		class="section-inner flex flex-col items-center gap-4 md:flex-row md:items-stretch md:justify-between"
 	>
-		<div
-			class="flex md:w-full flex-col gap-5 md:gap-6 md:self-stretch"
-		>
+		<div class="flex flex-col gap-5 md:w-full md:self-stretch md:gap-6">
 			<h2
 				id="lore-heading"
 				data-lore-reveal
-				class="lore-reveal-block lore-reveal-block--ltr font-display text-4xl max-w-[557px] font-normal leading-tight tracking-[0.2px] text-snowbound-secondary md:text-[64px] md:leading-[48px]"
+				class="lore-reveal-block lore-reveal-block--ltr font-display max-w-[557px] text-4xl font-normal leading-tight tracking-[0.2px] text-snowbound-secondary md:text-[64px] md:leading-[48px]"
 			>
-				AN ICED PARADISE AWAITS...
+				{messages.heading}
 			</h2>
 			<div
 				data-lore-reveal
 				class="lore-reveal-block lore-reveal-block--paragraph font-roboto flex w-full max-w-[557px] flex-col gap-4 p-2.5 text-[20px] font-normal leading-7 tracking-[0.2px] text-black md:flex-1 md:justify-between md:p-[10px] md:leading-[28px]"
 			>
-				<p class="md:leading-[28px]">
-					In the frozen North, beneath shimmering auroras, tribes fight to survive the
-					cold winter.
-				</p>
-				<p class="md:leading-[28px]">
-					Hidden under ancient ice lie the magical petals of the Thall Tree, a power
-					worth risking everything for.
-				</p>
-				<p class="md:leading-[28px]">
-					For ages, the Inuit have fought to gain its power — will you be the next to
-					claim it?
-				</p>
+				<p class="md:leading-[28px]">{messages.paragraphs[0]}</p>
+				<p class="md:leading-[28px]">{messages.paragraphs[1]}</p>
+				<p class="md:leading-[28px]">{messages.paragraphs[2]}</p>
 			</div>
 		</div>
 
-
 		<img
 			src={assets.tree}
-			alt="Illustration of the Thall Tree"
+			alt={messages.imageAlt}
 			data-lore-reveal
-			class="lore-reveal-block lore-reveal-block--image w-full max-w-[min(340px,85vw)] lg:max-w-[380px] shrink-0"
+			class="lore-reveal-block lore-reveal-block--image w-full shrink-0 max-w-[min(340px,85vw)] lg:max-w-[380px]"
 		/>
 	</div>
-
 </section>
 
 <noscript>
@@ -64,16 +58,13 @@ import { assets } from "../data/figmaAssets";
 	.lore-section {
 		background-size: 100% 100%;
 	}
+
 	@media (max-width: 768px) {
 		.lore-section {
 			background-size: cover;
 		}
 	}
 
-	/*
-	 * Direcciones solo cuando aún no ha terminado la revelación (:not(.is-in-view)),
-	 * para que no compitan con .is-in-view a igual especificidad y el título pueda ser LTR.
-	 */
 	#lore .lore-reveal-block {
 		opacity: 0;
 		transition:
@@ -90,14 +81,12 @@ import { assets } from "../data/figmaAssets";
 		transform: translate3d(calc(-1 * clamp(3.25rem, 6vw, 5.25rem)), 0, 0);
 	}
 
-	/* Párrafo: LTR en desktop (lg+); móvil/tablet = RTL (regla base de :not(.is-in-view)). */
 	@media (min-width: 1024px) {
 		#lore .lore-reveal-block.lore-reveal-block--paragraph:not(.is-in-view) {
 			transform: translate3d(calc(-1 * clamp(3.25rem, 6vw, 5.25rem)), 0, 0);
 		}
 	}
 
-	/* Imagen: LTR en móvil/tablet; desktop = RTL (regla base). */
 	@media (max-width: 1023px) {
 		#lore .lore-reveal-block.lore-reveal-block--image:not(.is-in-view) {
 			transform: translate3d(calc(-1 * clamp(3.25rem, 6vw, 5.25rem)), 0, 0);
@@ -120,7 +109,6 @@ import { assets } from "../data/figmaAssets";
 </style>
 
 <script is:inline>
-	/** Aproxima el ratio visible / alto del elemento; `marginBottomRatio` alinea con rootMargin inferior (p. ej. 0.15 = -15%). */
 	function loreHeightVisibleRatio(el, marginBottomRatio) {
 		const rect = el.getBoundingClientRect();
 		const vh = window.innerHeight;
@@ -137,7 +125,6 @@ import { assets } from "../data/figmaAssets";
 		const blocks = document.querySelectorAll("[data-lore-reveal]");
 		if (!blocks.length) return;
 
-		/** Disparo cuando el bloque está bien entrado: ~80–100% del alto visible en viewport. */
 		const minRatio = 0.8;
 		const rootMarginBottomPct = 0;
 

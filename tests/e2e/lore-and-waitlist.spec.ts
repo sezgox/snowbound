@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("Landing page", () => {
-	test("lore headline is full text and uses Figma typography scale", async ({
+	test("english lore headline renders with expected typography", async ({
 		page,
 	}) => {
 		await page.goto("/#lore");
@@ -16,24 +16,81 @@ test.describe("Landing page", () => {
 		expect(fs.color).toBe("rgb(17, 45, 87)");
 	});
 
-	test("hero waitlist submits via API and shows success", async ({
+	test("language switcher navigates from english to spanish route", async ({
 		page,
 	}) => {
+		await page.goto("/");
+		await expect(page.locator("html")).toHaveAttribute("lang", "en");
+
+		await page.getByRole("button", { name: "Change language" }).click();
+		await expect(page.getByText("English")).toBeVisible();
+		await page.getByRole("menuitem", { name: "Español" }).click();
+
+		await expect(page).toHaveURL(/\/es\/$/);
+		await expect(page.locator("html")).toHaveAttribute("lang", "es");
+		await expect(page.locator("#lore-heading")).toHaveText(
+			"Un paraíso helado te espera",
+		);
+	});
+
+	test("english waitlist submits locale-aware payload and shows success", async ({
+		page,
+	}) => {
+		let payload: Record<string, unknown> | null = null;
+
 		await page.route("**/api/waitlist", async (route) => {
+			payload = route.request().postDataJSON() as Record<string, unknown>;
 			await route.fulfill({
 				status: 200,
 				contentType: "application/json",
 				body: JSON.stringify({ ok: true }),
 			});
 		});
+
 		await page.goto("/");
-		await page.getByRole("button", { name: "JOIN THE WAITLIST" }).first().click();
+		await page.locator("[data-open-waitlist]").first().click({ force: true });
 		const dialog = page.getByRole("dialog", { name: "JOIN THE WAITLIST" });
 		await dialog.getByPlaceholder("Email for updates").fill("snowbound.web@gmail.com");
 		await dialog.getByRole("button", { name: "GET UPDATES" }).click();
 		const status = dialog.locator("[data-waitlist-status]");
 		await expect(status).not.toHaveClass(/hidden/, { timeout: 2_000 });
-		await expect(status).toContainText("Thanks", { timeout: 25_000 });
+		await expect(status).toContainText("Thanks!", { timeout: 25_000 });
+
+		expect(payload).toMatchObject({
+			email: "snowbound.web@gmail.com",
+			locale: "en",
+			title: "Snowbound newsletter",
+		});
+	});
+
+	test("spanish waitlist submits locale-aware payload and shows success", async ({
+		page,
+	}) => {
+		let payload: Record<string, unknown> | null = null;
+
+		await page.route("**/api/waitlist", async (route) => {
+			payload = route.request().postDataJSON() as Record<string, unknown>;
+			await route.fulfill({
+				status: 200,
+				contentType: "application/json",
+				body: JSON.stringify({ ok: true }),
+			});
+		});
+
+		await page.goto("/es/");
+		await page.locator("[data-open-waitlist]").first().click({ force: true });
+		const dialog = page.getByRole("dialog", { name: "ÚNETE A LA LISTA DE ESPERA" });
+		await dialog.getByPlaceholder("Correo para novedades").fill("snowbound.web@gmail.com");
+		await dialog.getByRole("button", { name: "RECIBIR NOVEDADES" }).click();
+		const status = dialog.locator("[data-waitlist-status]");
+		await expect(status).not.toHaveClass(/hidden/, { timeout: 2_000 });
+		await expect(status).toContainText("¡Gracias!", { timeout: 25_000 });
+
+		expect(payload).toMatchObject({
+			email: "snowbound.web@gmail.com",
+			locale: "es",
+			title: "Newsletter de Snowbound",
+		});
 	});
 
 	test("features uses natural scroll without vertical snap forcing", async ({

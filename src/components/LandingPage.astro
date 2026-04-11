@@ -1,0 +1,31 @@
+---
+import type { Locale, Messages } from "../i18n";
+import Hero from "./Hero.astro";
+import WaitlistPopover from "./WaitlistPopover.astro";
+import GameStats from "./GameStats.astro";
+import LoreSection from "./LoreSection.astro";
+import FeaturesSection from "./FeaturesSection.astro";
+import TribesSection from "./TribesSection.astro";
+import GameplaySection from "./GameplaySection.astro";
+import AboutSection from "./AboutSection.astro";
+import SiteFooter from "./SiteFooter.astro";
+
+interface Props {
+	locale: Locale;
+	messages: Messages;
+}
+
+const { locale, messages } = Astro.props;
+---
+
+<div id="top" class="flex min-h-screen w-full flex-col bg-white">
+	<Hero locale={locale} messages={messages.hero} />
+	<GameStats messages={messages.gameStats} />
+	<LoreSection messages={messages.lore} />
+	<FeaturesSection messages={messages.features} />
+	<TribesSection messages={messages.tribes} />
+	<GameplaySection messages={messages.gameplay} />
+	<AboutSection messages={messages.about} />
+	<SiteFooter messages={messages.footer} />
+	<WaitlistPopover locale={locale} messages={messages.waitlist} />
+</div>

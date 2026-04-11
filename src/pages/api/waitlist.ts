@@ -1,10 +1,10 @@
 import type { APIRoute } from "astro";
 import { Resend } from "resend";
+import { getMessages, isLocale, type Locale } from "../../i18n";
 import {
 	WAITLIST_EMAIL_LOGO_PATH,
-	WAITLIST_INTERNAL_HTML,
-	WAITLIST_USER_HTML,
-	renderWaitlistHtml,
+	renderInternalWaitlistHtml,
+	renderUserWaitlistHtml,
 } from "../../lib/email/waitlist-templates";
 
 export const prerender = false;
@@ -22,37 +22,44 @@ function logWaitlist(
 	}
 }
 
-/** Resend SDK error shape from `emails.send` */
 type ResendSendError = { message?: string; name?: string } | null;
 
 function resendErrorMessage(
 	internal: ResendSendError,
 	user: ResendSendError,
+	locale: Locale,
 ): string {
 	const parts = [internal?.message, user?.message].filter(
 		(m): m is string => typeof m === "string" && m.length > 0,
 	);
 	const unique = [...new Set(parts)];
-	return unique.join(" · ") || "Failed to send email";
+	return unique.join(" - ") || getMessages(locale).waitlist.api.failedToSend;
 }
 
 export const POST: APIRoute = async ({ request }) => {
-	let body: { email?: unknown; title?: unknown; time?: unknown };
+	let body: { email?: unknown; title?: unknown; time?: unknown; locale?: unknown };
 	try {
 		body = await request.json();
 	} catch {
 		logWaitlist("request rejected: invalid JSON body");
-		return new Response(JSON.stringify({ ok: false, error: "Invalid JSON" }), {
-			status: 400,
-			headers: { "Content-Type": "application/json" },
-		});
+		return new Response(
+			JSON.stringify({ ok: false, error: getMessages("en").waitlist.api.invalidJson }),
+			{
+				status: 400,
+				headers: { "Content-Type": "application/json" },
+			},
+		);
 	}
 
+	const localeCandidate = typeof body.locale === "string" ? body.locale : "";
+	const locale: Locale = isLocale(localeCandidate) ? localeCandidate : "en";
+	const waitlistCopy = getMessages(locale).waitlist;
+	const emailCopy = getMessages(locale).email;
 	const emailRaw = typeof body.email === "string" ? body.email.trim() : "";
 	const title =
 		typeof body.title === "string" && body.title.trim()
 			? body.title.trim()
-			: "Snowbound newsletter";
+			: waitlistCopy.newsletterLabel;
 	const time =
 		typeof body.time === "string" && body.time.trim()
 			? body.time.trim()
@@ -61,17 +68,22 @@ export const POST: APIRoute = async ({ request }) => {
 	if (!emailRaw || !EMAIL_RE.test(emailRaw)) {
 		logWaitlist("request rejected: invalid or empty email", {
 			emailProvided: Boolean(emailRaw),
+			locale,
 		});
-		return new Response(JSON.stringify({ ok: false, error: "Invalid email" }), {
-			status: 400,
-			headers: { "Content-Type": "application/json" },
-		});
+		return new Response(
+			JSON.stringify({ ok: false, error: waitlistCopy.api.invalidEmail }),
+			{
+				status: 400,
+				headers: { "Content-Type": "application/json" },
+			},
+		);
 	}
 
 	logWaitlist("POST received", {
 		subscriberEmail: emailRaw,
 		title,
 		time,
+		locale,
 	});
 
 	const apiKey = import.meta.env.RESEND_API_KEY;
@@ -88,7 +100,7 @@ export const POST: APIRoute = async ({ request }) => {
 			hasResendNotifyTo: Boolean(notifyTo),
 		});
 		return new Response(
-			JSON.stringify({ ok: false, error: "Email service not configured" }),
+			JSON.stringify({ ok: false, error: waitlistCopy.api.notConfigured }),
 			{ status: 503, headers: { "Content-Type": "application/json" } },
 		);
 	}
@@ -97,18 +109,20 @@ export const POST: APIRoute = async ({ request }) => {
 		from,
 		notifyTo,
 		replyTo: replyTo ?? "(none)",
+		locale,
 	});
 
 	const resend = new Resend(apiKey);
-	const vars = { email: emailRaw, time, title };
 	const siteBase =
 		typeof import.meta.env.PUBLIC_SITE_URL === "string"
 			? import.meta.env.PUBLIC_SITE_URL.trim().replace(/\/$/, "")
 			: "";
 	const logoUrl = siteBase ? `${siteBase}${WAITLIST_EMAIL_LOGO_PATH}` : undefined;
-	const htmlInternal = renderWaitlistHtml(WAITLIST_INTERNAL_HTML, vars, { logoUrl });
-	const htmlUser = renderWaitlistHtml(WAITLIST_USER_HTML, vars, { logoUrl });
-
+	const htmlInternal = renderInternalWaitlistHtml(
+		{ email: emailRaw, time, title, locale },
+		{ logoUrl },
+	);
+	const htmlUser = renderUserWaitlistHtml(locale, { email: emailRaw, time }, { logoUrl });
 	const shared = replyTo ? { replyTo } : {};
 
 	try {
@@ -116,14 +130,14 @@ export const POST: APIRoute = async ({ request }) => {
 			resend.emails.send({
 				from,
 				to: notifyTo,
-				subject: "New waitlist signup",
+				subject: getMessages("en").email.internal.subject,
 				html: htmlInternal,
 				...shared,
 			}),
 			resend.emails.send({
 				from,
 				to: emailRaw,
-				subject: "You're on the list",
+				subject: emailCopy.user.subject,
 				html: htmlUser,
 				...shared,
 			}),
@@ -136,7 +150,7 @@ export const POST: APIRoute = async ({ request }) => {
 				internal: internalErr,
 				user: userErr,
 			});
-			const message = resendErrorMessage(internalErr, userErr);
+			const message = resendErrorMessage(internalErr, userErr, locale);
 			const payload: Record<string, unknown> = {
 				ok: false,
 				error: message,
@@ -154,14 +168,15 @@ export const POST: APIRoute = async ({ request }) => {
 			internalEmailId: internalResult.data?.id ?? null,
 			userEmailId: userResult.data?.id ?? null,
 			subscriberEmail: emailRaw,
+			locale,
 		});
 	} catch (err) {
 		const msg = err instanceof Error ? err.message : String(err);
-		logWaitlist("exception while sending", { error: msg });
+		logWaitlist("exception while sending", { error: msg, locale });
 		console.error("[waitlist]", err);
 		const payload: Record<string, unknown> = {
 			ok: false,
-			error: import.meta.env.DEV ? msg : "Failed to send email",
+			error: import.meta.env.DEV ? msg : waitlistCopy.api.failedToSend,
 		};
 		if (import.meta.env.DEV) {
 			payload.exception = msg;

@@ -1,41 +1,21 @@
 ---
 import { assets } from "../data/figmaAssets";
+import type { Messages } from "../i18n";
 
-const cards = [
-	{
-		title: "UNCOVERING ICE",
-		body: [
-			"Reveal what's under the ice",
-			"and find useful items and",
-			"locations",
-		],
-		visual: "hex",
-	},
-	{
-		title: "FINDING PETALS",
-		body: [
-			"You will need Petals to win the game. Every time you find one it will activate an event",
-		],
-		visual: "petals",
-	},
-	{
-		title: "GRAB & ESCAPE",
-		body: [
-			"When you find an item while",
-			"searching the snow, save it",
-			"in your bag and run back to",
-			"your main base.",
-		],
-		visual: "board",
-	},
-	{
-		title: "GLOBAL EVENTS",
-		body: [
-			"Events are random and affect every player. They can alter the game immediately",
-		],
-		visual: "events",
-	},
-] as const;
+interface Props {
+	messages: Messages["gameplay"];
+}
+
+const { messages } = Astro.props;
+
+const cards = messages.cards.map((card, index) => ({
+	...card,
+	visual: ["hex", "petals", "board", "events"][index] as
+		| "hex"
+		| "petals"
+		| "board"
+		| "events",
+}));
 ---
 
 <section
@@ -57,7 +37,7 @@ const cards = [
 			id="gameplay-heading"
 			class="gameplay-title font-display p-2.5 text-center text-4xl tracking-wide text-[#112d57] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)] md:text-[64px] md:leading-[48px]"
 		>
-			GAMEPLAY
+			{messages.heading}
 		</h2>
 
 		<div

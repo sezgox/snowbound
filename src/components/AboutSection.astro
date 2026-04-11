@@ -1,5 +1,12 @@
 ---
 import { assets } from "../data/figmaAssets";
+import type { Messages } from "../i18n";
+
+interface Props {
+	messages: Messages["about"];
+}
+
+const { messages } = Astro.props;
 ---
 
 <section
@@ -16,7 +23,7 @@ import { assets } from "../data/figmaAssets";
 			class="about-impact about-impact--title font-display w-full text-center text-4xl leading-tight tracking-wide text-white md:text-[64px] md:leading-[64px]"
 			style="--about-impact-delay: 0.05s;"
 		>
-			ABOUT US
+			{messages.heading}
 		</h2>
 
 		<div class="relative grid w-full gap-10 md:grid-cols-2 md:gap-8">
@@ -27,7 +34,7 @@ import { assets } from "../data/figmaAssets";
 				>
 					<img
 						src={assets.aboutTeam}
-						alt="Juanma Mateo and Gonzalo Valle"
+						alt={messages.teamAlt}
 						class="absolute left-0 w-full max-w-none object-cover"
 						style="height: 302.06%; top: -85.16%;"
 					/>
@@ -36,7 +43,7 @@ import { assets } from "../data/figmaAssets";
 					class="about-impact font-inter text-center text-base leading-6 tracking-tight text-[#1d293d]"
 					style="--about-impact-delay: 0.31s;"
 				>
-					Juanma Mateo & Gonzalo Valle
+					{messages.teamNames}
 				</p>
 			</div>
 
@@ -45,18 +52,13 @@ import { assets } from "../data/figmaAssets";
 					class="about-impact font-inter text-base leading-6 tracking-tight text-white md:max-w-[492px]"
 					style="--about-impact-delay: 0.44s;"
 				>
-					We are a passionate team of game designers who, driven by our creativity, have
-					embarked on the adventure of creating a tabletop game. Drawing from our
-					experience in the video game industry, Snowbound brings together many of the
-					elements we love most in tabletop gaming: competition, strategy, and unexpected
-					twists.
+					{messages.paragraphs[0]}
 				</p>
 				<p
 					class="about-impact font-inter text-base leading-6 tracking-tight text-[#1d293d] md:max-w-full"
 					style="--about-impact-delay: 0.57s;"
 				>
-					Your support helps turn this dream into reality and bring Snowbound to tables all
-					around the world.
+					{messages.paragraphs[1]}
 				</p>
 			</div>
 		</div>
@@ -70,14 +72,14 @@ import { assets } from "../data/figmaAssets";
 			<button
 				type="button"
 				data-open-waitlist
-				class="font-tillana flex w-full max-w-[min(100%,778px)] items-center justify-center rounded-[50px] bg-[#0285e4] px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:min-h-[56px] max-md:whitespace-nowrap md:h-[78px] md:px-[70px] md:py-0 md:text-[48px] md:leading-8 md:tracking-[0.1px]"
+				class="font-tillana flex w-full items-center justify-center rounded-[50px] bg-[#0285e4] px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:min-h-[56px] max-md:whitespace-nowrap md:h-[78px]  md:text-[48px] md:leading-8 md:tracking-[0.1px]"
 			>
-				JOIN THE WAITLIST
+				{messages.cta}
 			</button>
 			<p
 				class="font-roboto max-w-[557px] px-2.5 text-center text-xl leading-7 tracking-[0.2px] text-[#112d57]"
 			>
-				Don't miss the launch
+				{messages.tagline}
 			</p>
 		</div>
 	</div>

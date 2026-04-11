@@ -1,10 +1,19 @@
 ---
+import { defaultLocale, getMessages, type Locale, type Messages } from "../i18n";
+
 interface Props {
 	variant?: "hero" | "inline";
 	id?: string;
+	locale?: Locale;
+	messages?: Messages["waitlist"];
 }
 
-const { variant = "hero", id = "waitlist-form" } = Astro.props;
+const {
+	variant = "hero",
+	id = "waitlist-form",
+	locale = defaultLocale,
+	messages = getMessages(locale).waitlist,
+} = Astro.props;
 const isHero = variant === "hero";
 ---
 
@@ -15,6 +24,13 @@ const isHero = variant === "hero";
 		isHero ? "items-center" : "w-full max-w-md",
 	]}
 	data-waitlist-form
+	data-locale={locale}
+	data-newsletter-label={messages.newsletterLabel}
+	data-empty-message={messages.status.empty}
+	data-pending-message={messages.status.pending}
+	data-success-message={messages.status.success}
+	data-not-configured-message={messages.status.notConfigured}
+	data-generic-error-message={messages.status.genericError}
 >
 	<div
 		class:list={[
@@ -22,13 +38,13 @@ const isHero = variant === "hero";
 			isHero ? "max-w-xl justify-center px-4" : "",
 		]}
 	>
-		<label class="sr-only" for={`${id}-email`}>Email</label>
+		<label class="sr-only" for={`${id}-email`}>{messages.emailLabel}</label>
 		<input
 			id={`${id}-email`}
 			name="user_email"
 			type="email"
 			required
-			placeholder="Email for updates"
+			placeholder={messages.emailPlaceholder}
 			autocomplete="email"
 			class="font-nunito min-h-[48px] flex-1 rounded-full border border-[#77abbd] bg-white px-5 text-base text-[#112d57] placeholder:text-[#5c5c5c]/70"
 		/>
@@ -40,7 +56,7 @@ const isHero = variant === "hero";
 			"font-tillana inline-flex items-center justify-center rounded-[50px] bg-[#0285e4] px-10 py-4 text-2xl leading-8 tracking-wide text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition enabled:hover:bg-[#0270c2] disabled:cursor-not-allowed disabled:opacity-60 md:px-[70px] md:py-5 md:text-5xl md:leading-8",
 		]}
 	>
-		GET UPDATES
+		{messages.submit}
 	</button>
 	<p
 		class="font-nunito hidden max-w-xl px-2 text-center text-sm text-[#5c5c5c]"
@@ -71,29 +87,41 @@ const isHero = variant === "hero";
 			e.preventDefault();
 			const status = form.querySelector<HTMLElement>("[data-waitlist-status]");
 			const submitBtn = form.querySelector<HTMLButtonElement>("[data-waitlist-submit]");
-
 			const emailInput = form.querySelector<HTMLInputElement>('[name="user_email"]');
 			const email = emailInput?.value.trim() ?? "";
+			const locale = form.dataset.locale === "es" ? "es" : "en";
+			const newsletterLabel = form.dataset.newsletterLabel ?? "Snowbound newsletter";
+			const emptyMessage = form.dataset.emptyMessage ?? "Please enter your email.";
+			const pendingMessage = form.dataset.pendingMessage ?? "Subscribing…";
+			const successMessage =
+				form.dataset.successMessage ??
+				"Thanks! You are on the list — we will be in touch.";
+			const notConfiguredMessage =
+				form.dataset.notConfiguredMessage ??
+				"Email not configured yet — we still noted your interest!";
+			const genericErrorMessage =
+				form.dataset.genericErrorMessage ??
+				"Something went wrong. Please try again.";
 
 			if (!email) {
-				showStatus(status, "Please enter your email.", true);
+				showStatus(status, emptyMessage, true);
 				return;
 			}
 
 			if (submitBtn) submitBtn.disabled = true;
-			showStatus(status, "Subscribing…", false);
+			showStatus(status, pendingMessage, false);
 
 			try {
-				await submitWaitlist(email);
-				showStatus(status, "Thanks! You are on the list — we will be in touch.", false);
+				await submitWaitlist(email, locale, newsletterLabel);
+				showStatus(status, successMessage, false);
 				form.reset();
 			} catch (err) {
 				const msg =
 					err instanceof Error && err.message === "not_configured"
-						? "Email not configured yet — we still noted your interest!"
+						? notConfiguredMessage
 						: err instanceof Error && err.message !== "request_failed"
 							? err.message
-							: "Something went wrong. Please try again.";
+							: genericErrorMessage;
 				showStatus(status, msg, true);
 			}
 

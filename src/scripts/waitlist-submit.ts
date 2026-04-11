@@ -1,12 +1,19 @@
-export async function submitWaitlist(email: string): Promise<void> {
-	console.log("[waitlist] submitting", { email });
+import type { Locale } from "../i18n";
+
+export async function submitWaitlist(
+	email: string,
+	locale: Locale,
+	title: string,
+): Promise<void> {
+	console.log("[waitlist] submitting", { email, locale, title });
 
 	const res = await fetch("/api/waitlist", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({
 			email,
-			title: "Snowbound newsletter",
+			locale,
+			title,
 			time: new Date().toISOString(),
 		}),
 	});

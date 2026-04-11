@@ -1,14 +1,21 @@
 ---
 import { assets } from "../data/figmaAssets";
-import { tribeSlides, type TribeBackground } from "../data/tribes";
+import { tribeVisuals, type TribeBackground } from "../data/tribes";
+import { formatWithIndex, type Messages } from "../i18n";
 
-const n = tribeSlides.length;
+interface Props {
+	messages: Messages["tribes"];
+}
+
+const { messages } = Astro.props;
+
+const n = tribeVisuals.length;
 
 function getBackgroundValue(background: TribeBackground) {
 	return background.kind === "gradient" ? background.css : background.hex;
 }
 
-const initialBackground = getBackgroundValue(tribeSlides[0].background);
+const initialBackground = getBackgroundValue(tribeVisuals[0].background);
 ---
 
 <section
@@ -24,21 +31,21 @@ const initialBackground = getBackgroundValue(tribeSlides[0].background);
 		id="tribes-heading"
 		class="relative z-10 font-display text-center text-[clamp(2.8rem,7vw,4.75rem)] leading-none tracking-[0.04em] text-snowbound-secondary [text-shadow:0_3px_12px_rgba(255,255,255,0.2)]"
 	>
-		The Inuit Tribes
+		{messages.heading}
 	</h2>
 
 	<div
 		class="tribes-carousel relative z-10 flex-1"
 		data-tribes-slides
 		role="region"
-		aria-label="Tribe carousel"
+		aria-label={messages.carouselLabel}
 		tabindex="0"
 	>
 		<button
 			type="button"
 			class="tribes-nav tribes-nav--prev"
 			data-tribes-prev
-			aria-label="Previous tribe"
+			aria-label={messages.previousLabel}
 		>
 			<img
 				src={assets.tribesChevron}
@@ -48,22 +55,26 @@ const initialBackground = getBackgroundValue(tribeSlides[0].background);
 		</button>
 
 			{
-				tribeSlides.map((slide, i) => {
+				tribeVisuals.map((visual, i) => {
 					const slideId = `tribes-slide-${i}`;
-					const backgroundValue = getBackgroundValue(slide.background);
+					const backgroundValue = getBackgroundValue(visual.background);
+					const slide = messages.slides[i];
 
 					return (
 						<article
 							id={slideId}
 							class={`tribes-slide${i === 0 ? " is-active" : ""}`}
 							aria-roledescription="slide"
-							aria-label={`Tribe ${i + 1} of ${n}`}
+							aria-label={formatWithIndex(messages.slidePositionLabel, {
+								current: i + 1,
+								total: n,
+							})}
 							aria-hidden={i === 0 ? "false" : "true"}
 							data-tribes-slide-index={i}
 							data-tribes-bg={backgroundValue}
 						>
 							<img
-								src={slide.character}
+								src={visual.character}
 								alt=""
 								class="tribes-slide__character pointer-events-none"
 							/>
@@ -93,7 +104,7 @@ const initialBackground = getBackgroundValue(tribeSlides[0].background);
 			type="button"
 			class="tribes-nav tribes-nav--next"
 			data-tribes-next
-			aria-label="Next tribe"
+			aria-label={messages.nextLabel}
 		>
 			<img
 				src={assets.tribesChevron}
@@ -103,15 +114,15 @@ const initialBackground = getBackgroundValue(tribeSlides[0].background);
 		</button>
 	</div>
 
-	<div class="relative z-10 flex justify-center gap-2 pt-3 md:pt-4" role="tablist" aria-label="Tribe slides">
+	<div class="relative z-10 flex justify-center gap-2 pt-3 md:pt-4" role="tablist" aria-label={messages.tablistLabel}>
 		{
-			tribeSlides.map((_, i) => (
+			tribeVisuals.map((_, i) => (
 				<button
 					type="button"
 					role="tab"
 					aria-controls={`tribes-slide-${i}`}
 					aria-selected={i === 0 ? "true" : "false"}
-					aria-label={`Show tribe ${i + 1}`}
+					aria-label={`${messages.showTribeLabel} ${i + 1}`}
 					data-tribes-dot
 					data-slide-index={i}
 					class="tribes-dot"

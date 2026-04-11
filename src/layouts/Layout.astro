@@ -2,19 +2,21 @@
 import "../styles/global.css";
 
 interface Props {
+	lang?: "en" | "es";
 	title?: string;
 	description?: string;
 }
 
 const {
-	title = "Snowbound — Board Game",
+	lang = "en",
+	title = "Snowbound - Board Game",
 	description =
 		"Survive the winter. Betray your rivals. A strategic board game of exploration, deception and survival.",
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
