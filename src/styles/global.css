@@ -38,45 +38,13 @@
 		scroll-behavior: smooth;
 	}
 
-	/*
-	 * Scroll snap vertical (página): los puntos de parada los marcan las secciones con scroll-snap-align.
-	 * Lore usa align: end para alinear el final de la sección con el borde inferior del viewport
-	 * y no dejar ver la siguiente sección hasta pasar ese punto.
-	 */
-	@media (prefers-reduced-motion: no-preference) {
-		html {
-			scroll-snap-type: y proximity;
-		}
-
-		[data-page-snap="start"] {
-			scroll-snap-align: start;
-			scroll-snap-stop: normal;
-		}
-
-		[data-page-snap="end"] {
-			scroll-snap-align: end;
-			scroll-snap-stop: always;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		html {
-			scroll-snap-type: none;
-		}
-
-		[data-page-snap] {
-			scroll-snap-align: unset;
-			scroll-snap-stop: normal;
-		}
-	}
-
 	body {
 		@apply bg-white text-black antialiased;
 	}
 }
 
 /**
- * Main column width vs full-bleed backgrounds (Figma desktop ~1200px, ~60–70% viewport).
+ * Main column width vs full-bleed backgrounds (Figma desktop ~1200px, ~60-70% viewport).
  */
 .section-inner {
 	@apply mx-auto w-full max-w-full lg:max-w-[min(1200px,70vw)];

@@ -70,13 +70,13 @@ const initialBackground = getBackgroundValue(tribeSlides[0].background);
 
 							<div
 								class="tribes-slide__panel"
-								style={`background-image: url('${assets.tribesDescBgRotated}');`}
+								style={`background-image: url('${assets.tribesDescBg}');`}
 							>
-								<h3 class="font-tillana text-[clamp(2rem,5vw,3.2rem)] font-medium leading-[0.95] tracking-[0.02em] text-black">
+								<h3 class="tribes-slide__title font-tillana text-[clamp(2rem,5vw,3.2rem)] font-medium leading-[0.95] tracking-[0.02em] text-black">
 									{slide.name}
 								</h3>
 
-								<div class="font-nunito space-y-3 text-base leading-6 tracking-[0.01em] text-black md:text-lg md:leading-7">
+								<div class="tribes-slide__copy font-nunito space-y-3 text-base leading-6 tracking-[0.01em] text-black md:text-lg md:leading-7">
 									{
 										slide.lines.map((line) => (
 											<p class="mb-0">{line}</p>
@@ -155,7 +155,7 @@ const initialBackground = getBackgroundValue(tribeSlides[0].background);
 
 	.tribes-carousel {
 		display: grid;
-		grid-template-columns: 38px minmax(0, 1fr) 38px;
+		grid-template-columns: minmax(0, 1fr);
 		align-items: center;
 		min-height: 470px;
 		touch-action: pan-y;
@@ -172,7 +172,7 @@ const initialBackground = getBackgroundValue(tribeSlides[0].background);
 	}
 
 	.tribes-slide {
-		grid-column: 2;
+		grid-column: 1;
 		grid-row: 1;
 		display: flex;
 		flex-direction: column;
@@ -182,7 +182,7 @@ const initialBackground = getBackgroundValue(tribeSlides[0].background);
 		opacity: 0;
 		pointer-events: none;
 		touch-action: pan-y;
-		padding: 1.5rem 3.5rem 0.75rem;
+		padding: 8px;
 		transform: translate3d(0, 0, 0);
 	}
 
@@ -218,9 +218,10 @@ const initialBackground = getBackgroundValue(tribeSlides[0].background);
 
 	.tribes-slide__character {
 		display: block;
-		height: auto;
-		width: 100%;
-		max-width: 260px;
+		height: 40vh;
+		max-height: 40vh;
+		width: auto;
+		max-width: 100%;
 		object-fit: contain;
 	}
 
@@ -229,20 +230,28 @@ const initialBackground = getBackgroundValue(tribeSlides[0].background);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
 		gap: 1rem;
+		height: 100%;
 		min-height: 280px;
 		width: min(100%, 460px);
 		min-width: min(320px, 100%);
-		padding: 2rem 2rem 2.25rem;
+		padding: 24px 16px 16px;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
 		text-align: center;
 	}
 
+	.tribes-slide__title {
+		flex: 1;
+	}
+
+	.tribes-slide__copy {
+		flex: 2;
+	}
+
 	.tribes-nav {
-		display: flex;
+		display: none;
 		height: 54px;
 		width: 38px;
 		align-items: center;
@@ -335,6 +344,7 @@ const initialBackground = getBackgroundValue(tribeSlides[0].background);
 		}
 
 		.tribes-slide {
+			grid-column: 2;
 			min-height: 460px;
 			flex-direction: row;
 			gap: 0;
@@ -342,19 +352,24 @@ const initialBackground = getBackgroundValue(tribeSlides[0].background);
 		}
 
 		.tribes-slide__character {
+			height: auto;
+			max-height: none;
+			width: 100%;
 			max-width: 360px;
 			flex: 0 0 auto;
 		}
 
 		.tribes-slide__panel {
 			flex: 0 1 auto;
+			height: 100%;
 			width: min(100%, 560px);
 			min-height: 360px;
 			min-width: 520px;
-			padding: 2.4rem 3rem 2.6rem;
+			padding: 24px 16px 16px;
 		}
 
 		.tribes-nav {
+			display: flex;
 			height: 62px;
 			width: 42px;
 		}

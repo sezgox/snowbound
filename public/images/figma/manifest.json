@@ -11,6 +11,7 @@
   "player-board": "/images/figma/player-board.png",
   "finding-petals": "/images/figma/finding-petals.png",
   "event-card": "/images/figma/event-card.png",
+  "global-events": "/images/figma/global-events.png",
   "footer-logo": "/images/figma/footer-logo.png",
   "kickstarter-hex": "/images/figma/kickstarter-hex.png",
   "about-team": "/images/figma/about-team.png",
@@ -18,11 +19,11 @@
   "icon-facebook": "/images/figma/icon-facebook.svg",
   "icon-instagram": "/images/figma/icon-instagram.svg",
   "tribes-shared-chevron": "/images/figma/tribes/shared-chevron.png",
-  "tribes-panel-bg-rotated": "/images/figma/tribes/tribe-desc-bg-rotated.png",
-  "tribes-01-character": "/images/figma/tribes/01-character.png",
-  "tribes-02-character": "/images/figma/tribes/02-character.png",
-  "tribes-03-character": "/images/figma/tribes/03-character.png",
-  "tribes-04-character": "/images/figma/tribes/04-character.png",
-  "tribes-05-character": "/images/figma/tribes/05-character.png",
-  "tribes-06-character": "/images/figma/tribes/06-character.png"
+  "tribes-panel-bg": "/images/figma/tribes/tribe-desc-bg.webp",
+  "tribes-01-character": "/images/figma/tribes/character-1.webp",
+  "tribes-02-character": "/images/figma/tribes/character-2.webp",
+  "tribes-03-character": "/images/figma/tribes/character-3.webp",
+  "tribes-04-character": "/images/figma/tribes/character-4.webp",
+  "tribes-05-character": "/images/figma/tribes/character-5.webp",
+  "tribes-06-character": "/images/figma/tribes/character-6.webp"
 }

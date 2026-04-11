@@ -23,14 +23,7 @@ import SiteFooter from "../components/SiteFooter.astro";
 		<GameplaySection />
 		<AboutSection />
 		<SiteFooter />
-		<!-- Global waitlist popover — triggered by any [data-open-waitlist] button -->
+		<!-- Global waitlist popover triggered by any [data-open-waitlist] button. -->
 		<WaitlistPopover />
 	</div>
-
-	<script>
-		import { initHomepageScrollSnaps } from "../scripts/homepage-scroll-snaps";
-
-		initHomepageScrollSnaps();
-		document.addEventListener("astro:page-load", initHomepageScrollSnaps);
-	</script>
 </Layout>

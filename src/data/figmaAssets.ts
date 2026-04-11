@@ -14,14 +14,15 @@ export const assets = {
 	/** FINDING PETALS gameplay card (Figma node 517:644). */
 	findingPetals: "/images/figma/finding-petals.png",
 	eventCard: "/images/figma/event-card.png",
+	globalEvents: "/images/figma/global-events.png",
 	footerLogo: "/images/figma/footer-logo.png",
 	kickstarterHex: "/images/figma/kickstarter-hex.png",
 	aboutTeam: "/images/figma/about-team.png",
 	iconMail: "/images/figma/icon-mail.svg",
 	iconFacebook: "/images/figma/icon-facebook.svg",
 	iconInstagram: "/images/figma/icon-instagram.svg",
-	/** Tribes description parchment background, rotated for panel layout. */
-	tribesDescBgRotated: "/images/figma/tribes/tribe-desc-bg-rotated.png",
+	/** Tribes description parchment background. */
+	tribesDescBg: "/images/figma/tribes/tribe-desc-bg.webp",
 	/** Tribes carousel chevron (Figma 599:320). */
 	tribesChevron: "/images/figma/tribes/shared-chevron.png",
 } as const;
