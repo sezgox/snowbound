@@ -6,31 +6,35 @@ import { assets } from "../data/figmaAssets";
 	id="about"
 	class="flex w-full flex-col items-center gap-2.5 bg-gradient-to-b from-[#2395e7] to-white py-10 scroll-mt-24"
 	aria-labelledby="about-heading"
+	data-about-reveal
 >
 	<div
 		class="section-inner flex w-full flex-col gap-6 rounded-2xl px-4 pb-8 pt-12 sm:px-8 md:px-12"
 	>
 		<h2
 			id="about-heading"
-			class="font-display w-full text-center text-4xl leading-tight tracking-wide text-white md:text-[64px] md:leading-[64px]"
+			class="about-impact about-impact--title font-display w-full text-center text-4xl leading-tight tracking-wide text-white md:text-[64px] md:leading-[64px]"
+			style="--about-impact-delay: 0.05s;"
 		>
 			ABOUT US
 		</h2>
 
 		<div class="relative grid w-full gap-10 md:grid-cols-2 md:gap-8">
 			<div class="flex flex-col items-center gap-4">
-			<div
-				class="relative h-[226px] w-full overflow-hidden rounded-[10px] border-2 border-[#99a1af]"
-			>
-				<img
-					src={assets.aboutTeam}
-					alt="Juanma Mateo and Gonzalo Valle"
-					class="absolute left-0 w-full max-w-none object-cover"
-					style="height: 302.06%; top: -85.16%;"
-				/>
-			</div>
+				<div
+					class="about-impact relative h-[226px] w-full overflow-hidden rounded-[10px] border-2 border-[#99a1af]"
+					style="--about-impact-delay: 0.18s;"
+				>
+					<img
+						src={assets.aboutTeam}
+						alt="Juanma Mateo and Gonzalo Valle"
+						class="absolute left-0 w-full max-w-none object-cover"
+						style="height: 302.06%; top: -85.16%;"
+					/>
+				</div>
 				<p
-					class="font-inter text-center text-base leading-6 tracking-tight text-[#1d293d]"
+					class="about-impact font-inter text-center text-base leading-6 tracking-tight text-[#1d293d]"
+					style="--about-impact-delay: 0.31s;"
 				>
 					Juanma Mateo & Gonzalo Valle
 				</p>
@@ -38,7 +42,8 @@ import { assets } from "../data/figmaAssets";
 
 			<div class="flex flex-col gap-4 pt-2 text-white md:pt-2.5">
 				<p
-					class="font-inter text-base leading-6 tracking-tight text-white md:max-w-[492px]"
+					class="about-impact font-inter text-base leading-6 tracking-tight text-white md:max-w-[492px]"
+					style="--about-impact-delay: 0.44s;"
 				>
 					We are a passionate team of game designers who, driven by our creativity, have
 					embarked on the adventure of creating a tabletop game. Drawing from our
@@ -47,7 +52,8 @@ import { assets } from "../data/figmaAssets";
 					twists.
 				</p>
 				<p
-					class="font-inter text-base leading-6 tracking-tight text-[#1d293d] md:max-w-full"
+					class="about-impact font-inter text-base leading-6 tracking-tight text-[#1d293d] md:max-w-full"
+					style="--about-impact-delay: 0.57s;"
 				>
 					Your support helps turn this dream into reality and bring Snowbound to tables all
 					around the world.
@@ -57,17 +63,150 @@ import { assets } from "../data/figmaAssets";
 	</div>
 
 	<div class="flex w-full flex-col items-center gap-4 px-3 py-5 sm:px-4">
-		<button
-			type="button"
-			data-open-waitlist
-			class="font-tillana flex w-full max-w-[min(100%,778px)] items-center justify-center rounded-[50px] bg-[#0285e4] px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:min-h-[56px] max-md:whitespace-nowrap md:h-[78px] md:px-[70px] md:py-0 md:text-[48px] md:leading-8 md:tracking-[0.1px]"
+		<div
+			class="about-impact about-impact--heavy flex w-full flex-col items-center gap-4"
+			style="--about-impact-delay: 0.74s;"
 		>
-			JOIN THE WAITLIST
-		</button>
-		<p
-			class="font-roboto max-w-[557px] px-2.5 text-center text-xl leading-7 tracking-[0.2px] text-[#112d57]"
-		>
-			Don't miss the launch
-		</p>
+			<button
+				type="button"
+				data-open-waitlist
+				class="font-tillana flex w-full max-w-[min(100%,778px)] items-center justify-center rounded-[50px] bg-[#0285e4] px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:min-h-[56px] max-md:whitespace-nowrap md:h-[78px] md:px-[70px] md:py-0 md:text-[48px] md:leading-8 md:tracking-[0.1px]"
+			>
+				JOIN THE WAITLIST
+			</button>
+			<p
+				class="font-roboto max-w-[557px] px-2.5 text-center text-xl leading-7 tracking-[0.2px] text-[#112d57]"
+			>
+				Don't miss the launch
+			</p>
+		</div>
 	</div>
 </section>
+
+<noscript>
+	<style>
+		[data-about-reveal] .about-impact {
+			opacity: 1 !important;
+			transform: none !important;
+			animation: none !important;
+		}
+	</style>
+</noscript>
+
+<style>
+	#about {
+		overflow-x: clip;
+	}
+
+	#about .about-impact {
+		--about-impact-start-scale: 2.6;
+		opacity: 0;
+		position: relative;
+		transform-origin: center top;
+		transform: translate3d(0, -7rem, 0) scale(var(--about-impact-start-scale));
+		will-change: transform, opacity;
+		backface-visibility: hidden;
+	}
+
+	#about .about-impact--title {
+		--about-impact-start-scale: 2.9;
+	}
+
+	#about .about-impact--heavy {
+		--about-impact-start-scale: 3.1;
+	}
+
+	#about.is-in-view .about-impact {
+		animation: about-impact-drop 0.84s cubic-bezier(0.18, 0.88, 0.24, 1) both;
+		animation-delay: var(--about-impact-delay, 0s);
+	}
+
+	@keyframes about-impact-drop {
+		0% {
+			opacity: 0;
+			transform: translate3d(0, -7rem, 0) scale(var(--about-impact-start-scale));
+		}
+		100% {
+			opacity: 1;
+			transform: translate3d(0, 0, 0) scale(1);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#about .about-impact {
+			opacity: 1;
+			transform: none;
+			animation: none !important;
+			will-change: auto;
+		}
+	}
+</style>
+
+<script is:inline>
+	function aboutHeightVisibleRatio(el, marginBottomRatio) {
+		const rect = el.getBoundingClientRect();
+		const vh = window.innerHeight;
+		const m = marginBottomRatio ?? 0;
+		const viewportBottom = vh * (1 - m);
+		const visibleTop = Math.max(0, rect.top);
+		const visibleBottom = Math.min(viewportBottom, rect.bottom);
+		const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+		if (rect.height <= 0) return 0;
+		return visibleHeight / rect.height;
+	}
+
+	function initAboutReveal() {
+		document.querySelectorAll("[data-about-reveal]").forEach((root) => {
+			if (!(root instanceof HTMLElement)) return;
+			if (root.dataset.aboutBound === "true") return;
+			root.dataset.aboutBound = "true";
+
+			const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+			const minRatio = 0.3;
+			const rootMarginBottomPct = 10;
+
+			const markInView = () => {
+				root.classList.add("is-in-view");
+			};
+
+			if (motionQuery.matches) {
+				markInView();
+				return;
+			}
+
+			if (
+				aboutHeightVisibleRatio(root, rootMarginBottomPct / 100) >=
+				minRatio - 0.02
+			) {
+				markInView();
+				return;
+			}
+
+			if (!("IntersectionObserver" in window)) {
+				markInView();
+				return;
+			}
+
+			const io = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries) {
+						if (entry.intersectionRatio >= minRatio) {
+							markInView();
+							io.unobserve(entry.target);
+							break;
+						}
+					}
+				},
+				{
+					threshold: [0, 0.15, 0.3, 0.45],
+					rootMargin: `0px 0px -${rootMarginBottomPct}% 0px`,
+				},
+			);
+
+			io.observe(root);
+		});
+	}
+
+	initAboutReveal();
+	document.addEventListener("astro:page-load", initAboutReveal);
+</script>

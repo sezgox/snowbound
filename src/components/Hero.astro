@@ -147,7 +147,7 @@ background-size: cover; background-position: center center;"
 		<button
 			type="button"
 			data-open-waitlist
-			class="font-tillana flex min-h-[56px] w-full max-w-full items-center justify-center rounded-[50px] bg-snowbound-primary px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:whitespace-nowrap sm:min-h-[78px] sm:px-10 sm:py-0 sm:text-[clamp(2rem,6vw,3rem)] sm:tracking-[0.1px] md:h-[102px] md:w-full md:max-w-[778px] md:text-[48px] md:leading-8"
+			class="hero-cta-button font-tillana flex min-h-[56px] w-full max-w-full items-center justify-center rounded-[50px] bg-snowbound-primary px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:whitespace-nowrap sm:min-h-[78px] sm:px-10 sm:py-0 sm:text-[clamp(2rem,6vw,3rem)] sm:tracking-[0.1px] md:h-[102px] md:w-full md:max-w-[778px] md:text-[48px] md:leading-8"
 		>
 			JOIN THE WAITLIST
 		</button>
@@ -193,9 +193,10 @@ background-size: cover; background-position: center center;"
 
 	.hero-kickstarter-plate {
 		filter:
-			drop-shadow(0 0 16px rgba(17, 45, 87, 0.16))
-			drop-shadow(0 0 10px rgba(35, 149, 231, 0.18))
-			drop-shadow(0 0 12px rgba(255, 255, 255, 0.16));
+			drop-shadow(0 0 22px rgba(0, 0, 0, 0.22))
+			drop-shadow(0 0 14px rgba(17, 45, 87, 0.26))
+			drop-shadow(0 0 18px rgba(35, 149, 231, 0.28));
+		animation: hero-kickstarter-shadow-orbit 6.5s linear infinite;
 	}
 
 	.hero-kickstarter-glow {
@@ -206,6 +207,15 @@ background-size: cover; background-position: center center;"
 		filter: blur(18px);
 		opacity: 0.96;
 		transform: translateZ(-28px) scale(1.24);
+		animation: hero-kickstarter-glow-breathe 3.8s ease-in-out infinite;
+	}
+
+	.hero-cta-button {
+		animation:
+			hero-cta-enter 0.82s cubic-bezier(0.2, 0.9, 0.25, 1.2) 0.14s both,
+			hero-cta-breathe 2.8s ease-in-out 1.05s infinite;
+		transform-origin: center center;
+		will-change: transform, box-shadow;
 	}
 
 	.hero-snowfield {
@@ -441,7 +451,92 @@ background-size: cover; background-position: center center;"
 		}
 	}
 
+	@keyframes hero-kickstarter-shadow-orbit {
+		0% {
+			filter:
+				drop-shadow(16px 0 26px rgba(0, 0, 0, 0.3))
+				drop-shadow(10px 0 18px rgba(17, 45, 87, 0.32))
+				drop-shadow(5px 0 14px rgba(35, 149, 231, 0.4));
+		}
+		25% {
+			filter:
+				drop-shadow(0 16px 26px rgba(0, 0, 0, 0.3))
+				drop-shadow(0 10px 18px rgba(17, 45, 87, 0.32))
+				drop-shadow(0 5px 14px rgba(35, 149, 231, 0.4));
+		}
+		50% {
+			filter:
+				drop-shadow(-16px 0 26px rgba(0, 0, 0, 0.3))
+				drop-shadow(-10px 0 18px rgba(17, 45, 87, 0.32))
+				drop-shadow(-5px 0 14px rgba(35, 149, 231, 0.4));
+		}
+		75% {
+			filter:
+				drop-shadow(0 -16px 26px rgba(0, 0, 0, 0.3))
+				drop-shadow(0 -10px 18px rgba(17, 45, 87, 0.32))
+				drop-shadow(0 -5px 14px rgba(35, 149, 231, 0.4));
+		}
+		100% {
+			filter:
+				drop-shadow(16px 0 26px rgba(0, 0, 0, 0.3))
+				drop-shadow(10px 0 18px rgba(17, 45, 87, 0.32))
+				drop-shadow(5px 0 14px rgba(35, 149, 231, 0.4));
+		}
+	}
+
+	@keyframes hero-kickstarter-glow-breathe {
+		0%,
+		100% {
+			opacity: 0.9;
+			transform: translateZ(-28px) scale(1.22);
+		}
+		50% {
+			opacity: 1;
+			transform: translateZ(-28px) scale(1.28);
+		}
+	}
+
+	@keyframes hero-cta-enter {
+		0% {
+			opacity: 0;
+			transform: translate3d(0, 0.9rem, 0) scale(0.94);
+			box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+		}
+		65% {
+			opacity: 1;
+			transform: translate3d(0, -0.15rem, 0) scale(1.02);
+			box-shadow: 0 18px 36px rgba(2, 133, 228, 0.24);
+		}
+		100% {
+			opacity: 1;
+			transform: translate3d(0, 0, 0) scale(1);
+			box-shadow: 0 4px 31px rgba(0, 0, 0, 0.15);
+		}
+	}
+
+	@keyframes hero-cta-breathe {
+		0%,
+		100% {
+			transform: translate3d(0, 0, 0) scale(1);
+			box-shadow:
+				0 4px 31px rgba(0, 0, 0, 0.15),
+				0 0 0 rgba(2, 133, 228, 0);
+		}
+		50% {
+			transform: translate3d(0, 0, 0) scale(1.02);
+			box-shadow:
+				0 10px 34px rgba(0, 0, 0, 0.18),
+				0 0 28px rgba(2, 133, 228, 0.22);
+		}
+	}
+
 	@media (prefers-reduced-motion: reduce) {
+		.hero-kickstarter-plate,
+		.hero-kickstarter-glow,
+		.hero-cta-button {
+			animation: none;
+		}
+
 		.hero-snowfield-particle {
 			animation: none;
 			transform: none;

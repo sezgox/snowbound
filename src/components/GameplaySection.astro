@@ -42,6 +42,7 @@ const cards = [
 	id="gameplay"
 	class="relative flex w-full flex-col items-center overflow-hidden py-10 scroll-mt-24"
 	aria-labelledby="gameplay-heading"
+	data-gameplay-reveal
 >
 	<img
 		src={assets.patternIce}
@@ -54,7 +55,7 @@ const cards = [
 	>
 		<h2
 			id="gameplay-heading"
-			class="font-display p-2.5 text-center text-4xl tracking-wide text-[#112d57] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)] md:text-[64px] md:leading-[48px]"
+			class="gameplay-title font-display p-2.5 text-center text-4xl tracking-wide text-[#112d57] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)] md:text-[64px] md:leading-[48px]"
 		>
 			GAMEPLAY
 		</h2>
@@ -63,8 +64,12 @@ const cards = [
 			class="flex w-full flex-wrap justify-center gap-4 md:flex-nowrap md:justify-center"
 		>
 			{
-				cards.map((c) => (
-					<div class="flex min-h-[409px] w-[min(100%,273px)] flex-col items-center gap-4 overflow-hidden rounded-[10px] border border-[#77abbd] bg-white px-5 py-10 md:w-[273px]">
+				cards.map((c, i) => (
+					<div
+						class={`gameplay-card gameplay-card--${i % 2 === 0 ? "left" : "right"} flex min-h-[409px] w-[min(100%,273px)] flex-col items-center gap-4 overflow-hidden rounded-[10px] border border-[#77abbd] bg-white px-5 py-10 md:w-[273px]`}
+						data-gameplay-card
+						style={`--gameplay-card-delay: ${0.24 + i * 0.12}s;`}
+					>
 						<div class="flex w-full items-center justify-center p-2.5">
 							<h3 class="font-tillana text-center text-2xl font-bold leading-8 tracking-wide text-black">
 								{c.title}
@@ -78,52 +83,52 @@ const cards = [
 							</div>
 						</div>
 						<div class="flex flex-1 flex-col items-center justify-end overflow-hidden pb-2">
-							{c.visual === "hex" && (
-								<div class="relative h-[150px] w-[207px] shrink-0">
-									<img
-										src={assets.altar}
-										alt=""
-										class="pointer-events-none absolute left-0 top-[-8px] h-[117px] w-[148px] object-cover"
-									/>
-									<img
-										src={assets.campfire}
-										alt=""
-										class="pointer-events-none absolute left-[69px] top-1 h-[123px] w-[156px] object-cover"
-									/>
-									<img
-										src={assets.igloo}
-										alt=""
-										class="pointer-events-none absolute left-2.5 top-[52px] h-[120px] w-[152px] object-cover"
-									/>
-								</div>
-							)}
-							{c.visual === "board" && (
-								<div class="relative h-[157px] w-[200px] shrink-0">
-									<img
-										src={assets.playerBoard}
-										alt=""
-										class="pointer-events-none absolute inset-0 size-full object-cover"
-									/>
-								</div>
-							)}
-						{c.visual === "petals" && (
-							<div class="relative mt-2 h-[180px] w-[220px]">
-								<img
-									src={assets.findingPetals}
-									alt=""
-									class="pointer-events-none absolute inset-0 size-full object-contain"
-								/>
-							</div>
-						)}
-							{c.visual === "events" && (
-								<div class="relative mt-2 h-[160px] w-[200px]">
-									<img
-										src={assets.globalEvents}
-										alt=""
-										class="pointer-events-none absolute inset-0 size-full object-contain"
-									/>
-								</div>
-							)}
+								{c.visual === "hex" && (
+									<div class="relative h-[150px] w-[207px] shrink-0">
+										<img
+											src={assets.altar}
+											alt=""
+											class="pointer-events-none absolute left-0 top-[-8px] h-[117px] w-[148px] object-cover"
+										/>
+										<img
+											src={assets.campfire}
+											alt=""
+											class="pointer-events-none absolute left-[69px] top-1 h-[123px] w-[156px] object-cover"
+										/>
+										<img
+											src={assets.igloo}
+											alt=""
+											class="pointer-events-none absolute left-2.5 top-[52px] h-[120px] w-[152px] object-cover"
+										/>
+									</div>
+								)}
+								{c.visual === "board" && (
+									<div class="relative h-[157px] w-[200px] shrink-0">
+										<img
+											src={assets.playerBoard}
+											alt=""
+											class="pointer-events-none absolute inset-0 size-full object-cover"
+										/>
+									</div>
+								)}
+								{c.visual === "petals" && (
+									<div class="relative mt-2 h-[180px] w-[220px]">
+										<img
+											src={assets.findingPetals}
+											alt=""
+											class="pointer-events-none absolute inset-0 size-full object-contain"
+										/>
+									</div>
+								)}
+								{c.visual === "events" && (
+									<div class="relative mt-2 h-[160px] w-[200px]">
+										<img
+											src={assets.globalEvents}
+											alt=""
+											class="pointer-events-none absolute inset-0 size-full object-contain"
+										/>
+									</div>
+								)}
 						</div>
 					</div>
 				))
@@ -131,3 +136,257 @@ const cards = [
 		</div>
 	</div>
 </section>
+
+<noscript>
+	<style>
+		[data-gameplay-reveal] .gameplay-title,
+		[data-gameplay-reveal] [data-gameplay-card] {
+			opacity: 1 !important;
+			transform: none !important;
+			animation: none !important;
+		}
+	</style>
+</noscript>
+
+<style>
+	#gameplay {
+		perspective: 1400px;
+	}
+
+	#gameplay .gameplay-title {
+		opacity: 0;
+		transform-origin: center center;
+		transform:
+			perspective(1400px)
+			rotateX(-84deg)
+			rotateY(18deg)
+			scale(0.9)
+			translate3d(0, -1rem, 0);
+		will-change: opacity, transform;
+		backface-visibility: hidden;
+	}
+
+	#gameplay [data-gameplay-card] {
+		opacity: 0;
+		will-change: opacity, transform;
+		backface-visibility: hidden;
+		transform-origin: center bottom;
+	}
+
+	#gameplay .gameplay-card--left {
+		transform: translate3d(-4.25rem, 8rem, 0) rotate(-16deg) scale(0.94);
+	}
+
+	#gameplay .gameplay-card--right {
+		transform: translate3d(4.25rem, 8rem, 0) rotate(16deg) scale(0.94);
+	}
+
+	#gameplay.is-in-view .gameplay-title {
+		animation: gameplay-title-flip-in 0.82s cubic-bezier(0.22, 1, 0.36, 1) both;
+	}
+
+	#gameplay [data-gameplay-card].is-in-view {
+		animation-duration: 1s;
+		animation-delay: var(--gameplay-card-delay, 0.24s);
+		animation-timing-function: cubic-bezier(0.18, 0.9, 0.22, 1);
+		animation-fill-mode: both;
+	}
+
+	#gameplay .gameplay-card--left.is-in-view {
+		animation-name: gameplay-card-curve-left;
+	}
+
+	#gameplay .gameplay-card--right.is-in-view {
+		animation-name: gameplay-card-curve-right;
+	}
+
+	@keyframes gameplay-title-flip-in {
+		0% {
+			opacity: 0;
+			transform:
+				perspective(1400px)
+				rotateX(-84deg)
+				rotateY(18deg)
+				scale(0.9)
+				translate3d(0, -1rem, 0);
+		}
+		55% {
+			opacity: 1;
+			transform:
+				perspective(1400px)
+				rotateX(14deg)
+				rotateY(-6deg)
+				scale(1.03)
+				translate3d(0, 0.2rem, 0);
+		}
+		100% {
+			opacity: 1;
+			transform:
+				perspective(1400px)
+				rotateX(0deg)
+				rotateY(0deg)
+				scale(1)
+				translate3d(0, 0, 0);
+		}
+	}
+
+	@keyframes gameplay-card-curve-left {
+		0% {
+			opacity: 0;
+			transform: translate3d(-4.25rem, 8rem, 0) rotate(-16deg) scale(0.94);
+		}
+		48% {
+			opacity: 1;
+			transform: translate3d(1.05rem, 1.6rem, 0) rotate(8deg) scale(1.015);
+		}
+		78% {
+			opacity: 1;
+			transform: translate3d(-0.4rem, -0.18rem, 0) rotate(-3deg) scale(0.998);
+		}
+		100% {
+			opacity: 1;
+			transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+		}
+	}
+
+	@keyframes gameplay-card-curve-right {
+		0% {
+			opacity: 0;
+			transform: translate3d(4.25rem, 8rem, 0) rotate(16deg) scale(0.94);
+		}
+		48% {
+			opacity: 1;
+			transform: translate3d(-1.05rem, 1.6rem, 0) rotate(-8deg) scale(1.015);
+		}
+		78% {
+			opacity: 1;
+			transform: translate3d(0.4rem, -0.18rem, 0) rotate(3deg) scale(0.998);
+		}
+		100% {
+			opacity: 1;
+			transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#gameplay .gameplay-title,
+		#gameplay [data-gameplay-card] {
+			opacity: 1;
+			transform: none;
+			animation: none !important;
+			will-change: auto;
+		}
+	}
+</style>
+
+<script is:inline>
+	function gameplayHeightVisibleRatio(el, marginBottomRatio) {
+		const rect = el.getBoundingClientRect();
+		const vh = window.innerHeight;
+		const m = marginBottomRatio ?? 0;
+		const viewportBottom = vh * (1 - m);
+		const visibleTop = Math.max(0, rect.top);
+		const visibleBottom = Math.min(viewportBottom, rect.bottom);
+		const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+		if (rect.height <= 0) return 0;
+		return visibleHeight / rect.height;
+	}
+
+	function initGameplayReveal() {
+		document
+			.querySelectorAll("[data-gameplay-reveal]")
+			.forEach((root) => {
+				if (!(root instanceof HTMLElement)) return;
+				if (root.dataset.gameplayBound === "true") return;
+				root.dataset.gameplayBound = "true";
+
+				const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+				const minRatio = 0.26;
+				const rootMarginBottomPct = 8;
+				const cards = Array.from(
+					root.querySelectorAll("[data-gameplay-card]"),
+				).filter((card) => card instanceof HTMLElement);
+
+				const markInView = () => {
+					root.classList.add("is-in-view");
+				};
+
+				const markCardInView = (card) => {
+					if (!(card instanceof HTMLElement)) return;
+					card.classList.add("is-in-view");
+				};
+
+				if (motionQuery.matches) {
+					markInView();
+					cards.forEach((card) => {
+						markCardInView(card);
+					});
+					return;
+				}
+
+				if (
+					gameplayHeightVisibleRatio(root, rootMarginBottomPct / 100) >=
+					minRatio - 0.02
+				) {
+					markInView();
+					return;
+				}
+
+				if (!("IntersectionObserver" in window)) {
+					markInView();
+					cards.forEach((card) => {
+						markCardInView(card);
+					});
+					return;
+				}
+
+				const io = new IntersectionObserver(
+					(entries) => {
+						for (const entry of entries) {
+							if (entry.intersectionRatio >= minRatio) {
+								markInView();
+								io.unobserve(entry.target);
+								break;
+							}
+						}
+					},
+					{
+						threshold: [0, 0.15, 0.3, 0.45],
+						rootMargin: `0px 0px -${rootMarginBottomPct}% 0px`,
+					},
+				);
+
+				io.observe(root);
+
+				const cardObserver = new IntersectionObserver(
+					(entries) => {
+						for (const entry of entries) {
+							if (entry.intersectionRatio >= 0.28) {
+								markCardInView(entry.target);
+								cardObserver.unobserve(entry.target);
+							}
+						}
+					},
+					{
+						threshold: [0, 0.15, 0.28, 0.45],
+						rootMargin: "0px 0px -4% 0px",
+					},
+				);
+
+				cards.forEach((card) => {
+					if (
+						gameplayHeightVisibleRatio(card, 0.08) >=
+						0.28 - 0.02
+					) {
+						markCardInView(card);
+						return;
+					}
+
+					cardObserver.observe(card);
+				});
+			});
+	}
+
+	initGameplayReveal();
+	document.addEventListener("astro:page-load", initGameplayReveal);
+</script>
