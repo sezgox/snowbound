@@ -5,6 +5,7 @@
 export const assets = {
 	navLogo: "/images/figma/nav-logo.png",
 	heroLogo: "/images/figma/snowbound-logo.png",
+	changeLanguage: "/images/figma/change-language.svg",
 	patternIce: "/images/figma/pattern-ice.png",
 	tree: "/images/figma/tree.webp",
 	altar: "/images/figma/altar.png",

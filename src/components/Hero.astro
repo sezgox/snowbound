@@ -81,23 +81,21 @@ background-size: cover; background-position: center center;"
 	<div class="hero-seam-patch" aria-hidden="true"></div>
 
 	<header
-		class="section-inner relative z-10 flex h-[50px] w-full min-w-0 shrink-0 items-center justify-center rounded-[69px] bg-white px-0 shadow-[0_4px_4px_rgba(0,0,0,0.25)] sm:px-2 md:px-3 mt-2 md:mt-4"
+		class="section-inner relative z-10 flex h-[50px] w-full min-w-0 shrink-0 items-center justify-around rounded-[69px] bg-white px-0 shadow-[0_4px_4px_rgba(0,0,0,0.25)] sm:px-2 md:px-3 mt-2 md:mt-4"
 	>
 		<a
 			href="#top"
-			class="absolute left-1 top-1/2 z-10 flex h-11 w-[52px] -translate-y-1/2 items-center justify-start overflow-hidden py-1 pl-0 sm:left-3 sm:h-12 sm:w-[112px] sm:py-2 sm:pl-1 md:left-6 md:w-[156px] md:pl-[35px]"
+			class="z-10 flex h-12 w-12 p-1 items-center"
 			aria-label="Snowbound home"
 		>
-			<div class="relative h-full w-full max-w-[48px] sm:max-w-[104px] md:max-w-[186px]">
-				<img
-					src={assets.navLogo}
-					alt=""
-					class="pointer-events-none absolute inset-0 size-full max-w-none object-contain object-left"
-				/>
-			</div>
+			<img
+				src={assets.navLogo}
+				alt=""
+				class="pointer-events-none inset-0 size-full object-contain"
+			/>
 		</a>
 		<nav
-			class="relative z-30 flex w-full min-w-0 flex-1 flex-nowrap items-center justify-between gap-x-0 overflow-x-auto overflow-y-hidden overscroll-x-contain py-0.5 pl-[calc(4px+52px+4px)] pr-[calc(4px+52px+4px)] [scrollbar-width:none] sm:pl-[calc(12px+112px+8px)] sm:pr-[calc(12px+112px+8px)] md:overflow-visible md:justify-center md:gap-8 md:pl-[calc(156px+28px)] md:pr-[calc(156px+28px)] [&::-webkit-scrollbar]:hidden"
+			class="relative z-30 flex w-full min-w-0 flex-1 flex-nowrap items-center justify-between gap-x-0 overflow-x-auto overflow-y-hidden overscroll-x-contain py-0.5 px-8 md:justify-around lg:justify-evenly"
 			aria-label="Primary"
 		>
 			<a
@@ -116,12 +114,23 @@ background-size: cover; background-position: center center;"
 				>About Us</a
 			>
 		</nav>
+		<button
+			class="z-10 flex h-12 w-12 p-3 items-center cursor-pointer hover:opacity-80"
+			aria-label="Snowbound home"
+		>
+			<img
+				src={assets.changeLanguage}
+				alt=""
+				class="pointer-events-none inset-0 size-full object-contain"
+			/>
+		</button>
 	</header>
 
 	<img
 		src={assets.heroLogo}
 		alt="Snowbound logo"
 		class="relative z-10 mx-auto block h-auto w-full max-h-[min(42vh,280px)] object-contain object-center md:max-h-[min(52vh,360px)] md:max-w-[452px] lg:max-h-none lg:max-w-[600px]"
+		style="filter: drop-shadow(2px 4px 6px black);"
 		loading="eager"
 		decoding="async"
 	/>
