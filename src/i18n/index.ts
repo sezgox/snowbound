@@ -46,6 +46,9 @@ export type Messages = {
 			titleLines: [string, string];
 			body: string;
 		}[];
+		/** Placeholder until final GIF; swap `src` when asset is ready */
+		mediaImageSrc: string;
+		mediaAlt: string;
 		cta: string;
 	};
 	tribes: {
@@ -182,6 +185,8 @@ const messages: Record<Locale, Messages> = {
 		features: {
 			heading: "WHAT MAKES IT UNIQUE",
 			tagline: "",
+			mediaImageSrc: "/images/figma/global-events.png",
+			mediaAlt: "Preview of global events in Snowbound",
 			cards: [
 				{
 					titleLines: ["CHANGING", "BOARD"],
@@ -192,7 +197,7 @@ const messages: Record<Locale, Messages> = {
 					body: "Steal, block and outplay your rivals at every turn.",
 				},
 				{
-					titleLines: ["RISK VS REWARD"],
+					titleLines: ["RISK VS", "REWARD"],
 					body: "Push your luck... or play it safe and lose the race.",
 				},
 				{
@@ -409,6 +414,8 @@ const messages: Record<Locale, Messages> = {
 		features: {
 			heading: "QUÉ NOS HACE ÚNICOS",
 			tagline: "MILES DE COMBINACIONES DIFERENTES",
+			mediaImageSrc: "/images/figma/global-events.png",
+			mediaAlt: "Vista previa de eventos globales en Snowbound",
 			cards: [
 				{
 					titleLines: ["TABLERO", "ALEATORIO"],

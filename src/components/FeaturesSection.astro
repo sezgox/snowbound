@@ -11,151 +11,86 @@ const cards = messages.cards;
 
 <section
 	id="features"
-	class="features-scroll-track relative w-full scroll-mt-0"
+	class="relative w-full scroll-mt-0 overflow-x-clip"
 	style="background-image: url('/images/figma/hex-board.png'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;"
 	aria-labelledby="features-heading"
-	data-features-scroll
 >
 	<div class="pointer-events-none absolute inset-0 z-0 bg-white/[0.66]" aria-hidden="true" />
 
-	<div class="features-shell sticky top-0 z-10 overflow-hidden">
-		<div class="pointer-events-none absolute inset-0 z-30" aria-hidden="true" data-features-overlay-layer>
-			<p
-				class="features-overlay-item features-overlay-item--title font-display text-shadow-outline text-shadow-white text-center tracking-wide text-[#112d57]"
-				data-features-overlay-item="title"
-				hidden
+	<div
+		class="section-inner relative z-10 flex w-full items-start justify-center px-4 py-6 md:px-6 md:py-10"
+	>
+		<div class="features-board">
+			<h2
+				id="features-heading"
+				class="features-title-wrap font-display text-shadow-outline text-shadow-white text-center tracking-wide text-[#112d57] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)]"
 			>
 				{messages.heading}
-			</p>
+			</h2>
 
-			{
-				cards.map((card, index) => (
-					<div
-						class="features-overlay-item features-overlay-item--card"
-						data-features-overlay-item={`card-${index}`}
-						hidden
-					>
-						<div class="features-card-surface features-card-surface--overlay">
-							<div class="features-card-title font-tillana">
-								{card.titleLines.map((line) => (
-									<p class="mb-0 leading-inherit">{line}</p>
-								))}
-							</div>
-							<p class="features-card-body font-nunito">
-								{card.body}
-							</p>
-						</div>
-					</div>
-				))
-			}
-
-			<div
-				class="features-overlay-item features-overlay-item--media"
-				data-features-overlay-item="media"
-				hidden
-			>
-				<div class="features-media-frame" aria-hidden="true"></div>
-			</div>
-		</div>
-
-		<div class="section-inner relative z-10 flex min-h-full w-full items-start justify-center px-4 py-4 md:px-6 md:py-6">
-			<div class="features-board" data-features-board>
-				<h2
-					id="features-heading"
-					class="features-title-wrap features-slot-item font-display text-shadow-outline text-shadow-white text-center tracking-wide text-[#112d57] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)]"
-					data-features-slot-item="title"
-				>
-					{messages.heading}
-				</h2>
-
-				<div class="features-cards-grid" data-features-cards>
-					{
-						cards.map((card, index) => (
-							<div
-								class="features-card-slot features-slot-item"
-								data-features-slot-item={`card-${index}`}
-							>
-								<div class="features-card-surface features-card-surface--slot">
-									<div class="features-card-title font-tillana">
-										{card.titleLines.map((line) => (
-											<p class="mb-0 leading-inherit">{line}</p>
-										))}
-									</div>
-									<p class="features-card-body font-nunito">
-										{card.body}
-									</p>
+			<div class="features-cards-grid w-full">
+				{
+					cards.map((card) => (
+						<div class="features-card-slot flex w-full justify-center">
+							<div class="features-card-surface">
+								<div class="features-card-title font-tillana">
+									{card.titleLines.map((line) => (
+										<p class="mb-0 leading-inherit">{line}</p>
+									))}
 								</div>
+								<p class="features-card-body font-nunito">
+									{card.body}
+								</p>
 							</div>
-						))
-					}
-				</div>
+						</div>
+					))
+				}
+			</div>
 
-				<div class="features-media-slot features-slot-item" data-features-slot-item="media">
-					<div class="features-media-frame" aria-hidden="true"></div>
+			<div class="features-media-slot w-full">
+				<div class="features-media-frame">
+					<img
+						class="features-media-img"
+						src={messages.mediaImageSrc}
+						alt={messages.mediaAlt}
+						loading="lazy"
+						decoding="async"
+						width="760"
+						height="400"
+					/>
 				</div>
+			</div>
 
-				<div class="features-cta-wrap relative flex w-full justify-center" data-features-cta>
-					<button
-						type="button"
-						data-open-waitlist
-						class="font-tillana flex w-full items-center justify-center rounded-[50px] bg-snowbound-primary px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:min-h-[52px] max-md:whitespace-nowrap md:h-[78px] md:text-[48px] md:leading-8 md:tracking-[0.1px]"
-					>
-						{messages.cta}
-					</button>
-				</div>
+			<div class="features-cta-wrap relative flex w-full justify-center">
+				<button
+					type="button"
+					data-open-waitlist
+					class="font-tillana flex w-full items-center justify-center rounded-[50px] bg-snowbound-primary px-4 py-2.5 text-lg leading-none tracking-tight text-white shadow-[0_4px_31px_rgba(0,0,0,0.15)] transition hover:bg-[#0270c2] max-md:min-h-[52px] max-md:whitespace-nowrap md:h-[78px] md:text-[48px] md:leading-8 md:tracking-[0.1px]"
+				>
+					{messages.cta}
+				</button>
 			</div>
 		</div>
 	</div>
 </section>
 
-<noscript>
-	<style>
-		#features [data-features-overlay-item] {
-			display: none !important;
-		}
-
-		#features .features-slot-item,
-		#features [data-features-cta] {
-			opacity: 1 !important;
-			visibility: visible !important;
-			transform: none !important;
-			pointer-events: auto !important;
-		}
-	</style>
-</noscript>
-
 <style>
-	#features[data-features-scroll] {
+	#features {
 		--features-card-slot-width: min(100%, 148px);
 		--features-card-slot-height: 176px;
-		--features-card-center-scale: 1.82;
-		--features-media-center-scale: 1.16;
-		--features-shell-height: 100svh;
-		--features-scroll-distance: 340svh;
 	}
 
 	@media (min-width: 768px) {
-		#features[data-features-scroll] {
+		#features {
 			--features-card-slot-width: min(100%, 208px);
 			--features-card-slot-height: 196px;
-			--features-card-center-scale: 1.46;
-			--features-media-center-scale: 1.08;
-			--features-scroll-distance: 300svh;
 		}
-	}
-
-	.features-scroll-track {
-		min-height: calc(var(--features-shell-height) + var(--features-scroll-distance));
-	}
-
-	.features-shell {
-		min-height: var(--features-shell-height);
-		height: var(--features-shell-height);
 	}
 
 	.features-board {
 		display: flex;
 		width: 100%;
+		max-width: 100%;
 		flex-direction: column;
 		align-items: center;
 		gap: clamp(0.8rem, 1.8vw, 1.4rem);
@@ -168,6 +103,14 @@ const cards = messages.cards;
 		padding: 0.5rem 1rem;
 		font-size: clamp(2.25rem, 6vw, 4rem);
 		line-height: 1.1;
+	}
+
+	@media (min-width: 1024px) {
+		.features-title-wrap {
+			width: auto;
+			max-width: calc(100vw - 3rem);
+			white-space: nowrap;
+		}
 	}
 
 	.features-cards-grid {
@@ -183,12 +126,6 @@ const cards = messages.cards;
 			grid-template-columns: repeat(4, minmax(0, 1fr));
 			gap: 1rem;
 		}
-	}
-
-	.features-card-slot {
-		display: flex;
-		width: 100%;
-		justify-content: center;
 	}
 
 	.features-card-surface {
@@ -208,12 +145,6 @@ const cards = messages.cards;
 		padding: 0.9rem 0.8rem;
 		box-shadow: 0 10px 28px rgba(17, 45, 87, 0.12);
 		overflow: hidden;
-	}
-
-	.features-card-surface--overlay {
-		box-shadow:
-			0 26px 64px rgba(17, 45, 87, 0.26),
-			0 10px 26px rgba(0, 0, 0, 0.16);
 	}
 
 	.features-card-title {
@@ -256,11 +187,9 @@ const cards = messages.cards;
 		}
 	}
 
-	.features-media-slot {
-		width: min(100%, 760px);
-	}
-
 	.features-media-frame {
+		position: relative;
+		overflow: hidden;
 		height: clamp(104px, 17vh, 124px);
 		width: 100%;
 		border-radius: 18px;
@@ -271,391 +200,85 @@ const cards = messages.cards;
 		box-shadow: 0 10px 28px rgba(17, 45, 87, 0.12);
 	}
 
+	.features-media-img {
+		display: block;
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+
 	@media (min-width: 768px) {
 		.features-media-frame {
 			height: clamp(150px, 20vh, 188px);
 		}
 	}
 
-	.features-slot-item {
-		opacity: 0;
-		visibility: hidden;
-		transform: scale(0.96);
-		transition:
-			opacity 0.28s ease,
-			transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
-			visibility 0s linear 0.28s;
-	}
-
-	.features-slot-item[data-features-placed="true"] {
-		opacity: 1;
-		visibility: visible;
-		transform: none;
-		transition-delay: 0s;
+	.features-media-slot {
+		width: min(100%, 760px);
+		view-timeline-name: --features-media-slot;
+		view-timeline-axis: block;
+		animation-timeline: --features-media-slot;
+		animation-name: show;
+		animation-fill-mode: both;
+		animation-range: entry 20% cover 35%;
+		@media (max-width: 768px) {
+			animation-range: entry 10% cover 20%;
+		}
 	}
 
 	.features-cta-wrap {
 		width: min(100%, 760px);
-		opacity: 0;
-		visibility: hidden;
-		transform: translate3d(0, 0.75rem, 0);
-		pointer-events: none;
-		transition:
-			opacity 0.3s ease,
-			transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-			visibility 0s linear 0.3s;
-	}
-
-	.features-cta-wrap[data-features-visible="true"] {
-		opacity: 1;
-		visibility: visible;
-		transform: none;
-		pointer-events: auto;
-		transition-delay: 0s;
-	}
-
-	.features-overlay-item {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		margin: 0;
-		opacity: 0;
-		transform: translate3d(-50%, -50%, 0) scale(1);
-		will-change: left, top, transform, opacity;
-	}
-
-	.features-overlay-item--title {
-		width: min(92vw, 920px);
-		padding: 0.5rem 1rem;
-		font-size: clamp(2.25rem, 7.5vw, 4rem);
-		line-height: 1.05;
-	}
-
-	@media (min-width: 1024px) {
-		.features-title-wrap,
-		.features-overlay-item--title {
-			width: auto;
-			max-width: calc(100vw - 3rem);
-			white-space: nowrap;
+		view-timeline-name: --features-cta;
+		view-timeline-axis: block;
+		animation-timeline: --features-cta;
+		animation-name: show;
+		animation-fill-mode: both;
+		animation-range: entry 20% cover 35%;
+		@media (max-width: 768px) {
+			animation-range: entry 0% cover 15%;
 		}
 	}
 
-	.features-overlay-item--card {
-		width: min(92vw, var(--features-card-slot-width));
-	}
-
-	.features-overlay-item--media {
-		width: min(92vw, 760px);
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.features-scroll-track {
-			min-height: auto;
-		}
-
-		.features-shell {
-			position: relative;
-			top: auto;
-			min-height: auto;
-			height: auto;
-		}
-
-		#features [data-features-overlay-item] {
-			display: none !important;
-		}
-
-		#features .features-slot-item,
-		#features [data-features-cta] {
-			opacity: 1 !important;
-			visibility: visible !important;
-			transform: none !important;
-			pointer-events: auto !important;
+	.features-card-slot {
+		view-timeline-name: --features-card-slot;
+		view-timeline-axis: block;
+		animation-timeline: --features-card-slot;
+		animation-name: show;
+		animation-fill-mode: both;
+		animation-range: entry 20% cover 35%;
+		@media (max-width: 768px) {
+			animation-range: entry 10% cover 20%;
 		}
 	}
+
+	#features h2 {
+		animation-timeline: --features;
+		animation-name: show;
+		animation-fill-mode: both;
+		animation-range: entry 20% cover 35%;
+		@media (max-width: 768px) {
+			animation-range: entry 10% cover 20%;
+		}
+	}
+
+	#features {
+		view-timeline-name: --features;
+		view-timeline-axis: block;
+	}
+
+
+	@keyframes show {
+		0% {
+			opacity: 0;
+			transform: translateY(300px);
+		}
+
+		100% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
 </style>
 
-<script is:inline>
-	const FEATURES_SEGMENTS = {
-		titleIntro: [0, 0.18],
-		titleMove: [0.18, 0.32],
-		card0: [0.32, 0.44],
-		card1: [0.44, 0.56],
-		card2: [0.56, 0.68],
-		card3: [0.68, 0.8],
-		media: [0.8, 0.92],
-		cta: [0.92, 1],
-	};
-	const FEATURES_PLACED_THRESHOLDS = {
-		title: FEATURES_SEGMENTS.titleMove[1],
-		"card-0": FEATURES_SEGMENTS.card0[1],
-		"card-1": FEATURES_SEGMENTS.card1[1],
-		"card-2": FEATURES_SEGMENTS.card2[1],
-		"card-3": FEATURES_SEGMENTS.card3[1],
-		media: FEATURES_SEGMENTS.media[1],
-	};
-	const FEATURES_ITEMS = ["title", "card-0", "card-1", "card-2", "card-3", "media"];
-
-	let featuresAbortController = null;
-	let featuresFrameId = null;
-	let featuresMaxProgress = 0;
-
-	function clamp(value, min = 0, max = 1) {
-		return Math.min(max, Math.max(min, value));
-	}
-
-	function lerp(start, end, amount) {
-		return start + (end - start) * amount;
-	}
-
-	function easeOutCubic(value) {
-		return 1 - Math.pow(1 - value, 3);
-	}
-
-	function easeInOutCubic(value) {
-		return value < 0.5
-			? 4 * value * value * value
-			: 1 - Math.pow(-2 * value + 2, 3) / 2;
-	}
-
-	function getSegmentProgress(progress, start, end) {
-		if (end <= start) return progress >= end ? 1 : 0;
-		return clamp((progress - start) / (end - start));
-	}
-
-	function getActiveFade(localProgress) {
-		if (localProgress <= 0) return 0;
-		if (localProgress >= 1) return 0;
-		if (localProgress < 0.12) return easeOutCubic(localProgress / 0.12);
-		if (localProgress > 0.88) return easeOutCubic((1 - localProgress) / 0.12);
-		return 1;
-	}
-
-	function getFeaturesSectionProgress(section) {
-		const rect = section.getBoundingClientRect();
-		const scrollableDistance = Math.max(rect.height - window.innerHeight, 1);
-		const earlyEntryOffset = window.innerHeight * 0.12;
-		return clamp((-rect.top + earlyEntryOffset) / scrollableDistance);
-	}
-
-	function getCenterState(shellRect, scale = 1, opacity = 1, yOffset = 0) {
-		return {
-			x: shellRect.width / 2,
-			y: shellRect.height / 2 + yOffset,
-			scale,
-			opacity,
-		};
-	}
-
-	function getSlotCenter(shellRect, slot) {
-		if (!(slot instanceof HTMLElement)) {
-			return getCenterState(shellRect);
-		}
-
-		const rect = slot.getBoundingClientRect();
-		return {
-			x: rect.left - shellRect.left + rect.width / 2,
-			y: rect.top - shellRect.top + rect.height / 2,
-		};
-	}
-
-	function positionOverlay(overlay, state) {
-		overlay.style.left = `${state.x}px`;
-		overlay.style.top = `${state.y}px`;
-		overlay.style.opacity = String(state.opacity);
-		overlay.style.transform = `translate3d(-50%, -50%, 0) scale(${state.scale})`;
-		overlay.hidden = state.opacity <= 0.001;
-	}
-
-	function setPlacedState(section, progress) {
-		for (const itemId of FEATURES_ITEMS) {
-			const slot = section.querySelector(`[data-features-slot-item="${itemId}"]`);
-			if (!(slot instanceof HTMLElement)) continue;
-
-			slot.dataset.featuresPlaced =
-				progress >= FEATURES_PLACED_THRESHOLDS[itemId] ? "true" : "false";
-		}
-
-		const cta = section.querySelector("[data-features-cta]");
-		if (cta instanceof HTMLElement) {
-			cta.dataset.featuresVisible = progress >= 0.965 ? "true" : "false";
-		}
-	}
-
-	function hideInactiveOverlays(section, activeItemId) {
-		section.querySelectorAll("[data-features-overlay-item]").forEach((node) => {
-			if (!(node instanceof HTMLElement)) return;
-			if (node.dataset.featuresOverlayItem === activeItemId) return;
-			node.hidden = true;
-			node.style.opacity = "0";
-		});
-	}
-
-	function renderTitleOverlay(section, shellRect, progress) {
-		const overlay = section.querySelector('[data-features-overlay-item="title"]');
-		const slot = section.querySelector('[data-features-slot-item="title"]');
-		if (!(overlay instanceof HTMLElement)) return false;
-
-		const introProgress = getSegmentProgress(
-			progress,
-			FEATURES_SEGMENTS.titleIntro[0],
-			FEATURES_SEGMENTS.titleIntro[1],
-		);
-		const moveProgress = getSegmentProgress(
-			progress,
-			FEATURES_SEGMENTS.titleMove[0],
-			FEATURES_SEGMENTS.titleMove[1],
-		);
-
-		if (progress >= FEATURES_SEGMENTS.titleMove[1]) {
-			overlay.hidden = true;
-			overlay.style.opacity = "0";
-			return false;
-		}
-
-		if (progress < FEATURES_SEGMENTS.titleMove[0]) {
-			positionOverlay(overlay, {
-				...getCenterState(
-					shellRect,
-					1,
-					easeOutCubic(introProgress),
-					lerp(window.innerHeight * 0.16, 0, easeOutCubic(introProgress)),
-				),
-			});
-			return true;
-		}
-
-		const fromState = getCenterState(shellRect, 1, 1, 0);
-		const slotCenter = getSlotCenter(shellRect, slot);
-		const easedProgress = easeInOutCubic(moveProgress);
-		const slotReveal = moveProgress >= 0.88 ? easeOutCubic((moveProgress - 0.88) / 0.12) : 0;
-
-		positionOverlay(overlay, {
-			x: lerp(fromState.x, slotCenter.x, easedProgress),
-			y: lerp(fromState.y, slotCenter.y, easedProgress),
-			scale: 1,
-			opacity: 1 - slotReveal,
-		});
-		return true;
-	}
-
-	function renderTravelOverlay(section, shellRect, progress, itemId, segment) {
-		const overlay = section.querySelector(`[data-features-overlay-item="${itemId}"]`);
-		const slot = section.querySelector(`[data-features-slot-item="${itemId}"]`);
-		if (!(overlay instanceof HTMLElement)) return false;
-
-		const localProgress = getSegmentProgress(progress, segment[0], segment[1]);
-		if (localProgress <= 0 || localProgress >= 1) {
-			overlay.hidden = true;
-			overlay.style.opacity = "0";
-			return false;
-		}
-
-		const centerScale =
-			itemId === "media"
-				? Number.parseFloat(
-						getComputedStyle(section).getPropertyValue("--features-media-center-scale"),
-					)
-				: Number.parseFloat(
-						getComputedStyle(section).getPropertyValue("--features-card-center-scale"),
-					);
-		const centerState = getCenterState(shellRect, centerScale, 1, 0);
-		const slotCenter = getSlotCenter(shellRect, slot);
-		const easedProgress = easeInOutCubic(localProgress);
-		const fade = getActiveFade(localProgress);
-
-		positionOverlay(overlay, {
-			x: lerp(centerState.x, slotCenter.x, easedProgress),
-			y: lerp(centerState.y, slotCenter.y, easedProgress),
-			scale: lerp(centerScale, 1, easedProgress),
-			opacity: fade,
-		});
-		return true;
-	}
-
-	function renderFeaturesScene(section) {
-		const shell = section.querySelector(".features-shell");
-		if (!(shell instanceof HTMLElement)) return;
-
-		const rawProgress = getFeaturesSectionProgress(section);
-		featuresMaxProgress = Math.max(featuresMaxProgress, rawProgress);
-		const progress = featuresMaxProgress;
-		const shellRect = shell.getBoundingClientRect();
-
-		setPlacedState(section, progress);
-
-		let activeItemId = null;
-
-		if (renderTitleOverlay(section, shellRect, progress)) {
-			activeItemId = "title";
-		} else if (renderTravelOverlay(section, shellRect, progress, "card-0", FEATURES_SEGMENTS.card0)) {
-			activeItemId = "card-0";
-		} else if (renderTravelOverlay(section, shellRect, progress, "card-1", FEATURES_SEGMENTS.card1)) {
-			activeItemId = "card-1";
-		} else if (renderTravelOverlay(section, shellRect, progress, "card-2", FEATURES_SEGMENTS.card2)) {
-			activeItemId = "card-2";
-		} else if (renderTravelOverlay(section, shellRect, progress, "card-3", FEATURES_SEGMENTS.card3)) {
-			activeItemId = "card-3";
-		} else if (renderTravelOverlay(section, shellRect, progress, "media", FEATURES_SEGMENTS.media)) {
-			activeItemId = "media";
-		}
-
-		hideInactiveOverlays(section, activeItemId);
-	}
-
-	function resetFeaturesScene(section) {
-		featuresMaxProgress = getFeaturesSectionProgress(section);
-		setPlacedState(section, featuresMaxProgress);
-		hideInactiveOverlays(section, null);
-		renderFeaturesScene(section);
-	}
-
-	function scheduleFeaturesRender(section) {
-		if (featuresFrameId !== null) return;
-
-		featuresFrameId = window.requestAnimationFrame(() => {
-			featuresFrameId = null;
-			renderFeaturesScene(section);
-		});
-	}
-
-	function finalizeFeaturesForReducedMotion(section) {
-		featuresMaxProgress = 1;
-		setPlacedState(section, 1);
-		hideInactiveOverlays(section, null);
-	}
-
-	function initFeaturesSection() {
-		const section = document.getElementById("features");
-		if (!(section instanceof HTMLElement)) return;
-
-		if (featuresAbortController) {
-			featuresAbortController.abort();
-			featuresAbortController = null;
-		}
-
-		if (featuresFrameId !== null) {
-			window.cancelAnimationFrame(featuresFrameId);
-			featuresFrameId = null;
-		}
-
-		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-			finalizeFeaturesForReducedMotion(section);
-			return;
-		}
-
-		featuresAbortController = new AbortController();
-		const { signal } = featuresAbortController;
-
-		resetFeaturesScene(section);
-
-		const onScrollOrResize = () => {
-			scheduleFeaturesRender(section);
-		};
-
-		window.addEventListener("scroll", onScrollOrResize, { passive: true, signal });
-		window.addEventListener("resize", onScrollOrResize, { passive: true, signal });
-	}
-
-	initFeaturesSection();
-	document.addEventListener("astro:page-load", initFeaturesSection);
-</script>

@@ -11,14 +11,18 @@ const { messages } = Astro.props;
 
 <section
 	id="lore"
-	class="lore-section relative mb-[-2px] min-h-[75vh] w-full content-center px-2 py-6"
+	class="lore-section relative mb-[-2px] min-h-[75vh] w-full content-center py-6 overflow-x-hidden"
 	aria-labelledby="lore-heading"
-	style="background-image: linear-gradient(180deg, var(--color-snowbound-cream) 0%, rgba(250, 249, 242, 0) 10%), url('/images/figma/pattern-ice.png'); background-position: center, center; background-repeat: no-repeat, no-repeat;"
+	style="background-image: linear-gradient(180deg, var(--color-snowbound-cream) 0%, 
+	rgba(250, 249, 242, 0) 10%), url('/images/figma/pattern-ice.png'); 
+	background-position: center, center; 
+	background-repeat: no-repeat, no-repeat;
+	"
 >
 	<div
-		class="section-inner flex flex-col items-center gap-4 md:flex-row md:items-stretch md:justify-between"
+		class="section-inner flex min-w-0 flex-col items-center gap-4 px-2 md:flex-row md:items-stretch md:justify-between"
 	>
-		<div class="flex flex-col gap-5 md:w-full md:self-stretch md:gap-6">
+		<div class="flex min-w-0 flex-col gap-5 md:flex-1 md:self-stretch md:gap-6">
 			<h2
 				id="lore-heading"
 				data-lore-reveal

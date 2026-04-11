@@ -18,7 +18,7 @@ interface Props {
 const { locale, messages } = Astro.props;
 ---
 
-<div id="top" class="flex min-h-screen w-full flex-col bg-white">
+<div id="top" class="flex min-h-screen w-full flex-col bg-white overflow-x-clip">
 	<Hero locale={locale} messages={messages.hero} />
 	<GameStats messages={messages.gameStats} />
 	<LoreSection messages={messages.lore} />
