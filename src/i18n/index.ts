@@ -46,8 +46,7 @@ export type Messages = {
 			titleLines: [string, string];
 			body: string;
 		}[];
-		/** Placeholder until final GIF; swap `src` when asset is ready */
-		mediaImageSrc: string;
+		mediaVideoSrc: string;
 		mediaAlt: string;
 		cta: string;
 	};
@@ -185,8 +184,8 @@ const messages: Record<Locale, Messages> = {
 		features: {
 			heading: "WHAT MAKES IT UNIQUE",
 			tagline: "",
-			mediaImageSrc: "/images/figma/global-events.png",
-			mediaAlt: "Preview of global events in Snowbound",
+			mediaVideoSrc: "/videos/gameboard.mp4",
+			mediaAlt: "Video of the Snowbound game board",
 			cards: [
 				{
 					titleLines: ["CHANGING", "BOARD"],
@@ -238,10 +237,10 @@ const messages: Record<Locale, Messages> = {
 					],
 				},
 				{
-					name: "IQURNAT",
+					name: "Amarok",
 					lines: [
-						"Shamans who invoke the power of the Thal tree.",
-						"They are known for being in harmony with spirits from the beyond.",
+						"A fierce tribe that embellishes their garments with ivory.",
+						"They stand out as specialists at hunting mammoths.",
 					],
 				},
 				{
@@ -414,8 +413,8 @@ const messages: Record<Locale, Messages> = {
 		features: {
 			heading: "QUÉ NOS HACE ÚNICOS",
 			tagline: "MILES DE COMBINACIONES DIFERENTES",
-			mediaImageSrc: "/images/figma/global-events.png",
-			mediaAlt: "Vista previa de eventos globales en Snowbound",
+			mediaVideoSrc: "/videos/gameboard.mp4",
+			mediaAlt: "Vídeo del tablero de Snowbound",
 			cards: [
 				{
 					titleLines: ["TABLERO", "ALEATORIO"],
@@ -467,10 +466,10 @@ const messages: Record<Locale, Messages> = {
 					],
 				},
 				{
-					name: "IQURNAT",
+					name: "Amarok",
 					lines: [
-						"Chamanes que invocan el poder del árbol Thal.",
-						"Son conocidos por estar en armonía con espíritus del más allá.",
+						"Tribu feroz que detallan sus vestimentas con el uso de marfil.",
+						"Destacan por ser especialistas a la hora de cazar mammuts.",
 					],
 				},
 				{

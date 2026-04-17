@@ -77,7 +77,7 @@ const languageEntries = [
 
 <section
 	id="hero"
-	class="relative mb-[-2px] flex min-h-screen flex-col items-center justify-around gap-4 overflow-hidden px-2 md:gap-8 lg:gap-10"
+	class="hero-cascade relative mb-[-2px] flex min-h-screen flex-col items-center justify-around gap-4 overflow-hidden px-2 md:gap-8 lg:gap-10"
 	style="background-image:linear-gradient(180deg,rgba(35,149,231,0.8) 0%, rgba(35,149,231,0.8) 5%, rgba(255, 255, 255, 0.9) 90%, #faf9f2 97%),  url('/images/figma/home-hero.png');
 background-size: cover; background-position: center center;"
 >
@@ -190,14 +190,14 @@ background-size: cover; background-position: center center;"
 	/>
 
 	<div
-	class="relative z-10 font-display text-center text-[clamp(2.25rem,5vw,4rem)] tracking-[0.2px] text-[#2095f7] md:text-[64px] md:leading-[64px] text-shadow-outline text-shadow-white"
+		class="hero-cascade__title relative z-10 font-display text-center text-[clamp(2.25rem,5vw,4rem)] tracking-[0.2px] text-[#2095f7] md:text-[64px] md:leading-[64px] text-shadow-outline text-shadow-white"
 	>
 		<p class="mb-0 leading-[1.1] whitespace-pre md:leading-[64px]">{messages.titleLines[0]}</p>
 		<p class="leading-[1.1] whitespace-pre md:leading-[64px]">{messages.titleLines[1]}</p>
 	</div>
 
 	<div
-		class="relative z-10 flex min-h-9 w-full items-center justify-center overflow-hidden px-2.5 py-2.5"
+		class="hero-cascade__subtitle relative z-10 flex min-h-9 w-full items-center justify-center overflow-hidden px-2.5 py-2.5"
 	>
 		<p
 			class="font-roboto text-center text-xl font-bold leading-7 tracking-[0.2px] text-snowbound-secondary md:text-[32px] md:leading-8"
@@ -206,7 +206,9 @@ background-size: cover; background-position: center center;"
 		</p>
 	</div>
 
-	<div class="relative z-10 flex w-full max-w-[min(100%,778px)] items-center justify-center flex-col gap-4">
+	<div
+		class="hero-cascade__actions relative z-10 flex w-full max-w-[min(100%,778px)] items-center justify-center flex-col gap-4"
+	>
 		<button
 			type="button"
 			data-open-waitlist
@@ -222,7 +224,6 @@ background-size: cover; background-position: center center;"
 		<div
 			class="hero-kickstarter-badge relative mb-8 flex h-[124px] w-[124px] select-none items-center justify-center md:h-[140px] md:w-[140px]"
 		>
-			<div class="hero-kickstarter-glow" aria-hidden="true"></div>
 			<div class="hero-kickstarter-plate" aria-hidden="true">
 				<img
 					src={assets.kickstarterHex}
@@ -243,41 +244,59 @@ background-size: cover; background-position: center center;"
 </section>
 
 <style>
-	.hero-kickstarter-badge {
-		perspective: 900px;
+	@keyframes hero-cascade-in {
+		from {
+			opacity: 0;
+			transform: translate3d(0, 1rem, 0);
+		}
+		to {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+		}
 	}
 
-	.hero-kickstarter-plate,
-	.hero-kickstarter-glow {
-		position: absolute;
-		inset: 0;
-		border-radius: 9999px;
-		transform-style: preserve-3d;
+	#hero.hero-cascade > header {
+		animation: hero-cascade-in 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
+	}
+
+	#hero.hero-cascade > img {
+		animation: hero-cascade-in 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.13s both;
+	}
+
+	.hero-cascade__title > p:nth-child(1) {
+		animation: hero-cascade-in 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+	}
+
+	.hero-cascade__title > p:nth-child(2) {
+		animation: hero-cascade-in 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
+	}
+
+	.hero-cascade__subtitle {
+		animation: hero-cascade-in 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.36s both;
+	}
+
+	.hero-cascade__actions > p {
+		animation: hero-cascade-in 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.52s both;
+	}
+
+	.hero-cascade__actions > .hero-kickstarter-badge {
+		animation: hero-cascade-in 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
 	}
 
 	.hero-kickstarter-plate {
+		position: absolute;
+		inset: 0;
+		border-radius: 9999px;
 		filter:
 			drop-shadow(0 0 22px rgba(0, 0, 0, 0.22))
 			drop-shadow(0 0 14px rgba(17, 45, 87, 0.26))
 			drop-shadow(0 0 18px rgba(35, 149, 231, 0.28));
-		animation: hero-kickstarter-shadow-orbit 6.5s linear infinite;
-	}
-
-	.hero-kickstarter-glow {
-		inset: 8%;
-		background:
-			radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 42%),
-			radial-gradient(circle, rgba(35, 149, 231, 0.34), rgba(35, 149, 231, 0) 70%);
-		filter: blur(18px);
-		opacity: 0.96;
-		transform: translateZ(-28px) scale(1.24);
-		animation: hero-kickstarter-glow-breathe 3.8s ease-in-out infinite;
 	}
 
 	.hero-cta-button {
 		animation:
-			hero-cta-enter 0.82s cubic-bezier(0.2, 0.9, 0.25, 1.2) 0.14s both,
-			hero-cta-breathe 2.8s ease-in-out 1.05s infinite;
+			hero-cascade-in 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.44s both,
+			hero-cta-breathe 2.8s ease-in-out 1s infinite;
 		transform-origin: center center;
 		will-change: transform, box-shadow;
 	}
@@ -582,69 +601,6 @@ background-size: cover; background-position: center center;"
 		}
 	}
 
-	@keyframes hero-kickstarter-shadow-orbit {
-		0% {
-			filter:
-				drop-shadow(16px 0 26px rgba(0, 0, 0, 0.3))
-				drop-shadow(10px 0 18px rgba(17, 45, 87, 0.32))
-				drop-shadow(5px 0 14px rgba(35, 149, 231, 0.4));
-		}
-		25% {
-			filter:
-				drop-shadow(0 16px 26px rgba(0, 0, 0, 0.3))
-				drop-shadow(0 10px 18px rgba(17, 45, 87, 0.32))
-				drop-shadow(0 5px 14px rgba(35, 149, 231, 0.4));
-		}
-		50% {
-			filter:
-				drop-shadow(-16px 0 26px rgba(0, 0, 0, 0.3))
-				drop-shadow(-10px 0 18px rgba(17, 45, 87, 0.32))
-				drop-shadow(-5px 0 14px rgba(35, 149, 231, 0.4));
-		}
-		75% {
-			filter:
-				drop-shadow(0 -16px 26px rgba(0, 0, 0, 0.3))
-				drop-shadow(0 -10px 18px rgba(17, 45, 87, 0.32))
-				drop-shadow(0 -5px 14px rgba(35, 149, 231, 0.4));
-		}
-		100% {
-			filter:
-				drop-shadow(16px 0 26px rgba(0, 0, 0, 0.3))
-				drop-shadow(10px 0 18px rgba(17, 45, 87, 0.32))
-				drop-shadow(5px 0 14px rgba(35, 149, 231, 0.4));
-		}
-	}
-
-	@keyframes hero-kickstarter-glow-breathe {
-		0%,
-		100% {
-			opacity: 0.9;
-			transform: translateZ(-28px) scale(1.22);
-		}
-		50% {
-			opacity: 1;
-			transform: translateZ(-28px) scale(1.28);
-		}
-	}
-
-	@keyframes hero-cta-enter {
-		0% {
-			opacity: 0;
-			transform: translate3d(0, 0.9rem, 0) scale(0.94);
-			box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-		}
-		65% {
-			opacity: 1;
-			transform: translate3d(0, -0.15rem, 0) scale(1.02);
-			box-shadow: 0 18px 36px rgba(2, 133, 228, 0.24);
-		}
-		100% {
-			opacity: 1;
-			transform: translate3d(0, 0, 0) scale(1);
-			box-shadow: 0 4px 31px rgba(0, 0, 0, 0.15);
-		}
-	}
-
 	@keyframes hero-cta-breathe {
 		0%,
 		100% {
@@ -662,10 +618,20 @@ background-size: cover; background-position: center center;"
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.hero-kickstarter-plate,
-		.hero-kickstarter-glow,
+		#hero.hero-cascade > header,
+		#hero.hero-cascade > img,
+		.hero-cascade__title > p,
+		.hero-cascade__subtitle,
+		.hero-cascade__actions > p,
+		.hero-cascade__actions > .hero-kickstarter-badge {
+			animation: none;
+			opacity: 1;
+			transform: none;
+		}
+
 		.hero-cta-button {
 			animation: none;
+			box-shadow: 0 4px 31px rgba(0, 0, 0, 0.15);
 		}
 
 		.hero-snowfield-particle {

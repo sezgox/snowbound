@@ -364,7 +364,6 @@ const initialBackground = getBackgroundValue(tribeVisuals[0].background);
 
 		.tribes-slide__character {
 			height: auto;
-			max-height: none;
 			width: 100%;
 			max-width: 360px;
 			flex: 0 0 auto;
@@ -462,7 +461,7 @@ const initialBackground = getBackgroundValue(tribeVisuals[0].background);
 				root.style.setProperty("--tribes-next-bg", nextBackground);
 				setOverlayTransition(false);
 				setOverlayPhase(phase);
-				void bgOverlay.offsetWidth;
+				void bgOverlay?.offsetWidth;
 			}
 
 			function animateOverlayIn(phase: TribesBgPhase) {

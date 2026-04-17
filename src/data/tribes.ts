@@ -10,7 +10,7 @@ export type TribeVisual = {
 
 export const tribeVisuals: TribeVisual[] = [
 	{
-		id: "iqurnat-shaman",
+		id: "iqurnat",
 		character: "/images/figma/tribes/character-1.webp",
 		background: {
 			kind: "gradient",
@@ -28,7 +28,7 @@ export const tribeVisuals: TribeVisual[] = [
 		background: { kind: "solid", hex: "#d3c94a" },
 	},
 	{
-		id: "iqurnat-guardian",
+		id: "amarok",
 		character: "/images/figma/tribes/character-4.webp",
 		background: { kind: "solid", hex: "#fda443" },
 	},

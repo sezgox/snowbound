@@ -49,14 +49,15 @@ const cards = messages.cards;
 
 			<div class="features-media-slot w-full">
 				<div class="features-media-frame">
-					<img
-						class="features-media-img"
-						src={messages.mediaImageSrc}
-						alt={messages.mediaAlt}
-						loading="lazy"
-						decoding="async"
-						width="760"
-						height="400"
+					<video
+						class="features-media-video"
+						src={messages.mediaVideoSrc}
+						aria-label={messages.mediaAlt}
+						autoplay
+						loop
+						muted
+						playsinline
+						preload="auto"
 					/>
 				</div>
 			</div>
@@ -190,8 +191,8 @@ const cards = messages.cards;
 	.features-media-frame {
 		position: relative;
 		overflow: hidden;
-		height: clamp(104px, 17vh, 124px);
 		width: 100%;
+		line-height: 0;
 		border-radius: 18px;
 		border: 1px solid rgba(119, 171, 189, 0.9);
 		background:
@@ -200,22 +201,19 @@ const cards = messages.cards;
 		box-shadow: 0 10px 28px rgba(17, 45, 87, 0.12);
 	}
 
-	.features-media-img {
+	.features-media-video {
 		display: block;
-		height: 100%;
 		width: 100%;
-		object-fit: cover;
-		object-position: center;
-	}
-
-	@media (min-width: 768px) {
-		.features-media-frame {
-			height: clamp(150px, 20vh, 188px);
-		}
+		height: auto;
+		max-width: 100%;
+		background: rgba(17, 45, 87, 0.06);
 	}
 
 	.features-media-slot {
-		width: min(100%, 760px);
+		width: 100%;
+		max-width: min(100%, 1024px);
+		margin-inline: auto;
+		align-self: center;
 		view-timeline-name: --features-media-slot;
 		view-timeline-axis: block;
 		animation-timeline: --features-media-slot;
@@ -234,7 +232,7 @@ const cards = messages.cards;
 		animation-timeline: --features-cta;
 		animation-name: show;
 		animation-fill-mode: both;
-		animation-range: entry 20% cover 35%;
+		animation-range: entry 15% cover 20%;
 		@media (max-width: 768px) {
 			animation-range: entry 0% cover 15%;
 		}

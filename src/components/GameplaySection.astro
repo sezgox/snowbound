@@ -281,8 +281,8 @@ const cards = messages.cards.map((card, index) => ({
 				root.dataset.gameplayBound = "true";
 
 				const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-				const minRatio = 0.26;
-				const rootMarginBottomPct = 8;
+				const minRatio = 0.2;
+				const rootMarginBottomPct = 4;
 				const cards = Array.from(
 					root.querySelectorAll("[data-gameplay-card]"),
 				).filter((card) => card instanceof HTMLElement);
@@ -331,32 +331,33 @@ const cards = messages.cards.map((card, index) => ({
 						}
 					},
 					{
-						threshold: [0, 0.15, 0.3, 0.45],
+						threshold: [0, 0.15, 0.2, 0.3, 0.45],
 						rootMargin: `0px 0px -${rootMarginBottomPct}% 0px`,
 					},
 				);
 
 				io.observe(root);
 
+				const cardMinRatio = 0.22;
 				const cardObserver = new IntersectionObserver(
 					(entries) => {
 						for (const entry of entries) {
-							if (entry.intersectionRatio >= 0.28) {
+							if (entry.intersectionRatio >= cardMinRatio) {
 								markCardInView(entry.target);
 								cardObserver.unobserve(entry.target);
 							}
 						}
 					},
 					{
-						threshold: [0, 0.15, 0.28, 0.45],
-						rootMargin: "0px 0px -4% 0px",
+						threshold: [0, 0.12, 0.22, 0.35],
+						rootMargin: "0px 0px -2% 0px",
 					},
 				);
 
 				cards.forEach((card) => {
 					if (
 						gameplayHeightVisibleRatio(card, 0.08) >=
-						0.28 - 0.02
+						cardMinRatio - 0.02
 					) {
 						markCardInView(card);
 						return;
