@@ -43,9 +43,6 @@ plugins/
 # n8n (docker-compose.n8n.yml)
 n8n_data/
 
-# Large local trailer (Workers asset limit; add file locally or host externally)
-public/videos/
-
 # Local dev scratch logs
 .tmp-dev.*
 .codex-astro-*.log
