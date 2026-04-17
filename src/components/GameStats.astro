@@ -15,7 +15,7 @@ const { messages } = Astro.props;
 	data-game-stats
 >
 	<div
-		class="game-stats-inner section-inner flex items-center justify-center gap-12 px-4 md:justify-between md:gap-8"
+		class="game-stats-inner section-inner flex items-center justify-center gap-12 px-4 max-[480px]:px-0 md:justify-between md:gap-8"
 	>
 		<div
 			class="game-stats-column relative flex h-[128px] w-[128px] flex-col items-center justify-between gap-0.5 md:h-[152px] md:w-[152px] lg:h-[160px] lg:w-[160px]"
@@ -58,7 +58,7 @@ const { messages } = Astro.props;
 				<path d="M9.81254 65.1079C9.49274 65.3783 9.31702 65.5608 9.31702 66.2068C9.31702 66.8539 9.31702 73.0901 9.31702 73.0901C9.31702 73.0901 9.25402 73.7613 9.92159 73.7613C10.2455 73.7613 18.3047 73.7712 26.5368 73.7814C34.7686 73.7711 42.8284 73.7613 43.1512 73.7613C43.8181 73.7613 43.7551 73.0901 43.7551 73.0901C43.7551 73.0901 43.7551 66.8543 43.7551 66.2068C43.7551 65.5608 43.5789 65.3783 43.2604 65.1079C41.0011 63.1956 30.9573 54.222 26.5366 54.222C22.1147 54.2217 12.0704 63.1958 9.81254 65.1079Z" fill="black"/>
 			</svg>
 			<p class="font-display text-center text-[16px] md:text-2xl text-black uppercase">
-				30 - 45
+				30' - 45'
 			</p>
 		</div>
 
@@ -144,6 +144,12 @@ const { messages } = Astro.props;
 		to {
 			opacity: 1;
 			transform: rotate(0deg) scale(1);
+		}
+	}
+
+	@media (max-width: 400px) {
+		[data-game-stats] .game-stats-column p {
+			font-size: 12px;
 		}
 	}
 
