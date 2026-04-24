@@ -78,6 +78,7 @@ const languageEntries = [
 <section
 	id="hero"
 	class="hero-cascade relative mb-[-2px] flex min-h-screen flex-col items-center justify-around gap-4 overflow-hidden px-2 md:gap-8 lg:gap-10"
+	data-locale={locale}
 	style="background-image:linear-gradient(180deg,rgba(35,149,231,0.8) 0%, rgba(35,149,231,0.8) 5%, rgba(255, 255, 255, 0.9) 90%, #faf9f2 97%),  url('/images/figma/home-hero.png');
 background-size: cover; background-position: center center;"
 >
@@ -132,7 +133,7 @@ background-size: cover; background-position: center center;"
 		<div class="hero-language-switcher relative z-40 flex items-center">
 			<button
 				type="button"
-				class="hero-language-trigger z-10 flex h-12 w-12 cursor-pointer items-center p-3 hover:opacity-80"
+				class="hero-language-trigger z-10 flex h-12 w-12 cursor-pointer items-center p-2.5 hover:opacity-80"
 				aria-label={messages.language.triggerLabel}
 				popovertarget={languageMenuId}
 				style={`anchor-name: ${languageButtonAnchorName};`}
@@ -140,7 +141,7 @@ background-size: cover; background-position: center center;"
 				<img
 					src={assets.changeLanguage}
 					alt=""
-					class="pointer-events-none inset-0 size-full object-contain"
+					class="pointer-events-none inset-0 size-full rounded-full object-contain"
 				/>
 			</button>
 			<div
@@ -190,12 +191,12 @@ background-size: cover; background-position: center center;"
 	/>
 
 	<div
-		class="hero-cascade__title relative z-10 w-full min-w-0 max-w-full px-1 font-display text-center text-[clamp(2.25rem,5vw,4rem)] tracking-[0.2px] text-[#2095f7] md:px-0 md:text-[64px] md:leading-[64px] text-shadow-outline text-shadow-white"
+		class="hero-cascade__title relative z-10 w-full min-w-0 max-w-full px-1 font-display text-center tracking-[0.2px] text-[#2095f7] md:px-0 text-shadow-outline text-shadow-white"
 	>
-		<p class="mb-0 w-full min-w-0 leading-[1.1] whitespace-normal max-[419px]:text-balance md:whitespace-nowrap md:leading-[64px]">
+		<p class="hero-cascade__title-line mb-0 whitespace-nowrap">
 			{messages.titleLines[0]}
 		</p>
-		<p class="w-full min-w-0 leading-[1.1] whitespace-normal max-[419px]:text-balance md:whitespace-nowrap md:leading-[64px]">
+		<p class="hero-cascade__title-line whitespace-nowrap">
 			{messages.titleLines[1]}
 		</p>
 	</div>
@@ -265,6 +266,29 @@ background-size: cover; background-position: center center;"
 
 	#hero.hero-cascade > img {
 		animation: hero-cascade-in 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.13s both;
+	}
+
+	#hero .hero-cascade__title {
+		font-size: clamp(2.25rem, 5vw, 4rem);
+		line-height: 1.1;
+	}
+
+	@media (max-width: 420px) {
+		#hero[data-locale="es"] .hero-cascade__title {
+			font-size: calc(clamp(2.25rem, 5vw, 4rem) - 4px);
+			line-height: 1.1;
+		}
+	}
+
+	@media (min-width: 768px) {
+		#hero .hero-cascade__title {
+			font-size: 64px;
+			line-height: 64px;
+		}
+
+		#hero .hero-cascade__title .hero-cascade__title-line {
+			line-height: 64px;
+		}
 	}
 
 	.hero-cascade__title > p:nth-child(1) {
