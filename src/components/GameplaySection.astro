@@ -23,19 +23,14 @@ const cards = messages.cards.map((card, index) => ({
 	class="relative flex w-full flex-col items-center overflow-hidden py-10 scroll-mt-24"
 	aria-labelledby="gameplay-heading"
 	data-gameplay-reveal
+	style={`background-image: linear-gradient(180deg, var(--color-snowbound-cream) 0%, rgba(250, 249, 242, 0) 10%), url('${assets.patternIce}'); background-position: center, center; background-repeat: no-repeat, no-repeat;`}
 >
-	<img
-		src={assets.patternIce}
-		alt=""
-		class="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
-	/>
-
 	<div
 		class="section-inner relative z-10 flex w-full flex-col items-center gap-16 px-4 md:gap-[70px]"
 	>
 		<h2
 			id="gameplay-heading"
-			class="gameplay-title font-display p-2.5 text-center text-4xl tracking-wide text-[#112d57] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)] md:text-[64px] md:leading-[48px]"
+			class="gameplay-title font-display p-2.5 text-center text-4xl tracking-wide text-snowbound-secondary drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)] md:text-[64px] md:leading-[48px]"
 		>
 			{messages.heading}
 		</h2>
@@ -56,7 +51,7 @@ const cards = messages.cards.map((card, index) => ({
 							</h3>
 						</div>
 						<div class="flex min-h-[92px] w-full items-center justify-center p-2.5">
-							<div class="font-nunito text-center text-base leading-6 tracking-wide text-[#5c5c5c]">
+							<div class="font-nunito text-center text-base leading-6 tracking-wide text-snowbound-muted">
 								{c.body.map((line) => (
 									<p class="mb-0 whitespace-pre-line">{line}</p>
 								))}
@@ -131,6 +126,13 @@ const cards = messages.cards.map((card, index) => ({
 <style>
 	#gameplay {
 		perspective: 1400px;
+		background-size: 100% 100%;
+	}
+
+	@media (max-width: 768px) {
+		#gameplay {
+			background-size: cover;
+		}
 	}
 
 	#gameplay .gameplay-title {

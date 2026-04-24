@@ -190,10 +190,14 @@ background-size: cover; background-position: center center;"
 	/>
 
 	<div
-		class="hero-cascade__title relative z-10 font-display text-center text-[clamp(2.25rem,5vw,4rem)] tracking-[0.2px] text-[#2095f7] md:text-[64px] md:leading-[64px] text-shadow-outline text-shadow-white"
+		class="hero-cascade__title relative z-10 w-full min-w-0 max-w-full px-1 font-display text-center text-[clamp(2.25rem,5vw,4rem)] tracking-[0.2px] text-[#2095f7] md:px-0 md:text-[64px] md:leading-[64px] text-shadow-outline text-shadow-white"
 	>
-		<p class="mb-0 leading-[1.1] whitespace-pre md:leading-[64px]">{messages.titleLines[0]}</p>
-		<p class="leading-[1.1] whitespace-pre md:leading-[64px]">{messages.titleLines[1]}</p>
+		<p class="mb-0 w-full min-w-0 leading-[1.1] whitespace-normal max-[419px]:text-balance md:whitespace-nowrap md:leading-[64px]">
+			{messages.titleLines[0]}
+		</p>
+		<p class="w-full min-w-0 leading-[1.1] whitespace-normal max-[419px]:text-balance md:whitespace-nowrap md:leading-[64px]">
+			{messages.titleLines[1]}
+		</p>
 	</div>
 
 	<div
