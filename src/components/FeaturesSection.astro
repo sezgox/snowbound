@@ -12,7 +12,10 @@ const cards = messages.cards;
 <section
 	id="features"
 	class="relative w-full scroll-mt-0 overflow-x-clip"
-	style="background-image: url('/images/figma/hex-board.png'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;"
+	style="background-image: url('/images/figma/hex-board.png'); 
+	background-size: cover; background-position: center; 
+	background-repeat: no-repeat; background-attachment: fixed;
+	 "
 	aria-labelledby="features-heading"
 >
 	<div class="pointer-events-none absolute inset-0 z-0 bg-white/[0.66]" aria-hidden="true" />
@@ -79,6 +82,12 @@ const cards = messages.cards;
 	#features {
 		--features-card-slot-width: min(100%, 148px);
 		--features-card-slot-height: 176px;
+		/* Inset solo arriba y abajo (hacia dentro de la sección) */
+		box-shadow:
+			inset 0 20px 28px -14px
+				color-mix(in srgb, var(--color-snowbound-secondary) 100%, transparent),
+			inset 0 -20px 28px -14px
+				color-mix(in srgb, var(--color-snowbound-secondary) 100%, transparent);
 	}
 
 	@media (min-width: 768px) {
