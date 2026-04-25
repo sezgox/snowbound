@@ -41,7 +41,7 @@ const cards = messages.cards.map((card, index) => ({
 			{
 				cards.map((c, i) => (
 					<div
-						class={`gameplay-card gameplay-card--${i % 2 === 0 ? "left" : "right"} flex min-h-[409px] w-[min(100%,273px)] flex-col items-center gap-4 overflow-hidden rounded-[10px] border border-[#77abbd] bg-white px-5 py-10 md:w-[273px]`}
+						class={`gameplay-card gameplay-card--${i % 2 === 0 ? "left" : "right"} flex min-h-[409px] w-[min(100%,273px)] flex-col items-center gap-4 overflow-hidden rounded-[10px] border border-snowbound-border bg-white px-5 py-10 md:w-[273px]`}
 						data-gameplay-card
 						style={`--gameplay-card-delay: ${0.24 + i * 0.12}s;`}
 					>
